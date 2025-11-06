@@ -1,0 +1,36 @@
+---
+import StickyNote from './StickyNote.astro';
+---
+<div class="bg-[#E5F7F8] h-fit min-h-[400px] relative w-full">
+      <div class="bg-white h-32">
+        <div class="text-center text-mango-green text-2xl">Did you know?</div>
+    </div>
+
+    <div class="bg-white h-32" style={{
+        clipPath: 'ellipse(70% 70% at top)',
+        WebkitClipPath: 'ellipse(70% 70% at top)'
+    }
+    }>
+    
+    </div>
+          <div class="flex flex-row justify-center items-center gap-10">
+            <div class="-rotate-13">
+            <StickyNote>Text Goes Here</StickyNote>
+            </div>
+            <div class="-rotate-5 -translate-y-14">
+            <StickyNote>Text Goes Here</StickyNote>
+            </div>
+            <div class="rotate-5 -translate-y-14">
+            <StickyNote>Text Goes Here</StickyNote>
+            </div>
+            <div class="rotate-13">
+            <StickyNote>Text Goes Here</StickyNote>
+            </div>
+        </div>
+
+        <div class="bg-[#C8F0F1] h-32 absolute bottom-0 w-full" style={{
+        clipPath: 'ellipse(50% 100% at bottom)',
+        WebkitClipPath: 'ellipse(50% 100% at bottom)'
+    }
+    }>
+</div>

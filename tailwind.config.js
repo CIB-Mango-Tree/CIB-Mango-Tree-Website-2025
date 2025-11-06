@@ -2,8 +2,18 @@
 export default {
   content: [],
   theme: {
-    extend: {},
+    extend: {
+      colors:{
+        'mangoGreen': '#609949',
+      }
+    },
   },
   plugins: [],
 }
 
+
+module.exports = {
+    "theme": {
+        "colors": colors,
+    }
+};
