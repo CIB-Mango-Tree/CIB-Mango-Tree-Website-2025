@@ -3,7 +3,9 @@ import Welcome from '../components/Welcome.astro';
 import Layout from '../layouts/Layout.astro';
 import "../styles/global.css";
 import Toolbar from '../components/Toolbar.astro';
-import StickNoteBar from '../components/StickyNoteBar.astro';
+import StickyNoteBar from '../components/StickyNoteBar.astro';
+import SeeInAction from '../components/SeeInAction.astro';
+import SaferInternetTools from '../components/SaferInternetTools.astro';
 
 // Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
 // Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
@@ -11,6 +13,9 @@ import StickNoteBar from '../components/StickyNoteBar.astro';
 
 <Layout>
 	<!-- <Toolbar /> -->
+	<h1 class="sr-only">CIB Mango Tree Homepage</h1>
 	<Welcome />
-	<StickNoteBar />
+	<StickyNoteBar />
+	<SeeInAction />
+	<SaferInternetTools />
 </Layout>
