@@ -17,5 +17,9 @@
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "tailwindcss": "^4.1.16"
+  },
+  "devDependencies": {
+    "eslint": "^9.39.1",
+    "prettier-plugin-astro": "^0.14.1"
   }
 }
