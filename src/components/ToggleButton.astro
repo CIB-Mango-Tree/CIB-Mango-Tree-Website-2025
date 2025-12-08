@@ -1,0 +1,31 @@
+---
+import Button from "./Button.astro";
+
+const displayContent = (event: Event, controlId: string, text: string) => {
+  const currentButton = event.target as HTMLElement;
+  currentButton.setAttribute("active", "true");
+  const element = document.getElementById(controlId);
+  if (element) {
+    element.innerText = text;
+  }
+};
+
+interface Props {
+  controlId: string;
+  active: boolean;
+  id: string;
+  iconSrc: string;
+  text: string;
+  content: string;
+}
+const { controlId, active, id, iconSrc, text, content } = Astro.props as Props;
+---
+
+<Button
+  id={id}
+  styles=`w-md my-2 text-left ${active ? "bg-[#2D5016] text-white" : "bg-[#E6EFDF]"}`
+  onClick={(event?: Event) => displayContent(event!, controlId, content)}
+>
+  <img src={iconSrc} alt="copy icon" class="inline w-5 h-5 mr-2" />
+  {text}
+</Button>

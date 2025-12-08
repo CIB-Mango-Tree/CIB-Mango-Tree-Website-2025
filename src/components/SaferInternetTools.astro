@@ -1,18 +1,65 @@
 ---
-import mango_tree from '../assets/mangotreesway.gif';
+import { callSafely } from "astro:actions";
+import mango_tree from "../assets/mangotreesway.gif";
+import copyIcon from "../assets/copy-icon.svg";
+import ToggleButton from "./ToggleButton.astro";
+import hashtagIcon from "../assets/hashtag-icon.svg";
+
+const defaultContent =
+  "This test looks for repeated phrases - copypasta - that appears across posts in your dataset. Some coordinated campaigns may consist of bot accounts reposting the same phrases to cut down on time. Our test extracts these repeated phrases, and reveals which accounts posted them, and when, in order to reveal hidden networks.";
 ---
 
-<section>
-    <div class="flex">
-        <div class="w-1/2">
-        <div>Tools for a safer internet</div>
-        <div>
-            CIB Mango Tree is a growing library of tools designed to detect signs of coordinated 
-            inauthentic behavior. It runs locally on your computer through an interactive 
-            command-line interface. Instead of scraping data, our programs analyze datasets of 
-            social media activity that you provide to identify abnormal online activity.
+<section class="px-30">
+  <div class="flex content-center justify-center">
+    <div class="w-1/2 text-center flex align-middle items-center">
+      <div>
+        <div class="text-[28px] text-mango-green">
+          Tools for a safer internet
         </div>
+        <div>
+          CIB Mango Tree is a growing library of tools designed to detect signs
+          of coordinated inauthentic behavior. It runs locally on your computer
+          through an interactive command-line interface. Instead of scraping
+          data, our programs analyze datasets of social media activity that you
+          provide to identify abnormal online activity.
+        </div>
+      </div>
     </div>
-<img src={mango_tree.src} alt="" class="w-1/2"/>
+    <img src={mango_tree.src} alt="" class="w-1/2" />
+  </div>
+  <div class="flex content-center justify-center">
+    <div class="w-1/2 block">
+      <!-- <Button
+        styles="bg-[#E6EFDF]"
+        onClick={() => displayContent(c)}
+      >
+        <img src={copyIcon.src} alt="copy icon" class="inline w-5 h-5 mr-2" />
+        Copy Pasta Text
+      </Button> -->
+      <ToggleButton
+        id="copy-pasta-button"
+        active={true}
+        iconSrc={copyIcon.src}
+        text="Copy Pasta Text"
+        controlId="info-content"
+        content={defaultContent}
+      />
+      <ToggleButton
+        id="hashtag-button"
+        active={false}
+        iconSrc={hashtagIcon.src}
+        text="Hashtag Text"
+        controlId="info-content"
+        content="Content for Hashtag Test goes here."
+      />
+      <!-- <Button onClick={() => displayContent("copy-pasta-content")}
+        >Hashtag Test</Button
+      > -->
     </div>
+    <div class="w-1/2">
+      <div id="info-content" class="rounded-sm p-4 bg-[#F1F5F9]">
+        {defaultContent}
+      </div>
+    </div>
+  </div>
 </section>

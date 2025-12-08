@@ -1,16 +1,16 @@
 ---
-import { undefined } from "astro:schema";
 
 interface Props {
     href?: string;
     styles?: string;
-    onClick?: () => void;
+    onClick?: (event?:Event) => void;
     disabled?: boolean;
+    id?: string;
 }
-const { href, styles, onClick, disabled = false } = Astro.props as Props;
+const { href, styles, onClick, disabled = false, id } = Astro.props as Props;
 
 const className =
-    "rounded-md px-4 py-2 disabled:opacity-50";
+    "rounded-md px-4 py-2 disabled:opacity-50 cursor-pointer";
 ---
 
 {
@@ -20,6 +20,7 @@ const className =
             class={`${className} ${styles}`}
             role="button"
             aria-disabled={disabled ? "true" : "false"}
+            id={id}
         >
             <slot />
         </a>
@@ -28,9 +29,10 @@ const className =
 {
     onClick && (
         <button
-            onclick={`${onClick}()`}
+            onclick={`${onClick}(event)`}
             class={`${className} ${styles}`}
             disabled={disabled}
+            id={id}
         >
             <slot />
         </button>
