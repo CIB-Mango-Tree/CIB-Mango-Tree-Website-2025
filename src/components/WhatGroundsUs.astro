@@ -1,7 +1,7 @@
 ---
 // Upload your team meeting image to: src/assets/team-meeting.jpg (or .png)
 // Then uncomment the import below and update the filename if different
-// import teamMeeting from '../assets/team-meeting.jpg';
+import teamMeeting from '../assets/team-meeting.jpg';
 ---
 
 <section class="py-16 px-8 bg-[#FDF8E9]">
@@ -15,11 +15,8 @@
 
         <div class="mt-12">
             <!-- TODO: After uploading image, uncomment the import above and use: src={teamMeeting.src} -->
-            <div class="w-full h-96 bg-gray-200 rounded-lg flex items-center justify-center border-2 border-dashed border-gray-300">
-                <p class="text-gray-500 text-center px-4">
-                    Upload your team meeting photo to:<br />
-                    <code class="text-sm bg-gray-100 px-2 py-1 rounded">src/assets/team-meeting.jpg</code>
-                </p>
+            <div class="w-full h-96 bg-gray-200 rounded-lg flex items-center justify-center overflow-hidden">
+               <img src={teamMeeting.src} alt="Team meeting" class="cover" />
             </div>
         </div>
     </div>

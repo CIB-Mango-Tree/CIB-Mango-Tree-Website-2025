@@ -73,8 +73,8 @@ export default function ToolsSelector() {
               className={`
                 flex items-center gap-4 p-4 rounded-lg transition-all
                 ${isSelected 
-                  ? 'bg-[#609949] text-white' 
-                  : 'bg-[#E5F7F8] text-[#609949]'
+                  ? 'bg-[#2D5016] text-white' 
+                  : 'bg-[#E6EFDF] text-[#2D5016]'
                 }
                 hover:opacity-90
               `}
@@ -87,14 +87,12 @@ export default function ToolsSelector() {
       </div>
 
       {/* Right side - Content */}
-      <div className="w-1/2">
-        <div className="bg-[#C8F0F1] p-6 rounded-lg">
+        <div className="w-1/2 bg-[#F1F5F9] p-6 rounded-lg">
           <p className="text-gray-800 leading-relaxed">
             {selectedToolData.description}
           </p>
         </div>
       </div>
-    </div>
   );
 }
 
