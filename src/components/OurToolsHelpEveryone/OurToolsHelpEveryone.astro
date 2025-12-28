@@ -1,0 +1,56 @@
+---
+import ResearchersIcon from "../../assets/researchers_icon.svg";
+import EngineersScientistsIcon from "../../assets/engineers_scientists_icon.svg";
+import PolicyExpertsIcon from "../../assets/policy_experts_journalists.svg";
+import CitizensIcon from "../../assets/citizens_icon.svg";
+import StakeholderIcon from "./StakeholderIcon.astro";
+---
+
+<section class="py-16 px-8 bg-[#F8FAFC]">
+  <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-12">
+      <h2 class="text-[#609949] text-3xl font-bold mb-4">
+        Our tools can help everyone
+      </h2>
+      <p class="text-gray-800 text-lg max-w-3xl mx-auto">
+        Whether you're a researcher, journalist, technologist, or concerned
+        citizen, CIB Mango Tree offers open, accessible tools designed for you
+        to quickly spot disruption and safeguard honest conversation online.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+      <!-- Researchers -->
+      <StakeholderIcon
+        title="Researchers"
+        description="in fields like social computing, political science, and cybersecurity."
+      >
+        <ResearchersIcon slot="icon" class="w-8 h-8" />
+      </StakeholderIcon>
+
+      <!-- Engineers & Data Scientists -->
+      <StakeholderIcon
+        title="Engineers & Data Scientists"
+        description="working with NLP, network analysis, or bot detection."
+      >
+        <EngineersScientistsIcon slot="icon" class="w-8 h-8" />
+      </StakeholderIcon>
+
+      <!-- Policy Experts & Journalists -->
+      <StakeholderIcon
+        title="Policy Experts & Journalists"
+        description="interested in platform transparency and digital integrity."
+      >
+        <PolicyExpertsIcon slot="icon" class="w-8 h-8" />
+      </StakeholderIcon>
+
+      <!-- Civic Hackers & Citizens -->
+      <StakeholderIcon
+        title="Civic Hackers & Citizens"
+        description="who want to make an impact."
+      >
+        <CitizensIcon slot="icon" class="w-8 h-8" />
+      </StakeholderIcon>
+    </div>
+  </div>
+</section>
