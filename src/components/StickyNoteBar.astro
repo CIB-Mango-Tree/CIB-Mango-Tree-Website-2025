@@ -2,33 +2,33 @@
 import StickyNote from './StickyNote.astro';
 ---
 <section class="bg-[#E5F7F8] h-fit min-h-[400px] relative w-full">
-      <div class="bg-white h-32">
-        <div class="text-center text-mango-green text-2xl">Did you know?</div>
+      <div class="bg-white h-20 md:h-32">
+        <div class="text-center text-mango-green text-xl md:text-2xl pt-6 md:pt-8">Did you know?</div>
     </div>
 
-    <div class="bg-white h-32" style={{
+    <div class="bg-white h-20 md:h-32" style={{
         clipPath: 'ellipse(70% 70% at top)',
         WebkitClipPath: 'ellipse(70% 70% at top)'
     }
     }>
-    
+
     </div>
-          <div class="flex flex-row justify-center items-center gap-10">
-            <div class="-rotate-13">
+          <div class="grid grid-cols-2 md:flex md:flex-row justify-center items-center gap-4 md:gap-6 lg:gap-10 px-4 max-w-xl md:max-w-none mx-auto">
+            <div class="-rotate-6 md:-rotate-13">
             <StickyNote>Text Goes Here</StickyNote>
             </div>
-            <div class="-rotate-5 -translate-y-14">
+            <div class="rotate-6 md:-rotate-5 md:-translate-y-14">
             <StickyNote>Text Goes Here</StickyNote>
             </div>
-            <div class="rotate-5 -translate-y-14">
+            <div class="-rotate-6 md:rotate-5 md:-translate-y-14">
             <StickyNote>Text Goes Here</StickyNote>
             </div>
-            <div class="rotate-13">
+            <div class="rotate-6 md:rotate-13">
             <StickyNote>Text Goes Here</StickyNote>
             </div>
         </div>
 
-        <div class="bg-[#C8F0F1] h-32 absolute bottom-0 w-full" style={{
+        <div class="bg-[#C8F0F1] h-20 md:h-32 absolute bottom-0 w-full" style={{
         clipPath: 'ellipse(50% 100% at bottom)',
         WebkitClipPath: 'ellipse(50% 100% at bottom)'
     }

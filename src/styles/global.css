@@ -3,3 +3,89 @@
 @theme {
     --color-mango-green: #609949;
 }
+
+/*
+ * RESPONSIVE DESIGN PATTERNS FOR FUTURE COMPONENTS
+ *
+ * Breakpoints: sm (640px), md (768px), lg (1024px), xl (1280px), 2xl (1536px)
+ *
+ * 1. TEXT SIZING:
+ *    - Use responsive text classes: text-base md:text-lg lg:text-xl
+ *    - Available utilities: text-responsive-sm, text-responsive-base, text-responsive-lg, etc.
+ *
+ * 2. SPACING:
+ *    - Use responsive padding: px-4 md:px-8, py-8 md:py-12 lg:py-16
+ *    - Available utilities: .px-responsive, .py-responsive
+ *
+ * 3. LAYOUT:
+ *    - Flex direction: flex-col md:flex-row
+ *    - Grid layouts: grid-cols-1 md:grid-cols-2 lg:grid-cols-4
+ *    - Container widths: max-w-7xl mx-auto
+ *
+ * 4. IMAGES:
+ *    - Always use: max-w-full h-auto (automatically applied globally)
+ *    - Responsive sizing: w-full md:w-1/2, max-w-md md:max-w-lg
+ *
+ * 5. NAVIGATION:
+ *    - Mobile-first: hidden md:flex for desktop nav
+ *    - Mobile menu: Use JavaScript for toggle functionality
+ *    - Hamburger icon: md:hidden for mobile-only
+ *
+ * 6. FORMS:
+ *    - Stack vertically on mobile: flex-col sm:flex-row
+ *    - Button sizing: px-6 md:px-8 py-3
+ *
+ * 7. COMPONENTS:
+ *    - Use container-responsive for consistent padding
+ *    - Test on mobile, tablet, and desktop breakpoints
+ *    - Consider touch targets (44px minimum)
+ */
+
+/* Responsive Design Utilities */
+.container-responsive {
+    @apply px-4 md:px-8 lg:px-12;
+}
+
+.text-responsive-sm {
+    @apply text-sm md:text-base;
+}
+
+.text-responsive-base {
+    @apply text-base md:text-lg;
+}
+
+.text-responsive-lg {
+    @apply text-lg md:text-xl lg:text-2xl;
+}
+
+.text-responsive-xl {
+    @apply text-xl md:text-2xl lg:text-3xl;
+}
+
+.text-responsive-2xl {
+    @apply text-2xl md:text-3xl lg:text-4xl;
+}
+
+.text-responsive-3xl {
+    @apply text-3xl md:text-4xl lg:text-5xl;
+}
+
+/* Responsive spacing utilities */
+.py-responsive {
+    @apply py-8 md:py-12 lg:py-16;
+}
+
+.px-responsive {
+    @apply px-4 md:px-8 lg:px-12;
+}
+
+/* Ensure images are always responsive */
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Smooth scrolling for better UX */
+html {
+    scroll-behavior: smooth;
+}

@@ -8,6 +8,18 @@ export default defineConfig({
   integrations: [react()],
 
   vite: {
-    plugins: [tailwindcss({})]
+    plugins: [tailwindcss({
+      content: [
+        './src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}',
+        './src/**/*.astro'
+      ],
+      theme: {
+        extend: {
+          colors: {
+            'mango-green': '#609949',
+          }
+        },
+      },
+    })]
   }
 });

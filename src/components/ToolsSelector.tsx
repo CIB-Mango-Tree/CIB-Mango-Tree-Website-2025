@@ -61,38 +61,49 @@ export default function ToolsSelector() {
   const selectedToolData = tools.find(tool => tool.id === selectedTool) || tools[0];
 
   return (
-    <div className="flex gap-8 mt-8">
-      {/* Left side - Buttons */}
-      <div className="w-1/2 flex flex-col gap-4">
-        {tools.map((tool) => {
-          const isSelected = tool.id === selectedTool;
-          return (
-            <button
-              key={tool.id}
-              onClick={() => setSelectedTool(tool.id)}
-              className={`
-                flex items-center gap-4 p-4 rounded-lg transition-all
-                ${isSelected 
-                  ? 'bg-[#2D5016] text-white' 
-                  : 'bg-[#E6EFDF] text-[#2D5016]'
-                }
-                hover:opacity-90
-              `}
-            >
-              <span className="flex-shrink-0">{tool.icon}</span>
-              <span className="font-semibold text-left">{tool.name}</span>
-            </button>
-          );
-        })}
+    <div className="mt-8">
+      {/* Mobile: Content first, then buttons */}
+      <div className="block md:hidden">
+        <div className="bg-[#F1F5F9] p-4 rounded-lg mb-6">
+          <p className="text-gray-800 leading-relaxed text-sm md:text-base">
+            {selectedToolData.description}
+          </p>
+        </div>
       </div>
 
-      {/* Right side - Content */}
-        <div className="w-1/2 bg-[#F1F5F9] p-6 rounded-lg">
+      <div className="flex flex-col md:flex-row gap-6 md:gap-8">
+        {/* Buttons */}
+        <div className="w-full md:w-1/2 flex flex-col gap-4">
+          {tools.map((tool) => {
+            const isSelected = tool.id === selectedTool;
+            return (
+              <button
+                key={tool.id}
+                onClick={() => setSelectedTool(tool.id)}
+                className={`
+                  flex items-center gap-3 md:gap-4 p-3 md:p-4 rounded-lg transition-all text-left
+                  ${isSelected
+                    ? 'bg-[#2D5016] text-white'
+                    : 'bg-[#E6EFDF] text-[#2D5016]'
+                  }
+                  hover:opacity-90
+                `}
+              >
+                <span className="flex-shrink-0 w-5 h-5 md:w-6 md:h-6">{tool.icon}</span>
+                <span className="font-semibold text-sm md:text-base">{tool.name}</span>
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Desktop: Content */}
+        <div className="hidden md:block w-1/2 bg-[#F1F5F9] p-6 rounded-lg">
           <p className="text-gray-800 leading-relaxed">
             {selectedToolData.description}
           </p>
         </div>
       </div>
+    </div>
   );
 }
 
