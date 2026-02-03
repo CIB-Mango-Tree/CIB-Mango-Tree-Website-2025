@@ -7,7 +7,7 @@ interface Props {
     description: string;
     ctaText?: string;
     ctaLink?: string;
-    color?: 'yellow' | 'cyan' | 'green' | 'cream' | 'peach';
+    color?: 'yellow' | 'cyan' | 'green' | 'cream' | 'peach' | 'lavender';
 }
 
 const { title, icon, description, ctaText, ctaLink, color = 'cream' } = Astro.props;
@@ -17,7 +17,8 @@ const colorClasses = {
     cyan: 'bg-[#E5F7F8] border-[#E5F7F8]',
     green: 'bg-mango-green-light border-mango-green-light',
     cream: 'bg-[#F8F6F2] border-border-color',
-    peach: 'bg-[#FFE5D9] border-[#FFE5D9]'
+    peach: 'bg-[#FFE5D9] border-[#FFE5D9]',
+    lavender: 'bg-[#EDE7F6] border-[#EDE7F6]'
 };
 
 // Map icon names to components

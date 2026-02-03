@@ -34,7 +34,7 @@ const contributionTypesBottom = [
         title: 'Testing & Feedback',
         icon: 'flask',
         description: 'Try our tools, report bugs, and help us improve the user experience. User testing, bug reporting, and feature suggestions.',
-        color: 'cream' as const
+        color: 'lavender' as const
     },
     {
         title: 'Engagement & Marketing',
@@ -80,30 +80,27 @@ const contributionSteps = [
     <!-- Hero Section -->
     <section class="py-20 md:py-24 px-8 md:px-12 bg-background">
         <div class="max-w-5xl mx-auto">
-            <div class="flex flex-col md:flex-row items-center gap-10 md:gap-16">
-                <!-- Left: Text Content -->
-                <div class="flex-1">
-                    <h1 class="font-display italic text-4xl md:text-5xl lg:text-6xl text-text-primary mb-10 leading-tight">
-                        Get Involved
-                    </h1>
-                    
-                    <p class="text-xl text-text-muted mb-8 leading-relaxed">
-                        Join our community of volunteers working to protect digital democracy. There's a role for everyone, regardless of technical background.
-                    </p>
-                    
-                    <p class="text-lg text-text-muted leading-relaxed">
-                        Join our dedicated team of volunteers working together to combat online disinformation and promote a healthier digital ecosystem. Your contributions, no matter how small, can make a real impact.
-                    </p>
-                </div>
+            <!-- Heading with Mango Man icon -->
+            <div class="flex items-center gap-4 mb-10">
+                <h1 class="font-display italic text-4xl md:text-5xl lg:text-6xl text-text-primary leading-tight">
+                    Get Involved
+                </h1>
+                <img 
+                    src={mangoMan.src} 
+                    alt="Dancing mango character" 
+                    class="w-16 md:w-20 lg:w-24 h-auto"
+                />
+            </div>
+            
+            <!-- Two-column paragraphs -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+                <p class="text-lg text-text-muted leading-relaxed">
+                    Join our community of volunteers working to protect digital democracy. There's a role for everyone, regardless of technical background.
+                </p>
                 
-                <!-- Right: Dancing Mango Man -->
-                <div class="flex-shrink-0">
-                    <img 
-                        src={mangoMan.src} 
-                        alt="Dancing mango character" 
-                        class="w-48 md:w-64 lg:w-72 h-auto"
-                    />
-                </div>
+                <p class="text-lg text-text-muted leading-relaxed">
+                    Join our dedicated team of volunteers working together to combat online disinformation and promote a healthier digital ecosystem. Your contributions, no matter how small, can make a real impact.
+                </p>
             </div>
         </div>
     </section>
