@@ -17,7 +17,7 @@ interface Props {
 
 const { posts, mediumUrl = 'https://medium.com/@cibmangotree' } = Astro.props;
 const featuredPost = posts[0];
-const otherPosts = posts.slice(1, 5);
+const otherPosts = posts.slice(1, 4); // Get 3 posts for the right side
 
 // Default Medium placeholder images based on article themes
 const defaultImages = [
@@ -28,86 +28,70 @@ const defaultImages = [
 ---
 
 <div class="blog-featured">
-    <!-- Featured Post with large image -->
-    {featuredPost && (
-        <a href={featuredPost.link} target="_blank" rel="noopener noreferrer" class="featured-card block mb-8">
-            <article class="bg-mango-green-dark text-white relative overflow-hidden">
-                <div class="flex flex-col md:flex-row">
-                    <!-- Featured Image -->
-                    <div class="md:w-2/5 h-48 md:h-auto relative overflow-hidden">
+    <!-- Two-column layout: Featured post on left, smaller cards on right -->
+    <div class="flex flex-col lg:flex-row gap-6 mb-8">
+        <!-- Featured Post - Left side with image stacked on top -->
+        {featuredPost && (
+            <a href={featuredPost.link} target="_blank" rel="noopener noreferrer" class="featured-card block lg:w-3/5">
+                <article class="bg-mango-green-dark text-white relative overflow-hidden h-full">
+                    <!-- Stacked Image on top -->
+                    <div class="h-56 md:h-64 relative overflow-hidden">
                         <img 
                             src={featuredPost.imageUrl || defaultImages[0]}
                             alt={featuredPost.title}
-                            class="featured-image w-full h-full object-cover absolute inset-0"
+                            class="featured-image w-full h-full object-cover"
                         />
-                        <div class="absolute inset-0 bg-gradient-to-r from-transparent to-mango-green-dark/50 md:block hidden"></div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-mango-green-dark/70 to-transparent"></div>
+                        <span class="absolute top-4 left-4 inline-block bg-mango-yellow text-text-primary text-xs font-bold px-3 py-1">
+                            FEATURED
+                        </span>
                     </div>
                     
-                    <!-- Content -->
-                    <div class="md:w-3/5 p-8 md:p-10 relative">
-                        <div class="absolute top-0 right-0 w-32 h-32 bg-mango-green-light/20 rounded-full -translate-y-1/2 translate-x-1/2"></div>
-                        
-                        <div class="relative z-10">
-                            <span class="inline-block bg-mango-yellow text-text-primary text-xs font-bold px-3 py-1 mb-4">
-                                FEATURED
-                            </span>
-                            <h3 class="font-display italic text-2xl md:text-3xl mb-4 leading-tight">
-                                {featuredPost.title}
-                            </h3>
-                            {featuredPost.author && (
-                                <p class="text-white/80 mb-4">By {featuredPost.author}</p>
-                            )}
-                            <div class="flex items-center gap-4 text-sm text-white/70">
-                                <span>{featuredPost.publication}</span>
-                                <span>•</span>
-                                <span>{featuredPost.date}</span>
-                            </div>
-                            <div class="mt-6 inline-flex items-center gap-2 text-mango-yellow font-medium">
-                                Read article
-                                <ArrowRight class="w-4 h-4 arrow-icon" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </article>
-        </a>
-    )}
-
-    <!-- Other Posts Grid with thumbnails -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-        {otherPosts.map((post, index) => (
-            <a 
-                href={post.link} 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                class="blog-card block"
-                style={`animation-delay: ${index * 0.1}s;`}
-            >
-                <article class="bg-background border border-border-color overflow-hidden h-full flex flex-col">
-                    <!-- Thumbnail -->
-                    <div class="h-32 overflow-hidden relative">
-                        <img 
-                            src={post.imageUrl || defaultImages[(index % 2) + 1]}
-                            alt={post.title}
-                            class="blog-image w-full h-full object-cover"
-                        />
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
-                    </div>
-                    
-                    <!-- Content -->
-                    <div class="p-5 flex-1 flex flex-col">
-                        <h4 class="font-display italic text-lg text-text-primary mb-3 flex-1 line-clamp-2">
-                            {post.title}
-                        </h4>
-                        <div class="flex items-center gap-3 text-sm text-text-muted">
-                            <span class="font-medium text-mango-green-dark">{post.publication}</span>
+                    <!-- Content below image -->
+                    <div class="p-6 md:p-8 relative">
+                        <h3 class="font-display italic text-xl md:text-2xl mb-3 leading-tight">
+                            {featuredPost.title}
+                        </h3>
+                        {featuredPost.author && (
+                            <p class="text-white/80 mb-3 text-sm">By {featuredPost.author}</p>
+                        )}
+                        <div class="flex items-center gap-3 text-sm text-white/70 mb-4">
+                            <span>{featuredPost.publication}</span>
                             <span>•</span>
-                            <span>{post.date}</span>
+                            <span>{featuredPost.date}</span>
+                        </div>
+                        <div class="inline-flex items-center gap-2 text-mango-yellow font-medium text-sm">
+                            Read article
+                            <ArrowRight class="w-4 h-4 arrow-icon" />
                         </div>
                     </div>
                 </article>
             </a>
-        ))}
+        )}
+
+        <!-- Other Posts - Right side, stacked vertically with just titles and dates -->
+        <div class="lg:w-2/5 flex flex-col gap-4">
+            {otherPosts.map((post, index) => (
+                <a 
+                    href={post.link} 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    class="blog-card block flex-1"
+                    style={`animation-delay: ${index * 0.1}s;`}
+                >
+                    <article class="bg-background border border-border-color p-5 h-full flex flex-col justify-center">
+                        <h4 class="font-display italic text-base text-text-primary mb-2 leading-snug line-clamp-2">
+                            {post.title}
+                        </h4>
+                        <div class="flex items-center gap-2 text-xs text-text-muted">
+                            <span class="font-medium text-mango-green-dark">{post.publication}</span>
+                            <span>•</span>
+                            <span>{post.date}</span>
+                        </div>
+                    </article>
+                </a>
+            ))}
+        </div>
     </div>
 
     <!-- More Articles Button -->

@@ -2,7 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import Footer from '../components/Footer.astro';
 import PlatformDownload from '../components/PlatformDownload.astro';
-import cliScreenshot from '../assets/cliscreenshot.png';
+import cliScreenshot from '../assets/CLI_Image_CIB.png';
 import { BookOpen, Github, MessageCircle, Bug } from '@lucide/astro';
 
 const platforms = [
@@ -160,11 +160,13 @@ user_id,username,post_content,timestamp,retweets,likes
     <section class="py-20 md:py-24 px-8 md:px-12 bg-background">
         <div class="max-w-5xl mx-auto">
             <h2 class="font-display italic text-3xl text-text-primary mb-10">What You'll Get</h2>
-            <img 
-                src={cliScreenshot.src} 
-                alt="CIB Mango Tree CLI interface" 
-                class="cli-preview w-full"
-            />
+            <div class="rounded-xl border-2 border-mango-green-dark/20 overflow-hidden shadow-lg">
+                <img 
+                    src={cliScreenshot.src} 
+                    alt="CIB Mango Tree CLI interface" 
+                    class="cli-preview w-full rounded-xl"
+                />
+            </div>
             <p class="text-text-muted text-sm mt-6 text-center">
                 An interactive command-line interface for analyzing social media datasets
             </p>

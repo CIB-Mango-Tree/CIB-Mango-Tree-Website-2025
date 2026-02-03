@@ -17,22 +17,22 @@ const steps: Step[] = [
 ---
 
 <div class="circle-cycle-container py-8">
-    <div class="relative w-full max-w-lg mx-auto aspect-square">
+    <div class="relative w-full max-w-md mx-auto aspect-square">
         <!-- Central Circle -->
         <div class="absolute inset-0 flex items-center justify-center z-10">
-            <div class="central-hub w-28 h-28 md:w-36 md:h-36 bg-mango-green-dark rounded-full flex items-center justify-center text-white text-center shadow-xl">
+            <div class="central-hub w-24 h-24 md:w-28 md:h-28 bg-mango-green-dark rounded-full flex items-center justify-center text-white text-center shadow-xl">
                 <div>
-                    <span class="font-display italic text-lg md:text-xl leading-tight block">Our</span>
-                    <span class="font-display italic text-lg md:text-xl leading-tight block">Process</span>
+                    <span class="font-display italic text-base md:text-lg leading-tight block">Our</span>
+                    <span class="font-display italic text-base md:text-lg leading-tight block">Process</span>
                 </div>
             </div>
         </div>
 
         <!-- Circular Path with Arrows -->
         <svg viewBox="0 0 400 400" class="w-full h-full absolute inset-0">
-            <!-- Circular path -->
+            <!-- Circular path - reduced radius from 150 to 120 -->
             <circle 
-                cx="200" cy="200" r="150" 
+                cx="200" cy="200" r="120" 
                 fill="none" 
                 stroke="#E5E2DC" 
                 stroke-width="2"
@@ -47,9 +47,9 @@ const steps: Step[] = [
                 </marker>
             </defs>
             
-            <!-- Arrow paths -->
+            <!-- Arrow paths - adjusted for smaller radius -->
             <path 
-                d="M 282 108 A 130 130 0 0 1 338 200" 
+                d="M 262 118 A 100 100 0 0 1 308 200" 
                 fill="none" 
                 stroke="#8BBF72" 
                 stroke-width="2.5" 
@@ -58,7 +58,7 @@ const steps: Step[] = [
                 style="animation-delay: 0.1s;"
             />
             <path 
-                d="M 338 215 A 130 130 0 0 1 260 320" 
+                d="M 305 220 A 100 100 0 0 1 245 295" 
                 fill="none" 
                 stroke="#8BBF72" 
                 stroke-width="2.5" 
@@ -67,7 +67,7 @@ const steps: Step[] = [
                 style="animation-delay: 0.2s;"
             />
             <path 
-                d="M 245 328 A 130 130 0 0 1 140 320" 
+                d="M 230 302 A 100 100 0 0 1 155 295" 
                 fill="none" 
                 stroke="#8BBF72" 
                 stroke-width="2.5" 
@@ -76,7 +76,7 @@ const steps: Step[] = [
                 style="animation-delay: 0.3s;"
             />
             <path 
-                d="M 128 308 A 130 130 0 0 1 62 200" 
+                d="M 142 285 A 100 100 0 0 1 92 200" 
                 fill="none" 
                 stroke="#8BBF72" 
                 stroke-width="2.5" 
@@ -85,7 +85,7 @@ const steps: Step[] = [
                 style="animation-delay: 0.4s;"
             />
             <path 
-                d="M 62 185 A 130 130 0 0 1 130 90" 
+                d="M 95 180 A 100 100 0 0 1 145 115" 
                 fill="none" 
                 stroke="#8BBF72" 
                 stroke-width="2.5" 
@@ -94,7 +94,7 @@ const steps: Step[] = [
                 style="animation-delay: 0.5s;"
             />
             <path 
-                d="M 145 80 A 130 130 0 0 1 260 85" 
+                d="M 160 105 A 100 100 0 0 1 245 110" 
                 fill="none" 
                 stroke="#8BBF72" 
                 stroke-width="2.5" 
@@ -157,12 +157,12 @@ const steps: Step[] = [
         animation: nodePopIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
     }
 
-    /* Position nodes in a circle */
-    .node-1 { top: 2%; left: 50%; transform: translateX(-50%); }
-    .node-2 { top: 25%; right: 2%; }
-    .node-3 { bottom: 15%; right: 10%; }
-    .node-4 { bottom: 15%; left: 10%; }
-    .node-5 { top: 25%; left: 2%; }
+    /* Position nodes in a circle - adjusted for smaller radius */
+    .node-1 { top: 5%; left: 50%; transform: translateX(-50%); }
+    .node-2 { top: 28%; right: 5%; }
+    .node-3 { bottom: 18%; right: 12%; }
+    .node-4 { bottom: 18%; left: 12%; }
+    .node-5 { top: 28%; left: 5%; }
 
     .node-circle {
         width: 3.5rem;

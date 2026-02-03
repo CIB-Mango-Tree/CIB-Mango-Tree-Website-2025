@@ -1,7 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Footer from '../components/Footer.astro';
-import cliScreenshot from '../assets/cliscreenshot.png';
+import cliScreenshot from '../assets/CLI_Image_CIB.png';
 import { Github, BookOpen, FileCode, Database, Terminal } from '@lucide/astro';
 ---
 
@@ -58,11 +58,13 @@ import { Github, BookOpen, FileCode, Database, Terminal } from '@lucide/astro';
 			<!-- CLI Preview -->
 			<div class="mb-16">
 				<h2 class="font-display italic text-3xl text-text-primary mb-8">CLI Interface</h2>
-				<img 
-					src={cliScreenshot.src} 
-					alt="CIB Mango Tree CLI interface" 
-					class="w-full"
-				/>
+				<div class="rounded-xl border-2 border-mango-green-dark/20 overflow-hidden shadow-lg">
+					<img 
+						src={cliScreenshot.src} 
+						alt="CIB Mango Tree CLI interface" 
+						class="w-full rounded-xl"
+					/>
+				</div>
 			</div>
 
 			<!-- Documentation Sections -->
