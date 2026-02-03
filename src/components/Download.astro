@@ -1,7 +1,12 @@
 ---
-import Button from "./Button.astro";
-
-const downloadLink = ()=>{}
 ---
 
-<Button styles="bg-[#FFB900]" onClick={downloadLink}>Download</Button>
+<a 
+    href="/download" 
+    class="inline-flex items-center gap-2 bg-mango-green-dark text-white px-5 py-2.5 font-semibold text-sm hover:bg-[#4A7A3A] transition-colors"
+>
+    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+    </svg>
+    Download
+</a>

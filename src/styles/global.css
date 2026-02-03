@@ -1,5 +1,101 @@
 @import "tailwindcss";
 
+/* Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap');
+
 @theme {
-    --color-mango-green: #609949;
+  /* Colors - Lighter Mango CIB Palette */
+  --color-mango-green: #8BBF72;
+  --color-mango-green-dark: #5A8A4A;
+  --color-mango-green-light: #A8D48F;
+  --color-mango-yellow: #FFE099;
+  --color-mango-yellow-light: #FFF0CC;
+  --color-mango-orange: #FFAA4D;
+  
+  /* Editorial Colors */
+  --color-background: #FDFCF9;
+  --color-background-alt: #F8F6F2;
+  --color-text-primary: #2D3A24;
+  --color-text-muted: #5A6B52;
+  --color-text-light: #7A8872;
+  --color-border: #E5E2DC;
+  --color-cyan-tint: #E5F7F8;
+  
+  /* Fonts */
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+}
+
+/* Base Styles */
+html {
+  background-color: var(--color-background);
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--color-text-primary);
+  line-height: 1.6;
+}
+
+/* Typography Utilities */
+.font-display {
+  font-family: var(--font-display);
+}
+
+.font-body {
+  font-family: var(--font-body);
+}
+
+/* Headline Style - Editorial Italic */
+.headline {
+  font-family: var(--font-display);
+  font-style: italic;
+  letter-spacing: -0.02em;
+}
+
+/* Animation Utilities */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.6s ease-out forwards;
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s ease-out forwards;
+}
+
+.animation-delay-100 { animation-delay: 0.1s; }
+.animation-delay-200 { animation-delay: 0.2s; }
+.animation-delay-300 { animation-delay: 0.3s; }
+.animation-delay-400 { animation-delay: 0.4s; }
+
+/* Transition Utilities */
+.transition-smooth {
+  transition: all 0.2s ease-in-out;
+}
+
+/* Sharp corners utility */
+.sharp {
+  border-radius: 0 !important;
 }

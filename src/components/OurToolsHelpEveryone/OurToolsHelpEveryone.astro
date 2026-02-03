@@ -6,26 +6,26 @@ import CitizensIcon from "../../assets/citizens_icon.svg";
 import StakeholderIcon from "./StakeholderIcon.astro";
 ---
 
-<section class="py-16 px-8 bg-[#F8FAFC]">
-  <div class="max-w-7xl mx-auto">
+<section class="py-16 px-6 md:px-8 bg-background">
+  <div class="max-w-6xl mx-auto">
     <div class="text-center mb-12">
-      <h2 class="text-[#609949] text-3xl font-bold mb-4">
+      <h2 class="font-display italic text-3xl md:text-4xl text-mango-green mb-6" style="letter-spacing: -0.02em;">
         Our tools can help everyone
       </h2>
-      <p class="text-gray-800 text-lg max-w-3xl mx-auto">
+      <p class="text-text-muted text-lg max-w-2xl mx-auto leading-relaxed">
         Whether you're a researcher, journalist, technologist, or concerned
         citizen, CIB Mango Tree offers open, accessible tools designed for you
         to quickly spot disruption and safeguard honest conversation online.
       </p>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
       <!-- Researchers -->
       <StakeholderIcon
         title="Researchers"
         description="in fields like social computing, political science, and cybersecurity."
       >
-        <ResearchersIcon slot="icon" class="w-8 h-8" />
+        <ResearchersIcon slot="icon" class="w-10 h-10" />
       </StakeholderIcon>
 
       <!-- Engineers & Data Scientists -->
@@ -33,7 +33,7 @@ import StakeholderIcon from "./StakeholderIcon.astro";
         title="Engineers & Data Scientists"
         description="working with NLP, network analysis, or bot detection."
       >
-        <EngineersScientistsIcon slot="icon" class="w-8 h-8" />
+        <EngineersScientistsIcon slot="icon" class="w-10 h-10" />
       </StakeholderIcon>
 
       <!-- Policy Experts & Journalists -->
@@ -41,7 +41,7 @@ import StakeholderIcon from "./StakeholderIcon.astro";
         title="Policy Experts & Journalists"
         description="interested in platform transparency and digital integrity."
       >
-        <PolicyExpertsIcon slot="icon" class="w-8 h-8" />
+        <PolicyExpertsIcon slot="icon" class="w-10 h-10" />
       </StakeholderIcon>
 
       <!-- Civic Hackers & Citizens -->
@@ -49,7 +49,7 @@ import StakeholderIcon from "./StakeholderIcon.astro";
         title="Civic Hackers & Citizens"
         description="who want to make an impact."
       >
-        <CitizensIcon slot="icon" class="w-8 h-8" />
+        <CitizensIcon slot="icon" class="w-10 h-10" />
       </StakeholderIcon>
     </div>
   </div>

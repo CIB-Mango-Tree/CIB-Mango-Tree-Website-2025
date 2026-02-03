@@ -4,140 +4,124 @@ import Download from "./Download.astro";
 import logo from '../assets/logo.png';
 ---
 
-<!-- <header class="toolbar" role="banner"> -->
-    <div class="bg-mango-green w-full h-fit top-0 z-50 sticky flex justify-between">
-       <Button href="/">
-            <img src={logo.src} alt="" class="brand__img" />
-        </Button>
+<header class="bg-mango-green w-full sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+        <!-- Logo -->
+        <a href="/" class="flex items-center gap-3 transition-opacity hover:opacity-90">
+            <img src={logo.src} alt="CIB Mango Tree" class="h-10 w-10 object-contain" />
+        </a>
 
-        <nav id="toolbar-nav" class="nav" role="navigation" aria-label="Main">
-            <ul>
-                <li><a href="/about">About Us</a></li>
-                <li><a href="/docs">Documentation</a></li>
-                <li><a href="/resources">Resources</a></li>
-                <li><a class="cta" href="/get-involved">Get Involved</a></li>
-                <li><Download /></li>
+        <!-- Navigation -->
+        <nav id="toolbar-nav" class="nav hidden md:flex" role="navigation" aria-label="Main">
+            <ul class="flex items-center gap-1">
+                <li>
+                    <a href="/about" class="nav-link">About Us</a>
+                </li>
+                <li>
+                    <a href="/docs" class="nav-link">Documentation</a>
+                </li>
+                <li>
+                    <a href="/resources" class="nav-link">Resources</a>
+                </li>
+                <li>
+                    <a href="/get-involved" class="nav-link cta">Get Involved</a>
+                </li>
+                <li class="ml-2">
+                    <Download />
+                </li>
             </ul>
         </nav>
+
+        <!-- Mobile Menu Toggle -->
+        <button 
+            id="menu-toggle" 
+            class="md:hidden p-2 text-white hover:bg-white/10 transition-colors"
+            aria-label="Toggle menu"
+            aria-expanded="false"
+        >
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+        </button>
     </div>
-<!-- </header> -->
+
+    <!-- Mobile Navigation -->
+    <nav id="mobile-nav" class="mobile-nav md:hidden hidden" role="navigation" aria-label="Mobile">
+        <ul class="flex flex-col py-4 px-6 bg-mango-green border-t border-white/20">
+            <li>
+                <a href="/about" class="mobile-nav-link">About Us</a>
+            </li>
+            <li>
+                <a href="/docs" class="mobile-nav-link">Documentation</a>
+            </li>
+            <li>
+                <a href="/resources" class="mobile-nav-link">Resources</a>
+            </li>
+            <li>
+                <a href="/get-involved" class="mobile-nav-link cta-mobile">Get Involved</a>
+            </li>
+            <li class="mt-4">
+                <Download />
+            </li>
+        </ul>
+    </nav>
+</header>
+
+<script>
+    const menuToggle = document.getElementById('menu-toggle');
+    const mobileNav = document.getElementById('mobile-nav');
+    
+    menuToggle?.addEventListener('click', () => {
+        const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
+        menuToggle.setAttribute('aria-expanded', (!isExpanded).toString());
+        mobileNav?.classList.toggle('hidden');
+    });
+</script>
 
 <style>
-
-    .inner {
-        max-width: var(--max-width);
-        margin: 0 auto;
-        padding: 0.6rem 1rem;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 1rem;
-    }
-
-    .brand {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.6rem;
-        text-decoration: none;
-        color: inherit;
-    }
-
-    .brand__img {
-        width: 36px;
-        height: 36px;
-        object-fit: contain;
-    }
-
-    .brand__name {
-        font-weight: 700;
-        font-size: 1rem;
-    }
-
-    .toggle {
-        background: transparent;
-        border: none;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        padding: 0.35rem;
-        cursor: pointer;
-        color: var(--fg);
-    }
-
-    .nav {
-        display: flex;
-    }
-
-    .nav ul {
-        display: flex;
-        gap: 1rem;
-        list-style: none;
-        margin: 0;
-        padding: 0;
-        align-items: center;
-    }
-
-    .nav a {
-        text-decoration: none;
+    .nav-link {
+        display: block;
+        padding: 0.5rem 1rem;
         color: white;
-        padding: 0.5rem 0.6rem;
-        border-radius: 6px;
-        font-weight: 600;
+        font-weight: 500;
+        font-size: 0.95rem;
+        text-decoration: none;
+        transition: background-color 0.2s ease;
     }
 
-    .nav a:hover,
-    .nav a:focus {
-        color: white;
-        background: rgba(255,255,255,0.1);
+    .nav-link:hover,
+    .nav-link:focus {
+        background-color: rgba(255, 255, 255, 0.15);
         outline: none;
     }
 
-    .nav .cta {
-        background: linear-gradient(90deg, var(--accent), #ffb26b);
+    .nav-link.cta {
+        background-color: #FFCC33;
+        color: #2D3A24;
+        font-weight: 600;
+        margin-left: 0.5rem;
+    }
+
+    .nav-link.cta:hover {
+        background-color: #FFD966;
+    }
+
+    .mobile-nav-link {
+        display: block;
+        padding: 0.75rem 0;
         color: white;
-        padding: 0.5rem 0.9rem;
+        font-weight: 500;
+        text-decoration: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        transition: opacity 0.2s ease;
     }
 
-    /* Mobile */
-    @media (max-width: 780px) {
-        .brand__name { display: none; }
-        .nav {
-            position: absolute;
-            top: 64px;
-            right: 1rem;
-            background: var(--bg);
-            border-radius: 8px;
-            box-shadow: 0 10px 30px rgba(2,6,23,0.08);
-            overflow: hidden;
-            transform-origin: top right;
-            transition: opacity 180ms ease, transform 180ms ease;
-            opacity: 0;
-            pointer-events: none;
-            transform: scale(0.95) translateY(-6px);
-        }
-
-        .nav.open {
-            opacity: 1;
-            pointer-events: auto;
-            transform: scale(1) translateY(0);
-        }
-
-        .nav ul {
-            flex-direction: column;
-            padding: 0.5rem;
-            gap: 0;
-            min-width: 200px;
-        }
-
-        .nav a {
-            display: block;
-            padding: 0.65rem 0.9rem;
-        }
+    .mobile-nav-link:hover {
+        opacity: 0.8;
     }
 
-    /* Hide toggle on larger screens */
-    @media (min-width: 781px) {
-        .toggle { display: none; }
-        .nav { position: static; opacity: 1; transform: none; pointer-events: auto; }
+    .mobile-nav-link.cta-mobile {
+        color: #FFCC33;
+        font-weight: 600;
     }
 </style>

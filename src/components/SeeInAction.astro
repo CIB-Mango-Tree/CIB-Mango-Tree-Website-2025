@@ -2,28 +2,41 @@
 import cli_screenshot from '../assets/cliscreenshot.png';
 ---
 
-<section>
-    <div class="bg-[#C8F0F1] text-center p-10">
-		<h2 class="pb-10 text-3xl">See it in Action</h2>
-		<img class="m-auto" src={cli_screenshot.src} alt="Screenshot of the CIB Mango Tree CLI" />
-		<div class="flex justify-center mt-10">
-			<div class="w-[600px] text-left pr-2">
-				CIB Mango Tree makes social media bot detection simple for everyone. 
-				It begins with easy-to-run tests, the “low-hanging fruit,” that help reveal 
-				clear signs of unsophisticated coordinated inauthentic behavior (CIB) 
-				in social media and online data.
+<section class="relative">
+    <div class="bg-cyan-tint py-16 px-6 md:px-8">
+		<div class="max-w-5xl mx-auto">
+			<h2 class="font-display italic text-3xl md:text-4xl text-text-primary text-center mb-12">
+				See it in Action
+			</h2>
+			
+			<!-- Screenshot -->
+			<div class="mb-12 shadow-lg">
+				<img 
+					class="w-full" 
+					src={cli_screenshot.src} 
+					alt="Screenshot of the CIB Mango Tree CLI" 
+				/>
 			</div>
-			<div class="w-[600px] text-left pl-2">
-				As you move up the Mango Tree, our tests become more advanced,
-				 helping experienced users tackle deeper, more complex cases of manipulation
+			
+			<!-- Description -->
+			<div class="grid md:grid-cols-2 gap-8">
+				<p class="text-text-muted leading-relaxed">
+					CIB Mango Tree makes social media bot detection simple for everyone. 
+					It begins with easy-to-run tests, the "low-hanging fruit," that help reveal 
+					clear signs of unsophisticated coordinated inauthentic behavior (CIB) 
+					in social media and online data.
+				</p>
+				<p class="text-text-muted leading-relaxed">
+					As you move up the Mango Tree, our tests become more advanced,
+					helping experienced users tackle deeper, more complex cases of manipulation.
+				</p>
 			</div>
 		</div>
-		
 	</div>
-     <div class="bg-[#C8F0F1] h-32" style={{
-        clipPath: 'ellipse(70% 70% at top)',
-        WebkitClipPath: 'ellipse(70% 70% at top)'
-        }
-    }>
-    </div>
+	
+	<!-- Curved bottom edge -->
+	<div 
+		class="bg-cyan-tint h-24 md:h-32"
+		style="clip-path: ellipse(70% 100% at 50% 0%);"
+	></div>
 </section>
