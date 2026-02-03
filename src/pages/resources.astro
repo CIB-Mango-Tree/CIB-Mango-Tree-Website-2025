@@ -187,7 +187,7 @@ const navItems = [
                         {navItems.map(item => (
                             <li>
                                 <a 
-                                    href={\`#\${item.id}\`} 
+                                    href={`#${item.id}`} 
                                     class="nav-link flex items-center gap-2 text-sm text-text-muted hover:text-mango-green-dark py-2 px-3 -mx-3 transition-colors"
                                 >
                                     {item.label}
@@ -251,7 +251,7 @@ const navItems = [
                                     href={tool.link} 
                                     target="_blank" 
                                     rel="noopener" 
-                                    class={\`tool-card \${tool.color} p-6 block\`}
+                                    class={`tool-card ${tool.color} p-6 block`}
                                 >
                                     <h3 class="font-display italic text-lg text-text-primary mb-3">{tool.name}</h3>
                                     <p class="text-text-muted text-sm mb-4">{tool.description}</p>
@@ -280,11 +280,11 @@ const navItems = [
                                     href={dataset.link} 
                                     target="_blank" 
                                     rel="noopener" 
-                                    class={\`dataset-card \${dataset.color} p-6 block\`}
+                                    class={`dataset-card ${dataset.color} p-6 block`}
                                 >
                                     <div class="flex justify-between items-start mb-3">
                                         <h3 class="font-display italic text-lg text-text-primary">{dataset.name}</h3>
-                                        <span class={\`text-xs px-2 py-1 \${dataset.access === 'Free' ? 'bg-mango-green-light text-mango-green-dark' : 'bg-mango-yellow-light text-text-muted'}\`}>
+                                        <span class={`text-xs px-2 py-1 ${dataset.access === 'Free' ? 'bg-mango-green-light text-mango-green-dark' : 'bg-mango-yellow-light text-text-muted'}`}>
                                             {dataset.access}
                                         </span>
                                     </div>
@@ -404,7 +404,7 @@ const navItems = [
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             const id = entry.target.getAttribute('id');
-            const navLink = document.querySelector(\`a[href="#\${id}"]\`);
+            const navLink = document.querySelector(`a[href="#${id}"]`);
             if (navLink) {
                 if (entry.isIntersecting) {
                     document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active', 'text-mango-green-dark', 'font-semibold'));

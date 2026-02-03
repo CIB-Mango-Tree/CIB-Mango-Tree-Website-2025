@@ -37,7 +37,7 @@ export default function ToolsSelector() {
   const selectedToolData = tools.find(tool => tool.id === selectedTool) || tools[0];
 
   return (
-    <div className="mt-12">
+    <div className="mt-12 max-w-4xl mx-auto">
       {/* Section Title */}
       <h3 
         className="text-2xl md:text-3xl mb-6"
@@ -172,7 +172,7 @@ export default function ToolsSelector() {
           
           {/* Content Description */}
           <p 
-            className="leading-relaxed"
+            className="leading-relaxed max-w-md"
             style={{ 
               color: '#5A6B52',
               fontSize: '15px',
