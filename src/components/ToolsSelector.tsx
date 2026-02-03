@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import type { ReactElement } from 'react';
+import { FileText, Hash, Settings, ChevronRight } from 'lucide-react';
 
 interface Tool {
   id: string;
@@ -8,54 +9,23 @@ interface Tool {
   description: string;
 }
 
-// Document icon (copy pasta)
-const DocumentIcon = ({ className }: { className?: string }) => (
-  <svg className={className} width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M14 2H6C5.46957 2 4.96086 2.21071 4.58579 2.58579C4.21071 2.96086 4 3.46957 4 4V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V8L14 2Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-    <path d="M14 2V8H20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-    <path d="M7 12H17M7 16H17M7 8H11" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-  </svg>
-);
-
-// Hashtag icon
-const HashtagIcon = ({ className }: { className?: string }) => (
-  <svg className={className} width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M4 9H20M4 15H20M10 3L8 21M16 3L14 21" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-  </svg>
-);
-
-// Gear icon (more coming soon)
-const GearIcon = ({ className }: { className?: string }) => (
-  <svg className={className} width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="12" cy="12" r="3" stroke="currentColor" strokeWidth="2"/>
-    <path d="M12 1V3M12 21V23M4.22 4.22L5.64 5.64M18.36 18.36L19.78 19.78M1 12H3M21 12H23M4.22 19.78L5.64 18.36M18.36 5.64L19.78 4.22" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-  </svg>
-);
-
-// Chevron right icon
-const ChevronRight = ({ className, style }: { className?: string; style?: React.CSSProperties }) => (
-  <svg className={className} style={style} width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-  </svg>
-);
-
 const tools: Tool[] = [
   {
     id: 'copypasta',
     name: 'Copy Pasta Test',
-    icon: <DocumentIcon />,
+    icon: <FileText size={20} />,
     description: 'This test looks for repeated phrases—"copypasta"—that appears across posts in your dataset. Some coordinated campaigns may consist of bot accounts reposting the same phrases to cut down on time. Our test extracts these repeated phrases, and reveals which accounts posted them, and when, in order to reveal hidden networks.'
   },
   {
     id: 'hashtag',
     name: 'Hashtag Test',
-    icon: <HashtagIcon />,
+    icon: <Hash size={20} />,
     description: 'The Hashtag Test analyzes hashtag usage patterns across your dataset to identify coordinated behavior. It detects unusual hashtag clustering, timing patterns, and account associations that may indicate inauthentic coordination. This helps reveal networks that use hashtags strategically to amplify messages.'
   },
   {
     id: 'coming-soon',
     name: 'More Coming Soon!',
-    icon: <GearIcon />,
+    icon: <Settings size={20} />,
     description: 'We are continuously developing new tools to help detect coordinated inauthentic behavior. Stay tuned for additional tests and features that will help you analyze social media datasets more effectively.'
   }
 ];
@@ -149,6 +119,7 @@ export default function ToolsSelector() {
                   </span>
                 </div>
                 <ChevronRight 
+                  size={16}
                   className="flex-shrink-0"
                   style={{ 
                     color: isSelected ? '#FFFFFF' : (isComingSoon ? '#7A8872' : '#5A8A4A'),

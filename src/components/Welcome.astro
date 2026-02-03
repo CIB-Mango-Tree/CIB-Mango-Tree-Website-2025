@@ -1,5 +1,6 @@
 ---
 import mangoAnimation from "../assets/mango_animation.gif";
+import { Download } from '@lucide/astro';
 ---
 
 <section class="bg-background py-16 px-6 md:px-8">
@@ -19,11 +20,9 @@ import mangoAnimation from "../assets/mango_animation.gif";
 				<div class="opacity-0 animate-fade-in-up" style="animation-delay: 0.4s;">
 					<a 
 						href="/download" 
-						class="download-btn group inline-flex items-center justify-center gap-2 bg-mango-yellow text-text-primary px-8 py-4 font-semibold text-lg"
+						class="download-btn group inline-flex items-center justify-center gap-2 bg-mango-green-dark text-white px-8 py-4 font-semibold text-lg"
 					>
-						<svg class="w-5 h-5 btn-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-						</svg>
+						<Download class="w-5 h-5 btn-icon" />
 						Download Now
 					</a>
 				</div>
@@ -32,31 +31,31 @@ import mangoAnimation from "../assets/mango_animation.gif";
 			<!-- Right side: 2x2 Stats Grid with Mango Animation -->
 			<div class="flex-1 opacity-0 animate-fade-in" style="animation-delay: 0.5s;">
 				<div class="grid grid-cols-2 gap-4">
-					<!-- Stat Card 1: Bad bots -->
-					<div class="stat-card bg-[#FFE099] p-6 flex flex-col justify-center cursor-default">
+					<!-- Mango Animation - Top left for visual hierarchy -->
+					<div class="mango-card bg-white flex items-center justify-center overflow-hidden border-2 border-mango-green-light aspect-square">
+						<img 
+							class="mango-img w-full h-full object-cover" 
+							src={mangoAnimation.src} 
+							alt="Mango tree illustration" 
+						/>
+					</div>
+					
+					<!-- Stat Card 1: Bad bots - Top right -->
+					<div class="stat-card bg-[#FFE099] p-6 flex flex-col justify-center cursor-default" style="animation-delay: 0.1s;">
 						<div class="stat-number font-display italic text-4xl md:text-5xl text-text-primary mb-2">40%</div>
 						<div class="text-sm text-text-primary/80">Bad bots in all internet traffic</div>
 					</div>
 					
-					<!-- Stat Card 2: Worried about disinformation -->
-					<div class="stat-card bg-[#E5F7F8] p-6 flex flex-col justify-center cursor-default" style="animation-delay: 0.1s;">
+					<!-- Stat Card 2: Worried about disinformation - Bottom left -->
+					<div class="stat-card bg-[#E5F7F8] p-6 flex flex-col justify-center cursor-default" style="animation-delay: 0.2s;">
 						<div class="stat-number font-display italic text-4xl md:text-5xl text-text-primary mb-2">87%</div>
 						<div class="text-sm text-text-primary/80">Worried about disinformation</div>
 					</div>
 					
-					<!-- Stat Card 3: Bot accounts spreading misinfo -->
-					<div class="stat-card bg-[#FFF5E6] p-6 flex flex-col justify-center cursor-default" style="animation-delay: 0.2s;">
+					<!-- Stat Card 3: Bot accounts spreading misinfo - Bottom right -->
+					<div class="stat-card bg-[#FFF5E6] p-6 flex flex-col justify-center cursor-default" style="animation-delay: 0.3s;">
 						<div class="stat-number font-display italic text-4xl md:text-5xl text-text-primary mb-2">33%</div>
 						<div class="text-sm text-text-primary/80">Bot accounts spreading misinfo</div>
-					</div>
-					
-					<!-- Stat Card 4: Mango Animation -->
-					<div class="mango-card bg-[#8BBF72] p-4 flex items-center justify-center overflow-hidden" style="animation-delay: 0.3s;">
-						<img 
-							class="mango-img w-full h-auto max-h-36 object-contain" 
-							src={mangoAnimation.src} 
-							alt="Mango tree illustration" 
-						/>
 					</div>
 				</div>
 			</div>
@@ -117,7 +116,7 @@ import mangoAnimation from "../assets/mango_animation.gif";
 		position: relative;
 		overflow: hidden;
 		transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-		box-shadow: 0 4px 12px rgba(255, 224, 153, 0.3);
+		box-shadow: 0 4px 12px rgba(90, 138, 74, 0.3);
 	}
 
 	.download-btn::before {
@@ -130,7 +129,7 @@ import mangoAnimation from "../assets/mango_animation.gif";
 		background: linear-gradient(
 			90deg,
 			transparent,
-			rgba(255, 255, 255, 0.4),
+			rgba(255, 255, 255, 0.3),
 			transparent
 		);
 		transition: left 0.5s ease;
@@ -138,8 +137,8 @@ import mangoAnimation from "../assets/mango_animation.gif";
 
 	.download-btn:hover {
 		transform: translateY(-4px);
-		box-shadow: 0 8px 24px rgba(255, 224, 153, 0.5);
-		background-color: #FFD966;
+		box-shadow: 0 8px 24px rgba(90, 138, 74, 0.5);
+		background-color: #4A7A3A;
 	}
 
 	.download-btn:hover::before {
@@ -148,7 +147,7 @@ import mangoAnimation from "../assets/mango_animation.gif";
 
 	.download-btn:active {
 		transform: translateY(-1px);
-		box-shadow: 0 2px 8px rgba(255, 224, 153, 0.3);
+		box-shadow: 0 2px 8px rgba(90, 138, 74, 0.3);
 	}
 
 	.btn-icon {
@@ -198,11 +197,13 @@ import mangoAnimation from "../assets/mango_animation.gif";
 	/* Mango card special hover */
 	.mango-card {
 		transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+		box-shadow: 0 4px 12px rgba(139, 191, 114, 0.15);
 	}
 
 	.mango-card:hover {
 		transform: scale(1.05) translateY(-4px);
-		box-shadow: 0 12px 28px rgba(90, 138, 74, 0.3);
+		box-shadow: 0 12px 28px rgba(139, 191, 114, 0.35);
+		border-color: #5A8A4A;
 	}
 
 	.mango-img {

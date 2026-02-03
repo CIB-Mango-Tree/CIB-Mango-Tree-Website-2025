@@ -1,0 +1,99 @@
+---
+import { Code, Palette, FileText, FlaskConical, Megaphone, Bug, Lightbulb, BookOpen, ArrowRight } from '@lucide/astro';
+
+interface Props {
+    title: string;
+    icon: 'code' | 'palette' | 'file-text' | 'flask' | 'megaphone' | 'bug' | 'lightbulb' | 'book' | string;
+    description: string;
+    ctaText?: string;
+    ctaLink?: string;
+    color?: 'yellow' | 'cyan' | 'green' | 'cream';
+}
+
+const { title, icon, description, ctaText, ctaLink, color = 'cream' } = Astro.props;
+
+const colorClasses = {
+    yellow: 'bg-mango-yellow border-mango-yellow',
+    cyan: 'bg-[#E5F7F8] border-[#E5F7F8]',
+    green: 'bg-mango-green-light border-mango-green-light',
+    cream: 'bg-[#F8F6F2] border-border-color'
+};
+
+// Map icon names to components
+const iconMap: Record<string, any> = {
+    'code': Code,
+    'palette': Palette,
+    'file-text': FileText,
+    'flask': FlaskConical,
+    'megaphone': Megaphone,
+    'bug': Bug,
+    'lightbulb': Lightbulb,
+    'book': BookOpen
+};
+
+const IconComponent = iconMap[icon];
+---
+
+<div class={`contribution-card ${colorClasses[color]} border-2 p-6 md:p-8 h-full flex flex-col`}>
+    <div class="card-icon mb-4 w-12 h-12 bg-white/50 rounded-xl flex items-center justify-center">
+        {IconComponent ? (
+            <IconComponent class="w-7 h-7 text-mango-green-dark" />
+        ) : (
+            <span class="text-3xl">{icon}</span>
+        )}
+    </div>
+    <h3 class="font-display italic text-xl md:text-2xl text-text-primary mb-3">
+        {title}
+    </h3>
+    <p class="text-text-muted leading-relaxed flex-1 mb-4">
+        {description}
+    </p>
+    {ctaText && ctaLink && (
+        <a 
+            href={ctaLink}
+            target={ctaLink.startsWith('http') ? '_blank' : undefined}
+            rel={ctaLink.startsWith('http') ? 'noopener noreferrer' : undefined}
+            class="cta-link inline-flex items-center gap-2 text-mango-green-dark font-semibold mt-auto"
+        >
+            {ctaText}
+            <ArrowRight class="w-4 h-4 arrow-icon" />
+        </a>
+    )}
+</div>
+
+<style>
+    .contribution-card {
+        transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .contribution-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 12px 32px rgba(90, 138, 74, 0.15);
+        border-color: #5A8A4A;
+    }
+
+    .card-icon {
+        transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .contribution-card:hover .card-icon {
+        transform: scale(1.1);
+        background-color: rgba(90, 138, 74, 0.15);
+    }
+
+    .cta-link {
+        transition: all 0.2s ease;
+    }
+
+    .cta-link:hover {
+        gap: 0.75rem;
+    }
+
+    .arrow-icon {
+        transition: transform 0.2s ease;
+    }
+
+    .cta-link:hover .arrow-icon {
+        transform: translateX(4px);
+    }
+</style>

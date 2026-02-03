@@ -1,141 +1,267 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Footer from '../components/Footer.astro';
+import ContributionCard from '../components/ContributionCard.astro';
+import CircleCycle from '../components/CircleCycle.astro';
+import GitHubActivity from '../components/GitHubActivity.astro';
+import Newsletter from '../components/Newsletter.astro';
+import { Calendar, Slack, Heart } from '@lucide/astro';
+
+const contributionTypesTop = [
+    {
+        title: 'Development',
+        icon: 'code',
+        description: 'Help build new detection tools, improve existing algorithms, or enhance our CLI interface. We work with Python, data analysis, and NLP/ML.',
+        color: 'green' as const
+    },
+    {
+        title: 'Design',
+        icon: 'palette',
+        description: 'Create intuitive interfaces, visualizations, and educational materials. UI/UX design, data visualization, and graphic design skills welcome.',
+        color: 'yellow' as const
+    },
+    {
+        title: 'Research & Writing',
+        icon: 'file-text',
+        description: 'Document our tools, write case studies, and contribute to our knowledge base. Technical writing, research analysis, and content creation.',
+        color: 'cyan' as const
+    }
+];
+
+const contributionTypesBottom = [
+    {
+        title: 'Testing & Feedback',
+        icon: 'flask',
+        description: 'Try our tools, report bugs, and help us improve the user experience. User testing, bug reporting, and feature suggestions.',
+        color: 'cream' as const
+    },
+    {
+        title: 'Engagement & Marketing',
+        icon: 'megaphone',
+        description: 'Help spread the word about CIB Mango Tree. Social media, community outreach, partnerships, and event coordination.',
+        color: 'yellow' as const
+    }
+];
+
+const contributionSteps = [
+    {
+        title: 'Bug Reports',
+        icon: 'bug',
+        description: 'Found something broken? Open a GitHub issue with details about what went wrong. Even small bugs help us improve!',
+        ctaText: 'Report a Bug',
+        ctaLink: 'https://github.com/cib-mango-tree/issues/new'
+    },
+    {
+        title: 'Code Contributions',
+        icon: 'code',
+        description: 'Ready to code? Fork the repo, make your changes, and submit a pull request. Check issues labeled "good first issue" to get started.',
+        ctaText: 'View Good First Issues',
+        ctaLink: 'https://github.com/cib-mango-tree/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22'
+    },
+    {
+        title: 'Ideas & Suggestions',
+        icon: 'lightbulb',
+        description: 'Have an idea for a new feature? Join our Slack channel #cib-mango-tree or open a GitHub discussion to share your thoughts.',
+        ctaText: 'Join Slack',
+        ctaLink: 'https://codefordc.slack.com'
+    },
+    {
+        title: 'Documentation',
+        icon: 'book',
+        description: 'Help make our tools more accessible by improving documentation. No coding required—just clear writing!',
+        ctaText: 'View Docs',
+        ctaLink: '/docs'
+    }
+];
 ---
 
 <Layout>
-	<section class="py-16 px-6 md:px-8 bg-background">
-		<div class="max-w-5xl mx-auto">
-			<h1 class="font-display italic text-4xl md:text-5xl lg:text-6xl text-text-primary mb-8 leading-tight">
-				Get Involved
-			</h1>
-			
-			<p class="text-xl text-text-muted mb-12 leading-relaxed max-w-3xl">
-				Join our community of volunteers working to protect digital democracy. There's a role for everyone, regardless of technical background.
-			</p>
+    <!-- Hero Section -->
+    <section class="py-16 px-6 md:px-8 bg-background">
+        <div class="max-w-5xl mx-auto">
+            <h1 class="font-display italic text-4xl md:text-5xl lg:text-6xl text-text-primary mb-8 leading-tight">
+                Get Involved
+            </h1>
+            
+            <p class="text-xl text-text-muted mb-6 leading-relaxed max-w-3xl">
+                Join our community of volunteers working to protect digital democracy. There's a role for everyone, regardless of technical background.
+            </p>
+            
+            <p class="text-lg text-text-muted leading-relaxed max-w-3xl">
+                Join our dedicated team of volunteers working together to combat online disinformation and promote a healthier digital ecosystem. Your contributions, no matter how small, can make a real impact.
+            </p>
+        </div>
+    </section>
 
-			<!-- Ways to Contribute -->
-			<div class="mb-16">
-				<h2 class="font-display italic text-3xl text-text-primary mb-8">Ways to Contribute</h2>
-				
-				<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-					<div class="bg-[#8BBF72] p-8">
-						<div class="text-4xl mb-4">💻</div>
-						<h3 class="font-display italic text-2xl text-text-primary mb-3">Development</h3>
-						<p class="text-text-primary/80 mb-4">Help build new detection tools, improve existing algorithms, or enhance our CLI interface.</p>
-						<ul class="text-sm text-text-primary/70 space-y-1">
-							<li>• Python development</li>
-							<li>• Data analysis</li>
-							<li>• NLP / Machine Learning</li>
-						</ul>
-					</div>
-					
-					<div class="bg-[#FFE099] p-8">
-						<div class="text-4xl mb-4">🎨</div>
-						<h3 class="font-display italic text-2xl text-text-primary mb-3">Design</h3>
-						<p class="text-text-primary/80 mb-4">Create intuitive interfaces, visualizations, and educational materials.</p>
-						<ul class="text-sm text-text-primary/70 space-y-1">
-							<li>• UI/UX design</li>
-							<li>• Data visualization</li>
-							<li>• Graphic design</li>
-						</ul>
-					</div>
-					
-					<div class="bg-[#E5F7F8] p-8">
-						<div class="text-4xl mb-4">📝</div>
-						<h3 class="font-display italic text-2xl text-text-primary mb-3">Research & Writing</h3>
-						<p class="text-text-primary/80 mb-4">Document our tools, write case studies, and contribute to our knowledge base.</p>
-						<ul class="text-sm text-text-primary/70 space-y-1">
-							<li>• Technical writing</li>
-							<li>• Research analysis</li>
-							<li>• Content creation</li>
-						</ul>
-					</div>
-					
-					<div class="bg-[#FFF5E6] p-8">
-						<div class="text-4xl mb-4">🧪</div>
-						<h3 class="font-display italic text-2xl text-text-primary mb-3">Testing & Feedback</h3>
-						<p class="text-text-primary/80 mb-4">Try our tools, report bugs, and help us improve the user experience.</p>
-						<ul class="text-sm text-text-primary/70 space-y-1">
-							<li>• User testing</li>
-							<li>• Bug reporting</li>
-							<li>• Feature suggestions</li>
-						</ul>
-					</div>
-				</div>
-			</div>
+    <!-- Ways to Contribute -->
+    <section class="py-16 px-6 md:px-8 bg-[#F8F6F2]">
+        <div class="max-w-5xl mx-auto">
+            <h2 class="font-display italic text-3xl text-text-primary mb-8">Ways to Contribute</h2>
+            
+            <!-- Top row: 3 cards -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                {contributionTypesTop.map((type, index) => (
+                    <div style={`animation-delay: ${index * 0.1}s;`} class="animate-fade-in-up opacity-0">
+                        <ContributionCard 
+                            title={type.title}
+                            icon={type.icon}
+                            description={type.description}
+                            color={type.color}
+                        />
+                    </div>
+                ))}
+            </div>
+            
+            <!-- Bottom row: 2 cards centered -->
+            <div class="flex justify-center gap-6">
+                {contributionTypesBottom.map((type, index) => (
+                    <div 
+                        style={`animation-delay: ${(index + 3) * 0.1}s;`} 
+                        class="animate-fade-in-up opacity-0 w-full md:w-[calc(33.333%-0.75rem)]"
+                    >
+                        <ContributionCard 
+                            title={type.title}
+                            icon={type.icon}
+                            description={type.description}
+                            color={type.color}
+                        />
+                    </div>
+                ))}
+            </div>
+        </div>
+    </section>
 
-			<!-- Join Civic Tech DC -->
-			<div class="bg-mango-green-dark text-white p-8 md:p-12 mb-16">
-				<h2 class="font-display italic text-3xl mb-6">Join Civic Tech DC</h2>
-				<p class="text-lg text-white/90 mb-8 leading-relaxed">
-					CIB Mango Tree is a project of Civic Tech DC, a volunteer community that builds technology to improve civic life. We meet regularly to collaborate on projects like this one.
-				</p>
-				<div class="flex flex-wrap gap-4">
-					<a 
-						href="https://www.meetup.com/code-for-dc/" 
-						target="_blank"
-						rel="noopener noreferrer"
-						class="inline-flex items-center gap-2 bg-mango-yellow text-text-primary px-6 py-3 font-semibold hover:bg-[#FFD966] transition-colors"
-					>
-						Join our Meetup
-					</a>
-					<a 
-						href="https://codefordc.slack.com" 
-						target="_blank"
-						rel="noopener noreferrer"
-						class="inline-flex items-center gap-2 bg-white/10 text-white px-6 py-3 font-semibold hover:bg-white/20 transition-colors border border-white/30"
-					>
-						Join Slack
-					</a>
-				</div>
-			</div>
+    <!-- How We Work Together -->
+    <section class="py-16 px-6 md:px-8 bg-background">
+        <div class="max-w-5xl mx-auto">
+            <h2 class="font-display italic text-3xl text-text-primary mb-4 text-center">How We Work Together</h2>
+            <p class="text-text-muted text-center max-w-2xl mx-auto mb-8">
+                Our team follows an agile process that keeps everyone aligned and moving forward
+            </p>
+            
+            <CircleCycle />
+        </div>
+    </section>
 
-			<!-- GitHub Contribution -->
-			<div class="mb-16">
-				<h2 class="font-display italic text-3xl text-text-primary mb-8">Contribute on GitHub</h2>
-				
-				<div class="bg-background-alt border border-border-color p-8">
-					<p class="text-text-muted mb-6 leading-relaxed">
-						Our code is open source and we welcome contributions of all sizes. Check out our repository to find issues labeled "good first issue" for newcomers.
-					</p>
-					
-					<div class="flex flex-col sm:flex-row gap-4">
-						<a 
-							href="https://github.com/cib-mango-tree" 
-							target="_blank"
-							rel="noopener noreferrer"
-							class="inline-flex items-center justify-center gap-2 bg-text-primary text-white px-6 py-3 font-semibold hover:bg-mango-green-dark transition-colors"
-						>
-							<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-								<path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-							</svg>
-							View Repository
-						</a>
-						<a 
-							href="https://github.com/cib-mango-tree/issues" 
-							target="_blank"
-							rel="noopener noreferrer"
-							class="inline-flex items-center justify-center gap-2 border-2 border-border-color text-text-primary px-6 py-3 font-semibold hover:bg-background-alt transition-colors"
-						>
-							Browse Issues
-						</a>
-					</div>
-				</div>
-			</div>
+    <!-- Making a Contribution -->
+    <section class="py-16 px-6 md:px-8 bg-[#F8F6F2]">
+        <div class="max-w-5xl mx-auto">
+            <h2 class="font-display italic text-3xl text-text-primary mb-4">Making a Contribution</h2>
+            <p class="text-text-muted mb-8 max-w-3xl">
+                Interested in adding to the codebase or reporting an issue? We use GitHub to manage contributions. Here's how to get started:
+            </p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                {contributionSteps.map((step, index) => (
+                    <div style={`animation-delay: ${index * 0.1}s;`} class="animate-fade-in-up opacity-0">
+                        <ContributionCard 
+                            title={step.title}
+                            icon={step.icon}
+                            description={step.description}
+                            ctaText={step.ctaText}
+                            ctaLink={step.ctaLink}
+                        />
+                    </div>
+                ))}
+            </div>
+        </div>
+    </section>
 
-			<!-- Contact -->
-			<div class="text-center py-8 border-t border-border-color">
-				<h3 class="font-display italic text-2xl text-text-primary mb-4">Questions?</h3>
-				<p class="text-text-muted mb-6">Reach out to us on Slack or email us directly</p>
-				<a 
-					href="mailto:hello@cibmangotree.org" 
-					class="text-mango-green-dark font-semibold hover:underline"
-				>
-					hello@cibmangotree.org
-				</a>
-			</div>
-		</div>
-	</section>
-	<Footer />
+    <!-- GitHub Activity Widget -->
+    <section class="py-16 px-6 md:px-8 bg-background">
+        <div class="max-w-5xl mx-auto">
+            <h2 class="font-display italic text-3xl text-text-primary mb-8">Open Source Development</h2>
+            <GitHubActivity />
+        </div>
+    </section>
+
+    <!-- Join Civic Tech DC -->
+    <section class="py-16 px-6 md:px-8 bg-mango-green-dark text-white">
+        <div class="max-w-5xl mx-auto">
+            <h2 class="font-display italic text-3xl mb-6">Join Civic Tech DC</h2>
+            <p class="text-lg text-white/90 mb-4 leading-relaxed max-w-3xl">
+                CIB Mango Tree is a project within the Civic Tech DC community. Civic Tech DC is a 501(c)(3) non-profit that organizes biweekly "project night" meetups where technologists meet to plan and carry out software-based projects that solve civic problems.
+            </p>
+            <p class="text-lg text-white/90 mb-8 leading-relaxed max-w-3xl">
+                Just as the CIB Mango Tree project is open to any contributor of all backgrounds and skill sets, anyone can attend the Civic Tech DC project nights and contribute to various projects in capacities ranging from project management, UI design to software development.
+            </p>
+            
+            <div class="flex flex-wrap gap-4">
+                <a 
+                    href="https://lu.ma/civictechdc" 
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="cta-btn inline-flex items-center gap-2 bg-mango-yellow text-text-primary px-6 py-3 font-semibold"
+                >
+                    <Calendar class="w-5 h-5" />
+                    RSVP on Lu.ma
+                </a>
+                <a 
+                    href="https://codefordc.slack.com" 
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="cta-btn inline-flex items-center gap-2 bg-white/10 text-white px-6 py-3 font-semibold border border-white/30"
+                >
+                    <Slack class="w-5 h-5" />
+                    Join Slack (#cib-mango-tree)
+                </a>
+                <a 
+                    href="https://www.civictechdc.org/donate" 
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="cta-btn inline-flex items-center gap-2 bg-white/10 text-white px-6 py-3 font-semibold border border-white/30"
+                >
+                    <Heart class="w-5 h-5" />
+                    Donate
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section class="py-12 px-6 md:px-8 bg-background">
+        <div class="max-w-5xl mx-auto text-center">
+            <h3 class="font-display italic text-2xl text-text-primary mb-4">Questions?</h3>
+            <p class="text-text-muted mb-6">Reach out to us on Slack or email us directly</p>
+            <a 
+                href="mailto:hello@cibmangotree.org" 
+                class="text-mango-green-dark font-semibold text-lg hover:underline"
+            >
+                hello@cibmangotree.org
+            </a>
+        </div>
+    </section>
+
+    <Newsletter />
+    <Footer />
 </Layout>
+
+<style>
+    .animate-fade-in-up {
+        animation: fadeInUp 0.6s ease-out forwards;
+    }
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .cta-btn {
+        transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .cta-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    .cta-btn:first-of-type:hover {
+        background-color: #FFD966;
+    }
+</style>
