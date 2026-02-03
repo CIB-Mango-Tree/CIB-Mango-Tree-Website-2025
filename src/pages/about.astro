@@ -1,0 +1,58 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Footer from '../components/Footer.astro';
+import teamMeeting from '../assets/team-meeting.jpg';
+---
+
+<Layout>
+	<section class="py-16 px-6 md:px-8 bg-background">
+		<div class="max-w-4xl mx-auto">
+			<h1 class="font-display italic text-4xl md:text-5xl lg:text-6xl text-text-primary mb-8 leading-tight">
+				About Us
+			</h1>
+			
+			<p class="text-xl text-text-muted mb-12 leading-relaxed">
+				CIB Mango Tree is a collaborative project born from the belief that a healthy democracy requires a healthy information ecosystem.
+			</p>
+
+			<div class="mb-16">
+				<img 
+					src={teamMeeting.src} 
+					alt="Team collaboration" 
+					class="w-full h-64 md:h-96 object-cover"
+				/>
+			</div>
+
+			<div class="prose prose-lg max-w-none">
+				<h2 class="font-display italic text-3xl text-text-primary mb-6">Our Mission</h2>
+				<p class="text-text-muted mb-8 leading-relaxed">
+					We build open-source tools that empower researchers, journalists, and citizens to identify and analyze coordinated inauthentic behavior (CIB) on social media platforms. Our goal is to make sophisticated detection methods accessible to everyone who cares about online discourse integrity.
+				</p>
+
+				<h2 class="font-display italic text-3xl text-text-primary mb-6">Who We Are</h2>
+				<p class="text-text-muted mb-8 leading-relaxed">
+					We are a diverse group of volunteers united by our commitment to digital democracy. Our team includes designers, engineers, product managers, policy experts, data scientists, and concerned citizens. As a Civic Tech DC project, we believe in the power of community-driven technology to address societal challenges.
+				</p>
+
+				<h2 class="font-display italic text-3xl text-text-primary mb-6">Our Approach</h2>
+				<p class="text-text-muted mb-8 leading-relaxed">
+					CIB Mango Tree takes a "low-hanging fruit" approach to bot detection. We start with easy-to-run tests that reveal clear signs of unsophisticated coordinated behavior. As users climb the "mango tree," they encounter more advanced tools for tackling complex manipulation campaigns.
+				</p>
+
+				<div class="bg-mango-yellow-light p-8 mt-12">
+					<h3 class="font-display italic text-2xl text-text-primary mb-4">Join Our Community</h3>
+					<p class="text-text-muted mb-6">
+						Whether you're a seasoned researcher or a curious citizen, there's a place for you in our community. We welcome contributors of all skill levels.
+					</p>
+					<a 
+						href="/get-involved" 
+						class="inline-flex items-center gap-2 bg-mango-green-dark text-white px-6 py-3 font-semibold hover:bg-mango-green transition-colors"
+					>
+						Get Involved
+					</a>
+				</div>
+			</div>
+		</div>
+	</section>
+	<Footer />
+</Layout>

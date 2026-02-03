@@ -1,0 +1,105 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout>
+	<section class="py-16 px-6 md:px-8 bg-background">
+		<div class="max-w-5xl mx-auto">
+			<h1 class="font-display italic text-4xl md:text-5xl lg:text-6xl text-text-primary mb-8 leading-tight">
+				Resources
+			</h1>
+			
+			<p class="text-xl text-text-muted mb-12 leading-relaxed max-w-3xl">
+				Curated resources to help you understand coordinated inauthentic behavior, bot detection, and information integrity.
+			</p>
+
+			<!-- Research Papers -->
+			<div class="mb-16">
+				<h2 class="font-display italic text-3xl text-text-primary mb-8">Research Papers</h2>
+				
+				<div class="space-y-6">
+					<article class="bg-background-alt border-l-4 border-mango-green-dark p-6">
+						<h3 class="text-xl font-semibold text-text-primary mb-2">The Spread of True and False News Online</h3>
+						<p class="text-text-muted mb-3">Vosoughi, Roy, and Aral (2018) - Science</p>
+						<p class="text-text-light text-sm">Landmark study showing false news spreads faster and farther than true news on social media.</p>
+					</article>
+					
+					<article class="bg-background-alt border-l-4 border-mango-yellow p-6">
+						<h3 class="text-xl font-semibold text-text-primary mb-2">Bots and Automation over Twitter during the U.S. Election</h3>
+						<p class="text-text-muted mb-3">Bessi and Ferrara (2016) - First Monday</p>
+						<p class="text-text-light text-sm">Analysis of bot activity during the 2016 U.S. presidential election.</p>
+					</article>
+					
+					<article class="bg-background-alt border-l-4 border-[#E5F7F8] p-6">
+						<h3 class="text-xl font-semibold text-text-primary mb-2">Detecting Bots on Social Media</h3>
+						<p class="text-text-muted mb-3">Ferrara et al. (2016) - Communications of the ACM</p>
+						<p class="text-text-light text-sm">Comprehensive overview of bot detection methods and challenges.</p>
+					</article>
+				</div>
+			</div>
+
+			<!-- Tools & Datasets -->
+			<div class="mb-16">
+				<h2 class="font-display italic text-3xl text-text-primary mb-8">Tools & Datasets</h2>
+				
+				<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+					<div class="bg-[#FFE099] p-6">
+						<h3 class="font-display italic text-xl text-text-primary mb-3">Botometer</h3>
+						<p class="text-text-muted mb-4">API for checking the activity of Twitter accounts and giving them a score based on how likely they are bots.</p>
+						<a href="https://botometer.osome.iu.edu/" target="_blank" rel="noopener" class="text-mango-green-dark font-semibold hover:underline">Visit site →</a>
+					</div>
+					
+					<div class="bg-[#E5F7F8] p-6">
+						<h3 class="font-display italic text-xl text-text-primary mb-3">Stanford Internet Observatory</h3>
+						<p class="text-text-muted mb-4">Research and datasets on information operations and platform manipulation.</p>
+						<a href="https://cyber.fsi.stanford.edu/io" target="_blank" rel="noopener" class="text-mango-green-dark font-semibold hover:underline">Visit site →</a>
+					</div>
+					
+					<div class="bg-mango-green-light p-6">
+						<h3 class="font-display italic text-xl text-text-primary mb-3">Twitter Transparency Center</h3>
+						<p class="text-text-muted mb-4">Released datasets of state-backed information operations from Twitter.</p>
+						<a href="https://transparency.twitter.com/" target="_blank" rel="noopener" class="text-mango-green-dark font-semibold hover:underline">Visit site →</a>
+					</div>
+					
+					<div class="bg-[#FFF5E6] p-6">
+						<h3 class="font-display italic text-xl text-text-primary mb-3">OSINT Framework</h3>
+						<p class="text-text-muted mb-4">Collection of open source intelligence tools for social media analysis.</p>
+						<a href="https://osintframework.com/" target="_blank" rel="noopener" class="text-mango-green-dark font-semibold hover:underline">Visit site →</a>
+					</div>
+				</div>
+			</div>
+
+			<!-- Educational Content -->
+			<div class="mb-16">
+				<h2 class="font-display italic text-3xl text-text-primary mb-8">Educational Content</h2>
+				
+				<div class="bg-mango-yellow-light p-8">
+					<h3 class="font-display italic text-2xl text-text-primary mb-4">Understanding CIB</h3>
+					<p class="text-text-muted mb-6 leading-relaxed">
+						Coordinated Inauthentic Behavior (CIB) refers to the use of fake accounts or automated tools to artificially amplify content, manipulate public discourse, or mislead users about who is behind certain messages. CIB campaigns can be domestic or foreign, and may target elections, public health discussions, or other civic topics.
+					</p>
+					<div class="flex flex-wrap gap-3">
+						<span class="bg-white px-4 py-2 text-sm text-text-primary">Bot Networks</span>
+						<span class="bg-white px-4 py-2 text-sm text-text-primary">Astroturfing</span>
+						<span class="bg-white px-4 py-2 text-sm text-text-primary">Sockpuppets</span>
+						<span class="bg-white px-4 py-2 text-sm text-text-primary">Troll Farms</span>
+						<span class="bg-white px-4 py-2 text-sm text-text-primary">Information Operations</span>
+					</div>
+				</div>
+			</div>
+
+			<!-- Newsletter CTA -->
+			<div class="text-center py-8 border-t border-border-color">
+				<p class="text-text-muted mb-4">Stay updated with the latest resources and research</p>
+				<a 
+					href="/#newsletter" 
+					class="inline-flex items-center gap-2 bg-mango-green-dark text-white px-6 py-3 font-semibold hover:bg-mango-green transition-colors"
+				>
+					Subscribe to Newsletter
+				</a>
+			</div>
+		</div>
+	</section>
+	<Footer />
+</Layout>

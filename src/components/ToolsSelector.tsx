@@ -33,8 +33,8 @@ const GearIcon = ({ className }: { className?: string }) => (
 );
 
 // Chevron right icon
-const ChevronRight = ({ className }: { className?: string }) => (
-  <svg className={className} width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+const ChevronRight = ({ className, style }: { className?: string; style?: React.CSSProperties }) => (
+  <svg className={className} style={style} width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
   </svg>
 );
@@ -62,6 +62,7 @@ const tools: Tool[] = [
 
 export default function ToolsSelector() {
   const [selectedTool, setSelectedTool] = useState<string>('copypasta');
+  const [hoveredTool, setHoveredTool] = useState<string | null>(null);
 
   const selectedToolData = tools.find(tool => tool.id === selectedTool) || tools[0];
 
@@ -102,23 +103,36 @@ export default function ToolsSelector() {
           {/* Navigation Items */}
           {tools.map((tool) => {
             const isSelected = tool.id === selectedTool;
+            const isHovered = tool.id === hoveredTool;
             const isComingSoon = tool.id === 'coming-soon';
             
             return (
               <button
                 key={tool.id}
                 onClick={() => setSelectedTool(tool.id)}
-                className="w-full flex items-center justify-between gap-3 px-5 py-4 transition-all duration-200"
+                onMouseEnter={() => setHoveredTool(tool.id)}
+                onMouseLeave={() => setHoveredTool(null)}
+                className="w-full flex items-center justify-between gap-3 px-5 py-4 group"
                 style={{
-                  backgroundColor: isSelected ? '#5A8A4A' : '#FDFCF9',
-                  borderLeft: isSelected ? '4px solid #5A8A4A' : '4px solid transparent',
+                  backgroundColor: isSelected ? '#5A8A4A' : (isHovered ? '#F0F4EC' : '#FDFCF9'),
+                  borderLeft: isSelected ? '4px solid #FFE099' : (isHovered ? '4px solid #8BBF72' : '4px solid transparent'),
                   borderBottom: !isSelected ? '1px solid #E5E2DC' : 'none',
+                  transition: 'all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1)',
+                  transform: isHovered && !isSelected ? 'translateX(4px)' : 'translateX(0)',
                 }}
               >
-                <div className="flex items-center gap-3">
+                <div 
+                  className="flex items-center gap-3"
+                  style={{
+                    transition: 'transform 0.25s ease',
+                  }}
+                >
                   <span 
                     style={{ 
-                      color: isSelected ? '#FFFFFF' : (isComingSoon ? '#7A8872' : '#5A6B52')
+                      color: isSelected ? '#FFFFFF' : (isComingSoon ? '#7A8872' : '#5A6B52'),
+                      transition: 'transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)',
+                      display: 'inline-block',
+                      transform: isHovered && !isSelected ? 'scale(1.2) rotate(-5deg)' : 'scale(1)',
                     }}
                   >
                     {tool.icon}
@@ -126,8 +140,9 @@ export default function ToolsSelector() {
                   <span 
                     className="font-medium text-left"
                     style={{ 
-                      color: isSelected ? '#FFFFFF' : (isComingSoon ? '#7A8872' : '#5A6B52'),
-                      fontSize: '15px'
+                      color: isSelected ? '#FFFFFF' : (isHovered ? '#2D3A24' : (isComingSoon ? '#7A8872' : '#5A6B52')),
+                      fontSize: '15px',
+                      transition: 'color 0.2s ease',
                     }}
                   >
                     {tool.name}
@@ -136,7 +151,9 @@ export default function ToolsSelector() {
                 <ChevronRight 
                   className="flex-shrink-0"
                   style={{ 
-                    color: isSelected ? '#FFFFFF' : (isComingSoon ? '#7A8872' : '#5A8A4A')
+                    color: isSelected ? '#FFFFFF' : (isComingSoon ? '#7A8872' : '#5A8A4A'),
+                    transition: 'transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1)',
+                    transform: isHovered || isSelected ? 'translateX(4px)' : 'translateX(0)',
                   }} 
                 />
               </button>
@@ -146,12 +163,27 @@ export default function ToolsSelector() {
 
         {/* Right Content Panel */}
         <div 
-          className="flex-1 p-8 border border-l-0"
+          className="flex-1 p-8 border border-l-0 relative overflow-hidden"
           style={{ 
             backgroundColor: '#F8F6F2',
-            borderColor: '#E5E2DC'
+            borderColor: '#E5E2DC',
+            transition: 'all 0.3s ease',
           }}
         >
+          {/* Animated background accent */}
+          <div 
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              width: '4px',
+              height: '100%',
+              backgroundColor: '#5A8A4A',
+              transform: 'scaleY(1)',
+              transition: 'transform 0.3s ease',
+            }}
+          />
+          
           {/* Content Title */}
           <h4 
             className="text-xl mb-4"
@@ -159,8 +191,10 @@ export default function ToolsSelector() {
               fontFamily: "'Playfair Display', Georgia, serif",
               fontStyle: 'italic',
               color: '#5A8A4A',
-              letterSpacing: '-0.01em'
+              letterSpacing: '-0.01em',
+              animation: 'fadeSlideIn 0.3s ease',
             }}
+            key={selectedToolData.id + '-title'}
           >
             {selectedToolData.name}
           </h4>
@@ -171,13 +205,28 @@ export default function ToolsSelector() {
             style={{ 
               color: '#5A6B52',
               fontSize: '15px',
-              lineHeight: '1.7'
+              lineHeight: '1.7',
+              animation: 'fadeSlideIn 0.3s ease 0.1s both',
             }}
+            key={selectedToolData.id + '-desc'}
           >
             {selectedToolData.description}
           </p>
         </div>
       </div>
+
+      <style>{`
+        @keyframes fadeSlideIn {
+          from {
+            opacity: 0;
+            transform: translateY(8px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+      `}</style>
     </div>
   );
 }

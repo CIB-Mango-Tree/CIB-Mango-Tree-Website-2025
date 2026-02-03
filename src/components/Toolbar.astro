@@ -4,7 +4,7 @@ import Download from "./Download.astro";
 import logo from '../assets/logo.png';
 ---
 
-<header class="bg-mango-green w-full sticky top-0 z-50">
+<header class="bg-mango-green-dark w-full sticky top-0 z-50">
     <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
         <!-- Logo -->
         <a href="/" class="flex items-center gap-3 transition-opacity hover:opacity-90">
@@ -47,7 +47,7 @@ import logo from '../assets/logo.png';
 
     <!-- Mobile Navigation -->
     <nav id="mobile-nav" class="mobile-nav md:hidden hidden" role="navigation" aria-label="Mobile">
-        <ul class="flex flex-col py-4 px-6 bg-mango-green border-t border-white/20">
+        <ul class="flex flex-col py-4 px-6 bg-mango-green-dark border-t border-white/20">
             <li>
                 <a href="/about" class="mobile-nav-link">About Us</a>
             </li>
@@ -86,12 +86,31 @@ import logo from '../assets/logo.png';
         font-weight: 500;
         font-size: 0.95rem;
         text-decoration: none;
-        transition: background-color 0.2s ease;
+        position: relative;
+        transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .nav-link::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        width: 0;
+        height: 2px;
+        background-color: #FFE099;
+        transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        transform: translateX(-50%);
+    }
+
+    .nav-link:hover::after,
+    .nav-link:focus::after {
+        width: 80%;
     }
 
     .nav-link:hover,
     .nav-link:focus {
-        background-color: rgba(255, 255, 255, 0.15);
+        background-color: rgba(255, 255, 255, 0.1);
+        transform: translateY(-2px);
         outline: none;
     }
 
@@ -100,10 +119,22 @@ import logo from '../assets/logo.png';
         color: #2D3A24;
         font-weight: 600;
         margin-left: 0.5rem;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .nav-link.cta::after {
+        display: none;
     }
 
     .nav-link.cta:hover {
         background-color: #FFD966;
+        transform: translateY(-3px);
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+    }
+
+    .nav-link.cta:active {
+        transform: translateY(-1px);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
 
     .mobile-nav-link {
@@ -113,15 +144,39 @@ import logo from '../assets/logo.png';
         font-weight: 500;
         text-decoration: none;
         border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        transition: opacity 0.2s ease;
+        transition: all 0.25s ease;
+        transform-origin: left;
     }
 
     .mobile-nav-link:hover {
-        opacity: 0.8;
+        padding-left: 0.5rem;
+        background: linear-gradient(90deg, rgba(255,255,255,0.1) 0%, transparent 100%);
     }
 
     .mobile-nav-link.cta-mobile {
         color: #FFCC33;
         font-weight: 600;
+    }
+
+    /* Logo hover */
+    header a:first-child img {
+        transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    header a:first-child:hover img {
+        transform: rotate(-5deg) scale(1.1);
+    }
+
+    /* Menu toggle animation */
+    #menu-toggle {
+        transition: transform 0.2s ease, background-color 0.2s ease;
+    }
+
+    #menu-toggle:hover {
+        transform: scale(1.1);
+    }
+
+    #menu-toggle:active {
+        transform: scale(0.95);
     }
 </style>

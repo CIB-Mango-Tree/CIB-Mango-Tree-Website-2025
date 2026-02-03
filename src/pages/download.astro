@@ -1,0 +1,174 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Footer from '../components/Footer.astro';
+import cliScreenshot from '../assets/cliscreenshot.png';
+---
+
+<Layout>
+	<section class="py-16 px-6 md:px-8 bg-background">
+		<div class="max-w-5xl mx-auto">
+			<h1 class="font-display italic text-4xl md:text-5xl lg:text-6xl text-text-primary mb-8 leading-tight">
+				Download
+			</h1>
+			
+			<p class="text-xl text-text-muted mb-12 leading-relaxed max-w-3xl">
+				Get CIB Mango Tree running on your machine in minutes. Our tools run locally, ensuring your data stays private and secure.
+			</p>
+
+			<!-- Main Download Card -->
+			<div class="bg-mango-green-dark text-white p-8 md:p-12 mb-12">
+				<div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+					<div>
+						<h2 class="font-display italic text-3xl mb-3">CIB Mango Tree CLI</h2>
+						<p class="text-white/80 mb-2">Version 1.0.0 • Open Source</p>
+						<p class="text-white/60 text-sm">Requires Python 3.8+</p>
+					</div>
+					<a 
+						href="https://pypi.org/project/cib-mango-tree/" 
+						target="_blank"
+						rel="noopener noreferrer"
+						class="inline-flex items-center gap-2 bg-mango-yellow text-text-primary px-8 py-4 font-semibold text-lg hover:bg-[#FFD966] transition-colors"
+					>
+						<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+						</svg>
+						Download Now
+					</a>
+				</div>
+			</div>
+
+			<!-- Installation Options -->
+			<div class="mb-16">
+				<h2 class="font-display italic text-3xl text-text-primary mb-8">Installation Options</h2>
+				
+				<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+					<!-- pip install -->
+					<div class="bg-background-alt border border-border-color p-6">
+						<h3 class="font-semibold text-lg text-text-primary mb-4 flex items-center gap-2">
+							<span class="bg-mango-yellow text-text-primary px-2 py-1 text-xs font-bold">RECOMMENDED</span>
+							pip (Python)
+						</h3>
+						<code class="block bg-text-primary text-mango-yellow p-4 font-mono text-sm mb-4">
+							pip install cib-mango-tree
+						</code>
+						<p class="text-text-muted text-sm">Best for most users. Requires Python 3.8 or higher.</p>
+					</div>
+					
+					<!-- GitHub clone -->
+					<div class="bg-background-alt border border-border-color p-6">
+						<h3 class="font-semibold text-lg text-text-primary mb-4">Clone from GitHub</h3>
+						<code class="block bg-text-primary text-mango-yellow p-4 font-mono text-sm mb-4 overflow-x-auto">
+							git clone https://github.com/cib-mango-tree/cib-mango-tree.git
+						</code>
+						<p class="text-text-muted text-sm">For contributors and those who want the latest development version.</p>
+					</div>
+				</div>
+			</div>
+
+			<!-- System Requirements -->
+			<div class="mb-16">
+				<h2 class="font-display italic text-3xl text-text-primary mb-8">System Requirements</h2>
+				
+				<div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+					<div class="bg-[#E5F7F8] p-6">
+						<h3 class="font-semibold text-text-primary mb-2">Operating System</h3>
+						<ul class="text-text-muted text-sm space-y-1">
+							<li>• macOS 10.15+</li>
+							<li>• Windows 10+</li>
+							<li>• Linux (Ubuntu 18.04+)</li>
+						</ul>
+					</div>
+					
+					<div class="bg-[#FFE099] p-6">
+						<h3 class="font-semibold text-text-primary mb-2">Python</h3>
+						<ul class="text-text-muted text-sm space-y-1">
+							<li>• Python 3.8 or higher</li>
+							<li>• pip package manager</li>
+						</ul>
+					</div>
+					
+					<div class="bg-mango-green-light p-6">
+						<h3 class="font-semibold text-text-primary mb-2">Hardware</h3>
+						<ul class="text-text-muted text-sm space-y-1">
+							<li>• 4GB RAM minimum</li>
+							<li>• 500MB disk space</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+
+			<!-- CLI Preview -->
+			<div class="mb-16">
+				<h2 class="font-display italic text-3xl text-text-primary mb-8">What You'll Get</h2>
+				<img 
+					src={cliScreenshot.src} 
+					alt="CIB Mango Tree CLI interface" 
+					class="w-full border border-border-color"
+				/>
+				<p class="text-text-muted text-sm mt-4 text-center">
+					An interactive command-line interface for analyzing social media datasets
+				</p>
+			</div>
+
+			<!-- Quick Start After Download -->
+			<div class="bg-mango-yellow-light p-8">
+				<h2 class="font-display italic text-2xl text-text-primary mb-6">Quick Start After Installation</h2>
+				
+				<div class="space-y-4">
+					<div>
+						<p class="text-text-muted mb-2">1. Verify installation:</p>
+						<code class="block bg-text-primary text-mango-yellow p-3 font-mono text-sm">
+							mango-tree --version
+						</code>
+					</div>
+					
+					<div>
+						<p class="text-text-muted mb-2">2. See available commands:</p>
+						<code class="block bg-text-primary text-mango-yellow p-3 font-mono text-sm">
+							mango-tree --help
+						</code>
+					</div>
+					
+					<div>
+						<p class="text-text-muted mb-2">3. Run your first analysis:</p>
+						<code class="block bg-text-primary text-mango-yellow p-3 font-mono text-sm">
+							mango-tree analyze --input dataset.csv --test copypasta
+						</code>
+					</div>
+				</div>
+				
+				<div class="mt-6 pt-6 border-t border-mango-yellow">
+					<a 
+						href="/docs" 
+						class="text-mango-green-dark font-semibold hover:underline"
+					>
+						Read the full documentation →
+					</a>
+				</div>
+			</div>
+
+			<!-- Help Section -->
+			<div class="text-center py-12 border-t border-border-color mt-12">
+				<h3 class="font-display italic text-2xl text-text-primary mb-4">Need Help?</h3>
+				<p class="text-text-muted mb-6">Check our documentation or reach out to the community</p>
+				<div class="flex flex-wrap justify-center gap-4">
+					<a 
+						href="/docs" 
+						class="inline-flex items-center gap-2 bg-mango-green-dark text-white px-6 py-3 font-semibold hover:bg-mango-green transition-colors"
+					>
+						Documentation
+					</a>
+					<a 
+						href="https://github.com/cib-mango-tree/issues" 
+						target="_blank"
+						rel="noopener noreferrer"
+						class="inline-flex items-center gap-2 border-2 border-border-color text-text-primary px-6 py-3 font-semibold hover:bg-background-alt transition-colors"
+					>
+						Report an Issue
+					</a>
+				</div>
+			</div>
+		</div>
+	</section>
+	<Footer />
+</Layout>
