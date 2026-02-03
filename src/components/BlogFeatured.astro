@@ -35,27 +35,27 @@ const defaultImages = [
             <a href={featuredPost.link} target="_blank" rel="noopener noreferrer" class="featured-card block lg:w-3/5">
                 <article class="bg-mango-green-dark text-white relative overflow-hidden h-full">
                     <!-- Stacked Image on top -->
-                    <div class="h-56 md:h-64 relative overflow-hidden">
+                    <div class="h-44 md:h-48 relative overflow-hidden">
                         <img 
                             src={featuredPost.imageUrl || defaultImages[0]}
                             alt={featuredPost.title}
                             class="featured-image w-full h-full object-cover"
                         />
                         <div class="absolute inset-0 bg-gradient-to-t from-mango-green-dark/70 to-transparent"></div>
-                        <span class="absolute top-4 left-4 inline-block bg-mango-yellow text-text-primary text-xs font-bold px-3 py-1">
+                        <span class="absolute top-3 left-3 inline-block bg-mango-yellow text-text-primary text-xs font-bold px-2 py-1">
                             FEATURED
                         </span>
                     </div>
                     
                     <!-- Content below image -->
-                    <div class="p-6 md:p-8 relative">
-                        <h3 class="font-display italic text-xl md:text-2xl mb-3 leading-tight">
+                    <div class="p-5 md:p-6 relative">
+                        <h3 class="font-display italic text-lg md:text-xl mb-2 leading-tight">
                             {featuredPost.title}
                         </h3>
                         {featuredPost.author && (
-                            <p class="text-white/80 mb-3 text-sm">By {featuredPost.author}</p>
+                            <p class="text-white/80 mb-2 text-sm">By {featuredPost.author}</p>
                         )}
-                        <div class="flex items-center gap-3 text-sm text-white/70 mb-4">
+                        <div class="flex items-center gap-3 text-sm text-white/70 mb-3">
                             <span>{featuredPost.publication}</span>
                             <span>•</span>
                             <span>{featuredPost.date}</span>
@@ -70,7 +70,7 @@ const defaultImages = [
         )}
 
         <!-- Other Posts - Right side, stacked vertically with just titles and dates -->
-        <div class="lg:w-2/5 flex flex-col gap-4">
+        <div class="lg:w-2/5 flex flex-col gap-3">
             {otherPosts.map((post, index) => (
                 <a 
                     href={post.link} 
@@ -79,8 +79,8 @@ const defaultImages = [
                     class="blog-card block flex-1"
                     style={`animation-delay: ${index * 0.1}s;`}
                 >
-                    <article class="bg-background border border-border-color p-5 h-full flex flex-col justify-center">
-                        <h4 class="font-display italic text-base text-text-primary mb-2 leading-snug line-clamp-2">
+                    <article class="bg-background border border-border-color py-3 px-4 h-full flex flex-col justify-center">
+                        <h4 class="font-display italic text-sm text-text-primary mb-1 leading-snug line-clamp-2">
                             {post.title}
                         </h4>
                         <div class="flex items-center gap-2 text-xs text-text-muted">
