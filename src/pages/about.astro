@@ -46,17 +46,17 @@ const newsItems = [
 
 <Layout>
     <!-- Hero Section -->
-    <section class="py-16 px-6 md:px-8 bg-background">
+    <section class="py-20 md:py-24 px-8 md:px-12 bg-background">
         <div class="max-w-4xl mx-auto">
-            <h1 class="font-display italic text-4xl md:text-5xl lg:text-6xl text-text-primary mb-8 leading-tight">
+            <h1 class="font-display italic text-4xl md:text-5xl lg:text-6xl text-text-primary mb-10 leading-tight">
                 About Us
             </h1>
             
-            <p class="text-xl text-text-muted mb-12 leading-relaxed">
+            <p class="text-xl text-text-muted mb-16 leading-relaxed">
                 CIB Mango Tree is a collaborative project born from the belief that a healthy democracy requires a healthy information ecosystem.
             </p>
 
-            <div class="mb-16">
+            <div class="mb-20">
                 <img 
                     src={teamMeeting.src} 
                     alt="Team collaboration" 
@@ -67,19 +67,19 @@ const newsItems = [
     </section>
 
     <!-- Mission Section -->
-    <section class="py-12 px-6 md:px-8 bg-background">
+    <section class="py-16 px-8 md:px-12 bg-background">
         <div class="max-w-4xl mx-auto">
-            <h2 class="font-display italic text-3xl text-text-primary mb-6">Our Mission</h2>
-            <p class="text-text-muted mb-6 leading-relaxed text-lg">
+            <h2 class="font-display italic text-3xl text-text-primary mb-8">Our Mission</h2>
+            <p class="text-text-muted mb-8 leading-relaxed text-lg">
                 We build open-source tools that empower researchers, journalists, and citizens to identify and analyze coordinated inauthentic behavior (CIB) on social media platforms. Our goal is to make sophisticated detection methods accessible to everyone who cares about online discourse integrity.
             </p>
-            <p class="text-text-muted mb-6 leading-relaxed text-lg">
+            <p class="text-text-muted mb-8 leading-relaxed text-lg">
                 A project of Civic Tech DC, founded in 2024, CIB Mango Tree empowers people to uncover how disruptive actors manipulate online discourse around health, politics, and society.
             </p>
             
             <!-- Taiwan Origin Callout -->
-            <div class="bg-mango-yellow-light border-l-4 border-mango-yellow p-6 my-8">
-                <p class="text-text-muted leading-relaxed italic">
+            <div class="bg-mango-yellow-light border-l-4 border-mango-yellow p-8 my-10">
+                <p class="text-text-muted leading-relaxed italic text-lg">
                     Inspired by Taiwan, known both for its vibrant fruit and its open-source activism, CIB Mango Tree contributes to this spirit of activism in the heart of American democracy, Washington D.C.
                 </p>
             </div>
@@ -87,9 +87,9 @@ const newsItems = [
     </section>
 
     <!-- Who We Are Section -->
-    <section class="py-12 px-6 md:px-8 bg-[#F8F6F2]">
+    <section class="py-16 px-8 md:px-12 bg-[#F8F6F2]">
         <div class="max-w-4xl mx-auto">
-            <h2 class="font-display italic text-3xl text-text-primary mb-6">Who We Are</h2>
+            <h2 class="font-display italic text-3xl text-text-primary mb-8">Who We Are</h2>
             <p class="text-text-muted leading-relaxed text-lg">
                 We are a diverse group of volunteers united by our commitment to digital democracy. Our team includes designers, engineers, product managers, policy experts, data scientists, and concerned citizens. As a Civic Tech DC project, we believe in the power of community-driven technology to address societal challenges.
             </p>
@@ -97,9 +97,9 @@ const newsItems = [
     </section>
 
     <!-- Our Approach Section -->
-    <section class="py-12 px-6 md:px-8 bg-background">
+    <section class="py-16 px-8 md:px-12 bg-background">
         <div class="max-w-4xl mx-auto">
-            <h2 class="font-display italic text-3xl text-text-primary mb-6">Our Approach</h2>
+            <h2 class="font-display italic text-3xl text-text-primary mb-8">Our Approach</h2>
             <p class="text-text-muted leading-relaxed text-lg">
                 CIB Mango Tree takes a "low-hanging fruit" approach to bot detection. We start with easy-to-run tests that reveal clear signs of unsophisticated coordinated behavior. As users climb the "mango tree," they encounter more advanced tools for tackling complex manipulation campaigns.
             </p>
@@ -107,8 +107,8 @@ const newsItems = [
     </section>
 
     <!-- Values Section -->
-    <section class="py-16 bg-background">
-        <div class="max-w-4xl mx-auto px-6 md:px-8 mb-8">
+    <section class="py-20 bg-background">
+        <div class="max-w-4xl mx-auto px-8 md:px-12 mb-12">
             <h2 class="font-display italic text-3xl text-text-primary">Our Values</h2>
         </div>
         {values.map((value, index) => (
@@ -122,16 +122,16 @@ const newsItems = [
     </section>
 
     <!-- Civic Tech DC Section -->
-    <section class="py-16 px-6 md:px-8 bg-background">
+    <section class="py-20 md:py-24 px-8 md:px-12 bg-background">
         <div class="max-w-4xl mx-auto">
-            <h2 class="font-display italic text-3xl text-text-primary mb-6">About Civic Tech DC</h2>
-            <p class="text-text-muted mb-8 leading-relaxed text-lg">
+            <h2 class="font-display italic text-3xl text-text-primary mb-8">About Civic Tech DC</h2>
+            <p class="text-text-muted mb-10 leading-relaxed text-lg">
                 CIB Mango Tree is a project within the Civic Tech DC community. Civic Tech DC is a 501(c)(3) non-profit that organizes biweekly "project night" meetups where technologists meet to plan and carry out software-based projects that solve civic problems, from climate change impacts to election access. Just as the CIB Mango Tree project is open to any contributor of all backgrounds and skill sets, anyone can attend the Civic Tech DC project nights and contribute to various projects in capacities ranging from project management, UI design to software development.
             </p>
             
             <SprintCalendar />
             
-            <div class="flex flex-wrap gap-4 mt-8">
+            <div class="flex flex-wrap gap-5 mt-10">
                 <a 
                     href="https://codefordc.slack.com" 
                     target="_blank"
@@ -159,10 +159,10 @@ const newsItems = [
     </section>
 
     <!-- In Media Section -->
-    <section class="py-16 px-6 md:px-8 bg-[#F8F6F2]">
+    <section class="py-20 md:py-24 px-8 md:px-12 bg-[#F8F6F2]">
         <div class="max-w-4xl mx-auto">
-            <h2 class="font-display italic text-3xl text-text-primary mb-8">In the Media</h2>
-            <div class="space-y-6">
+            <h2 class="font-display italic text-3xl text-text-primary mb-12">In the Media</h2>
+            <div class="space-y-8">
                 {newsItems.map(item => (
                     <NewsQuote 
                         title={item.title}
@@ -178,10 +178,10 @@ const newsItems = [
     </section>
 
     <!-- Join Community CTA -->
-    <section class="py-16 px-6 md:px-8 bg-mango-yellow-light">
+    <section class="py-20 md:py-24 px-8 md:px-12 bg-mango-yellow-light">
         <div class="max-w-4xl mx-auto text-center">
-            <h2 class="font-display italic text-3xl text-text-primary mb-6">Join Our Community</h2>
-            <p class="text-text-muted mb-8 text-lg">
+            <h2 class="font-display italic text-3xl text-text-primary mb-8">Join Our Community</h2>
+            <p class="text-text-muted mb-10 text-lg">
                 Whether you're a seasoned researcher or a curious citizen, there's a place for you in our community. We welcome contributors of all skill levels.
             </p>
             <a 

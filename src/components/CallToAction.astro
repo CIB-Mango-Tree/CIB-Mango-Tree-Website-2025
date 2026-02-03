@@ -1,17 +1,17 @@
 ---
-import { Download, BookOpen, Users } from '@lucide/astro';
+import { Download, BookOpen, Users, Heart } from '@lucide/astro';
 ---
 
-<section class="py-16 px-6 md:px-8 bg-mango-green-dark">
+<section class="py-20 px-8 md:px-12 bg-mango-green-dark">
     <div class="max-w-5xl mx-auto text-center">
-        <h2 class="font-display italic text-3xl md:text-4xl text-white mb-4">
+        <h2 class="font-display italic text-3xl md:text-4xl text-white mb-6">
             Ready to Make an Impact?
         </h2>
-        <p class="text-white/80 text-lg mb-10 max-w-2xl mx-auto">
+        <p class="text-white/80 text-lg mb-12 max-w-2xl mx-auto">
             Join our community of researchers, developers, and citizens working to protect digital democracy.
         </p>
         
-        <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+        <div class="flex flex-col sm:flex-row gap-4 justify-center items-center flex-wrap">
             <!-- Primary CTA - Download (most prominent) -->
             <a 
                 href="/download" 
@@ -37,6 +37,17 @@ import { Download, BookOpen, Users } from '@lucide/astro';
             >
                 <BookOpen class="w-5 h-5" />
                 View Docs
+            </a>
+            
+            <!-- Donate CTA -->
+            <a 
+                href="https://www.civictechdc.org/donate" 
+                target="_blank"
+                rel="noopener noreferrer"
+                class="cta-btn cta-donate inline-flex items-center gap-2 bg-transparent text-white border-2 border-mango-yellow px-8 py-4 font-semibold text-lg"
+            >
+                <Heart class="w-5 h-5" />
+                Donate
             </a>
         </div>
     </div>
@@ -87,6 +98,17 @@ import { Download, BookOpen, Users } from '@lucide/astro';
         transform: translateY(-3px) scale(1.02);
         background-color: rgba(255, 255, 255, 0.1);
         border-color: white;
+    }
+
+    .cta-donate {
+        box-shadow: 0 4px 16px rgba(255, 224, 153, 0.2);
+    }
+
+    .cta-donate:hover {
+        transform: translateY(-3px) scale(1.02);
+        background-color: rgba(255, 224, 153, 0.15);
+        border-color: #FFD966;
+        box-shadow: 0 8px 24px rgba(255, 224, 153, 0.3);
     }
 
     .cta-btn:active {

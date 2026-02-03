@@ -7,7 +7,7 @@ interface Props {
     description: string;
     ctaText?: string;
     ctaLink?: string;
-    color?: 'yellow' | 'cyan' | 'green' | 'cream';
+    color?: 'yellow' | 'cyan' | 'green' | 'cream' | 'peach';
 }
 
 const { title, icon, description, ctaText, ctaLink, color = 'cream' } = Astro.props;
@@ -16,7 +16,8 @@ const colorClasses = {
     yellow: 'bg-mango-yellow border-mango-yellow',
     cyan: 'bg-[#E5F7F8] border-[#E5F7F8]',
     green: 'bg-mango-green-light border-mango-green-light',
-    cream: 'bg-[#F8F6F2] border-border-color'
+    cream: 'bg-[#F8F6F2] border-border-color',
+    peach: 'bg-[#FFE5D9] border-[#FFE5D9]'
 };
 
 // Map icon names to components
@@ -35,17 +36,17 @@ const IconComponent = iconMap[icon];
 ---
 
 <div class={`contribution-card ${colorClasses[color]} border-2 p-6 md:p-8 h-full flex flex-col`}>
-    <div class="card-icon mb-4 w-12 h-12 bg-white/50 rounded-xl flex items-center justify-center">
+    <div class="card-icon mb-5 w-14 h-14 bg-white/50 rounded-xl flex items-center justify-center">
         {IconComponent ? (
-            <IconComponent class="w-7 h-7 text-mango-green-dark" />
+            <IconComponent class="w-8 h-8 text-mango-green-dark" />
         ) : (
             <span class="text-3xl">{icon}</span>
         )}
     </div>
-    <h3 class="font-display italic text-xl md:text-2xl text-text-primary mb-3">
+    <h3 class="font-display italic text-xl md:text-2xl text-text-primary mb-4">
         {title}
     </h3>
-    <p class="text-text-muted leading-relaxed flex-1 mb-4">
+    <p class="text-text-muted leading-relaxed flex-1 mb-5">
         {description}
     </p>
     {ctaText && ctaLink && (

@@ -3,17 +3,17 @@ import mangoAnimation from "../assets/mango_animation.gif";
 import { Download } from '@lucide/astro';
 ---
 
-<section class="bg-background py-16 px-6 md:px-8">
+<section class="bg-background py-20 md:py-24 px-8 md:px-12">
 	<div class="max-w-7xl mx-auto">
-		<div class="flex flex-col lg:flex-row items-center gap-12 lg:gap-8">
+		<div class="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
 			<!-- Left side: Text content -->
 			<div class="flex-1 flex flex-col justify-center opacity-0 animate-fade-in">
-				<h1 class="font-display italic text-4xl md:text-5xl lg:text-6xl text-text-primary mb-6 leading-tight tracking-tight">
+				<h1 class="font-display italic text-4xl md:text-5xl lg:text-6xl text-text-primary mb-8 leading-tight tracking-tight">
 					<span class="block headline-word">Harvest Knowledge.</span>
 					<span class="block headline-word" style="animation-delay: 0.1s;">Share the Fruit.</span>
 					<span class="block headline-word" style="animation-delay: 0.2s;">Defend Democracy.</span>
 				</h1>
-				<p class="text-lg md:text-xl text-text-muted mb-8 max-w-xl leading-relaxed opacity-0 animate-fade-in-up" style="animation-delay: 0.3s;">
+				<p class="text-lg md:text-xl text-text-muted mb-10 max-w-xl leading-relaxed opacity-0 animate-fade-in-up" style="animation-delay: 0.3s;">
 					An open-source library to detect and analyze coordinated
 					inauthentic behavior online
 				</p>
@@ -30,7 +30,7 @@ import { Download } from '@lucide/astro';
 
 			<!-- Right side: 2x2 Stats Grid with Mango Animation -->
 			<div class="flex-1 opacity-0 animate-fade-in" style="animation-delay: 0.5s;">
-				<div class="grid grid-cols-2 gap-4">
+				<div class="grid grid-cols-2 gap-6">
 					<!-- Mango Animation - Top left for visual hierarchy -->
 					<div class="mango-card bg-white flex items-center justify-center overflow-hidden border-2 border-mango-green-light aspect-square">
 						<img 
@@ -41,21 +41,27 @@ import { Download } from '@lucide/astro';
 					</div>
 					
 					<!-- Stat Card 1: Bad bots - Top right -->
-					<div class="stat-card bg-[#FFE099] p-6 flex flex-col justify-center cursor-default" style="animation-delay: 0.1s;">
-						<div class="stat-number font-display italic text-4xl md:text-5xl text-text-primary mb-2">40%</div>
+					<div class="stat-card bg-[#FFE099] p-6 md:p-8 flex flex-col justify-center cursor-default" style="animation-delay: 0.1s;">
+						<div class="stat-number font-display italic text-4xl md:text-5xl text-text-primary mb-2">
+							40%<a href="https://www.imperva.com/resources/resource-library/reports/2025-bad-bot-report/" target="_blank" rel="noopener noreferrer" class="citation-link"><sup>[1]</sup></a>
+						</div>
 						<div class="text-sm text-text-primary/80">Bad bots in all internet traffic</div>
 					</div>
 					
 					<!-- Stat Card 2: Worried about disinformation - Bottom left -->
-					<div class="stat-card bg-[#E5F7F8] p-6 flex flex-col justify-center cursor-default" style="animation-delay: 0.2s;">
-						<div class="stat-number font-display italic text-4xl md:text-5xl text-text-primary mb-2">87%</div>
+					<div class="stat-card bg-[#E5F7F8] p-6 md:p-8 flex flex-col justify-center cursor-default" style="animation-delay: 0.2s;">
+						<div class="stat-number font-display italic text-4xl md:text-5xl text-text-primary mb-2">
+							87%<a href="https://www.ipsos.com/en/elections-social-media-battle-against-disinformation-and-trust-issues" target="_blank" rel="noopener noreferrer" class="citation-link"><sup>[2]</sup></a>
+						</div>
 						<div class="text-sm text-text-primary/80">Worried about disinformation</div>
 					</div>
 					
-					<!-- Stat Card 3: Bot accounts spreading misinfo - Bottom right -->
-					<div class="stat-card bg-[#FFF5E6] p-6 flex flex-col justify-center cursor-default" style="animation-delay: 0.3s;">
-						<div class="stat-number font-display italic text-4xl md:text-5xl text-text-primary mb-2">33%</div>
-						<div class="text-sm text-text-primary/80">Bot accounts spreading misinfo</div>
+					<!-- Stat Card 3: Twitter bot users - Bottom right -->
+					<div class="stat-card bg-[#FFF5E6] p-6 md:p-8 flex flex-col justify-center cursor-default" style="animation-delay: 0.3s;">
+						<div class="stat-number font-display italic text-3xl md:text-4xl text-text-primary mb-2">
+							25-68%<a href="https://polisci.wustl.edu/news/are-bots-winning-war-control-social-media" target="_blank" rel="noopener noreferrer" class="citation-link"><sup>[3]</sup></a>
+						</div>
+						<div class="text-sm text-text-primary/80">Twitter users are bots</div>
 					</div>
 				</div>
 			</div>
@@ -192,6 +198,20 @@ import { Download } from '@lucide/astro';
 
 	.stat-card:hover .stat-number {
 		transform: scale(1.1);
+	}
+
+	/* Citation links */
+	.citation-link {
+		color: #5A8A4A;
+		text-decoration: none;
+		font-size: 0.5em;
+		vertical-align: super;
+		transition: color 0.2s ease;
+	}
+
+	.citation-link:hover {
+		color: #4A7A3A;
+		text-decoration: underline;
 	}
 
 	/* Mango card special hover */

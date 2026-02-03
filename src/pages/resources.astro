@@ -176,166 +176,169 @@ const navItems = [
 ---
 
 <Layout>
-    <div class="flex">
-        <!-- Sticky Left Navigation -->
-        <aside class="hidden lg:block w-64 flex-shrink-0">
-            <nav class="sticky top-24 p-6">
-                <h3 class="text-xs font-bold uppercase tracking-widest text-text-muted mb-4">On This Page</h3>
-                <ul class="space-y-2">
-                    {navItems.map(item => (
-                        <li>
-                            <a 
-                                href={`#${item.id}`} 
-                                class="nav-link flex items-center gap-2 text-sm text-text-muted hover:text-mango-green-dark py-2 px-3 -mx-3 transition-colors"
-                            >
-                                {item.label}
-                            </a>
-                        </li>
-                    ))}
-                </ul>
-            </nav>
-        </aside>
-
-        <!-- Main Content -->
-        <section class="flex-1 py-16 px-6 md:px-8 bg-background min-w-0">
-            <div class="max-w-4xl">
-                <h1 class="font-display italic text-4xl md:text-5xl lg:text-6xl text-text-primary mb-8 leading-tight">
-                    Resources
-                </h1>
-                
-                <p class="text-xl text-text-muted mb-12 leading-relaxed">
-                    Curated resources to help you understand coordinated inauthentic behavior, bot detection, and information integrity.
-                </p>
-
-                <!-- Research Papers - Compact 2-column grid -->
-                <div id="research" class="mb-16 scroll-mt-24">
-                    <h2 class="font-display italic text-3xl text-text-primary mb-6 flex items-center gap-3">
-                        <FileText class="w-8 h-8 text-mango-green-dark" />
-                        Research Papers
-                    </h2>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        {researchPapers.map((paper, i) => (
-                            <a 
-                                href={paper.link} 
-                                target="_blank" 
-                                rel="noopener" 
-                                class="paper-card group bg-background-alt p-4 border-l-4 border-mango-green-dark hover:border-mango-yellow"
-                            >
-                                <h3 class="font-semibold text-text-primary mb-1 text-sm leading-tight group-hover:text-mango-green-dark transition-colors">
-                                    {paper.title}
-                                </h3>
-                                <p class="text-xs text-text-muted">
-                                    {paper.authors} ({paper.year}) · {paper.publication}
-                                </p>
-                                <span class="inline-flex items-center gap-1 text-xs text-mango-green-dark mt-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                                    Read paper <ExternalLink class="w-3 h-3" />
-                                </span>
-                            </a>
+    <!-- Centered wrapper for nav + content -->
+    <div class="max-w-7xl mx-auto px-8 md:px-12">
+        <div class="flex">
+            <!-- Sticky Left Navigation -->
+            <aside class="hidden lg:block w-64 flex-shrink-0">
+                <nav class="sticky top-24 py-20 pr-8">
+                    <h3 class="text-xs font-bold uppercase tracking-widest text-text-muted mb-6">On This Page</h3>
+                    <ul class="space-y-3">
+                        {navItems.map(item => (
+                            <li>
+                                <a 
+                                    href={\`#\${item.id}\`} 
+                                    class="nav-link flex items-center gap-2 text-sm text-text-muted hover:text-mango-green-dark py-2 px-3 -mx-3 transition-colors"
+                                >
+                                    {item.label}
+                                </a>
+                            </li>
                         ))}
-                    </div>
-                </div>
+                    </ul>
+                </nav>
+            </aside>
 
-                <!-- Additional Tools Section -->
-                <div id="tools" class="mb-16 scroll-mt-24">
-                    <h2 class="font-display italic text-3xl text-text-primary mb-6 flex items-center gap-3">
-                        <BookOpen class="w-8 h-8 text-mango-green-dark" />
-                        Additional Tools
-                    </h2>
+            <!-- Main Content -->
+            <section class="flex-1 py-20 md:py-24 bg-background min-w-0">
+                <div class="max-w-4xl">
+                    <h1 class="font-display italic text-4xl md:text-5xl lg:text-6xl text-text-primary mb-10 leading-tight">
+                        Resources
+                    </h1>
                     
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        {tools.map(tool => (
-                            <a 
-                                href={tool.link} 
-                                target="_blank" 
-                                rel="noopener" 
-                                class={`tool-card ${tool.color} p-5 block`}
-                            >
-                                <h3 class="font-display italic text-lg text-text-primary mb-2">{tool.name}</h3>
-                                <p class="text-text-muted text-sm mb-3">{tool.description}</p>
-                                <span class="text-mango-green-dark font-semibold text-sm inline-flex items-center gap-1">
-                                    Visit site <ExternalLink class="w-3 h-3" />
-                                </span>
-                            </a>
-                        ))}
-                    </div>
-                </div>
-
-                <!-- Datasets Section -->
-                <div id="datasets" class="mb-16 scroll-mt-24">
-                    <h2 class="font-display italic text-3xl text-text-primary mb-6 flex items-center gap-3">
-                        <Database class="w-8 h-8 text-mango-green-dark" />
-                        Datasets
-                    </h2>
-                    
-                    <p class="text-text-muted mb-6">
-                        Access social media datasets for research. Some require API access or applications.
+                    <p class="text-xl text-text-muted mb-16 leading-relaxed">
+                        Curated resources to help you understand coordinated inauthentic behavior, bot detection, and information integrity.
                     </p>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        {datasets.map(dataset => (
-                            <a 
-                                href={dataset.link} 
-                                target="_blank" 
-                                rel="noopener" 
-                                class={`dataset-card ${dataset.color} p-5 block`}
-                            >
-                                <div class="flex justify-between items-start mb-2">
-                                    <h3 class="font-display italic text-lg text-text-primary">{dataset.name}</h3>
-                                    <span class={`text-xs px-2 py-1 ${dataset.access === 'Free' ? 'bg-mango-green-light text-mango-green-dark' : 'bg-mango-yellow-light text-text-muted'}`}>
-                                        {dataset.access}
-                                    </span>
-                                </div>
-                                <p class="text-text-muted text-sm mb-3">{dataset.description}</p>
-                                <span class="text-mango-green-dark font-semibold text-sm inline-flex items-center gap-1">
-                                    Access dataset <ExternalLink class="w-3 h-3" />
-                                </span>
-                            </a>
-                        ))}
-                    </div>
-                </div>
 
-                <!-- Understanding CIB -->
-                <div id="understanding" class="mb-16 scroll-mt-24">
-                    <h2 class="font-display italic text-3xl text-text-primary mb-6 flex items-center gap-3">
-                        <HelpCircle class="w-8 h-8 text-mango-green-dark" />
-                        Understanding CIB
-                    </h2>
-                    
-                    <div class="bg-mango-yellow-light p-8">
-                        <p class="text-text-muted mb-6 leading-relaxed text-lg">
-                            Coordinated Inauthentic Behavior (CIB) refers to the use of fake accounts or automated tools to artificially amplify content, manipulate public discourse, or mislead users about who is behind certain messages. CIB campaigns can be domestic or foreign, and may target elections, public health discussions, or other civic topics.
-                        </p>
-                        <div class="flex flex-wrap gap-3">
-                            <span class="keyword-tag bg-white px-4 py-2 text-sm text-text-primary">Bot Networks</span>
-                            <span class="keyword-tag bg-white px-4 py-2 text-sm text-text-primary">Astroturfing</span>
-                            <span class="keyword-tag bg-white px-4 py-2 text-sm text-text-primary">Sockpuppets</span>
-                            <span class="keyword-tag bg-white px-4 py-2 text-sm text-text-primary">Troll Farms</span>
-                            <span class="keyword-tag bg-white px-4 py-2 text-sm text-text-primary">Information Operations</span>
+                    <!-- Research Papers - Compact 2-column grid -->
+                    <div id="research" class="mb-20 scroll-mt-24">
+                        <h2 class="font-display italic text-3xl text-text-primary mb-8 flex items-center gap-3">
+                            <FileText class="w-8 h-8 text-mango-green-dark" />
+                            Research Papers
+                        </h2>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            {researchPapers.map((paper, i) => (
+                                <a 
+                                    href={paper.link} 
+                                    target="_blank" 
+                                    rel="noopener" 
+                                    class="paper-card group bg-background-alt p-5 border-l-4 border-mango-green-dark hover:border-mango-yellow"
+                                >
+                                    <h3 class="font-semibold text-text-primary mb-2 text-sm leading-tight group-hover:text-mango-green-dark transition-colors">
+                                        {paper.title}
+                                    </h3>
+                                    <p class="text-xs text-text-muted">
+                                        {paper.authors} ({paper.year}) · {paper.publication}
+                                    </p>
+                                    <span class="inline-flex items-center gap-1 text-xs text-mango-green-dark mt-3 opacity-0 group-hover:opacity-100 transition-opacity">
+                                        Read paper <ExternalLink class="w-3 h-3" />
+                                    </span>
+                                </a>
+                            ))}
                         </div>
                     </div>
-                </div>
 
-                <!-- Blog Section -->
-                <div id="blog" class="mb-16 scroll-mt-24">
-                    <h2 class="font-display italic text-3xl text-text-primary mb-6 flex items-center gap-3">
-                        <Newspaper class="w-8 h-8 text-mango-green-dark" />
-                        From Our Blog
-                    </h2>
-                    <BlogFeatured posts={blogPosts} />
-                </div>
+                    <!-- Additional Tools Section -->
+                    <div id="tools" class="mb-20 scroll-mt-24">
+                        <h2 class="font-display italic text-3xl text-text-primary mb-8 flex items-center gap-3">
+                            <BookOpen class="w-8 h-8 text-mango-green-dark" />
+                            Additional Tools
+                        </h2>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            {tools.map(tool => (
+                                <a 
+                                    href={tool.link} 
+                                    target="_blank" 
+                                    rel="noopener" 
+                                    class={\`tool-card \${tool.color} p-6 block\`}
+                                >
+                                    <h3 class="font-display italic text-lg text-text-primary mb-3">{tool.name}</h3>
+                                    <p class="text-text-muted text-sm mb-4">{tool.description}</p>
+                                    <span class="text-mango-green-dark font-semibold text-sm inline-flex items-center gap-1">
+                                        Visit site <ExternalLink class="w-3 h-3" />
+                                    </span>
+                                </a>
+                            ))}
+                        </div>
+                    </div>
 
-                <!-- Glossary Section -->
-                <div id="glossary" class="mb-16 scroll-mt-24">
-                    <h2 class="font-display italic text-3xl text-text-primary mb-6 flex items-center gap-3">
-                        <BookOpen class="w-8 h-8 text-mango-green-dark" />
-                        Glossary of Terms
-                    </h2>
-                    <GlossaryAccordion terms={glossaryTerms} />
-                </div>
+                    <!-- Datasets Section -->
+                    <div id="datasets" class="mb-20 scroll-mt-24">
+                        <h2 class="font-display italic text-3xl text-text-primary mb-8 flex items-center gap-3">
+                            <Database class="w-8 h-8 text-mango-green-dark" />
+                            Datasets
+                        </h2>
+                        
+                        <p class="text-text-muted mb-8">
+                            Access social media datasets for research. Some require API access or applications.
+                        </p>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            {datasets.map(dataset => (
+                                <a 
+                                    href={dataset.link} 
+                                    target="_blank" 
+                                    rel="noopener" 
+                                    class={\`dataset-card \${dataset.color} p-6 block\`}
+                                >
+                                    <div class="flex justify-between items-start mb-3">
+                                        <h3 class="font-display italic text-lg text-text-primary">{dataset.name}</h3>
+                                        <span class={\`text-xs px-2 py-1 \${dataset.access === 'Free' ? 'bg-mango-green-light text-mango-green-dark' : 'bg-mango-yellow-light text-text-muted'}\`}>
+                                            {dataset.access}
+                                        </span>
+                                    </div>
+                                    <p class="text-text-muted text-sm mb-4">{dataset.description}</p>
+                                    <span class="text-mango-green-dark font-semibold text-sm inline-flex items-center gap-1">
+                                        Access dataset <ExternalLink class="w-3 h-3" />
+                                    </span>
+                                </a>
+                            ))}
+                        </div>
+                    </div>
 
-            </div>
-        </section>
+                    <!-- Understanding CIB -->
+                    <div id="understanding" class="mb-20 scroll-mt-24">
+                        <h2 class="font-display italic text-3xl text-text-primary mb-8 flex items-center gap-3">
+                            <HelpCircle class="w-8 h-8 text-mango-green-dark" />
+                            Understanding CIB
+                        </h2>
+                        
+                        <div class="bg-mango-yellow-light p-8 md:p-10">
+                            <p class="text-text-muted mb-8 leading-relaxed text-lg">
+                                Coordinated Inauthentic Behavior (CIB) refers to the use of fake accounts or automated tools to artificially amplify content, manipulate public discourse, or mislead users about who is behind certain messages. CIB campaigns can be domestic or foreign, and may target elections, public health discussions, or other civic topics.
+                            </p>
+                            <div class="flex flex-wrap gap-4">
+                                <span class="keyword-tag bg-white px-4 py-2 text-sm text-text-primary">Bot Networks</span>
+                                <span class="keyword-tag bg-white px-4 py-2 text-sm text-text-primary">Astroturfing</span>
+                                <span class="keyword-tag bg-white px-4 py-2 text-sm text-text-primary">Sockpuppets</span>
+                                <span class="keyword-tag bg-white px-4 py-2 text-sm text-text-primary">Troll Farms</span>
+                                <span class="keyword-tag bg-white px-4 py-2 text-sm text-text-primary">Information Operations</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Blog Section -->
+                    <div id="blog" class="mb-20 scroll-mt-24">
+                        <h2 class="font-display italic text-3xl text-text-primary mb-8 flex items-center gap-3">
+                            <Newspaper class="w-8 h-8 text-mango-green-dark" />
+                            From Our Blog
+                        </h2>
+                        <BlogFeatured posts={blogPosts} />
+                    </div>
+
+                    <!-- Glossary Section -->
+                    <div id="glossary" class="mb-20 scroll-mt-24">
+                        <h2 class="font-display italic text-3xl text-text-primary mb-8 flex items-center gap-3">
+                            <BookOpen class="w-8 h-8 text-mango-green-dark" />
+                            Glossary of Terms
+                        </h2>
+                        <GlossaryAccordion terms={glossaryTerms} />
+                    </div>
+
+                </div>
+            </section>
+        </div>
     </div>
     
     <Newsletter />
@@ -401,7 +404,7 @@ const navItems = [
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             const id = entry.target.getAttribute('id');
-            const navLink = document.querySelector(`a[href="#${id}"]`);
+            const navLink = document.querySelector(\`a[href="#\${id}"]\`);
             if (navLink) {
                 if (entry.isIntersecting) {
                     document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active', 'text-mango-green-dark', 'font-semibold'));
