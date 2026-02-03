@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Footer from '../components/Footer.astro';
+import CodeBlock from '../components/CodeBlock.astro';
 import cliScreenshot from '../assets/CLI_Image_CIB.png';
 import { Github, BookOpen, FileCode, Database, Terminal } from '@lucide/astro';
 ---
@@ -23,30 +24,21 @@ import { Github, BookOpen, FileCode, Database, Terminal } from '@lucide/astro';
 				<div class="space-y-8">
 					<div>
 						<h3 class="text-lg font-semibold text-text-primary mb-3">1. Clone the repository</h3>
-						<code class="block bg-text-primary text-mango-yellow p-4 font-mono text-sm">
-							git clone https://github.com/civictechdc/cib-mango-tree.git
-						</code>
+						<CodeBlock code="git clone https://github.com/civictechdc/cib-mango-tree.git" />
 					</div>
 					
 					<div>
 						<h3 class="text-lg font-semibold text-text-primary mb-3">2. Create virtual environment and install dependencies</h3>
 						<div class="space-y-3">
-							<code class="block bg-text-primary text-mango-yellow p-4 font-mono text-sm">
-								python -m venv venv
-							</code>
+							<CodeBlock code="python -m venv venv" />
 							<p class="text-text-muted text-sm">Then run the bootstrap script:</p>
-							<code class="block bg-text-primary text-mango-yellow p-4 font-mono text-sm">
-								./bootstrap.sh &nbsp;&nbsp;&nbsp;# macOS/Linux<br/>
-								bootstrap.ps1 &nbsp;&nbsp;&nbsp;# Windows PowerShell
-							</code>
+							<CodeBlock code="./bootstrap.sh&nbsp;&nbsp;&nbsp;# macOS/Linux<br/>bootstrap.ps1&nbsp;&nbsp;&nbsp;# Windows PowerShell" />
 						</div>
 					</div>
 					
 					<div>
 						<h3 class="text-lg font-semibold text-text-primary mb-3">3. Run the application</h3>
-						<code class="block bg-text-primary text-mango-yellow p-4 font-mono text-sm">
-							python -m cibmangotree
-						</code>
+						<CodeBlock code="python -m cibmangotree" />
 					</div>
 				</div>
 

@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import Footer from '../components/Footer.astro';
 import PlatformDownload from '../components/PlatformDownload.astro';
+import CodeBlock from '../components/CodeBlock.astro';
 import cliScreenshot from '../assets/CLI_Image_CIB.png';
 import { BookOpen, Github, MessageCircle, Bug } from '@lucide/astro';
 
@@ -95,12 +96,8 @@ const dataPreparationSteps = [
                         From Source
                     </h3>
                     <div class="space-y-4 mb-5">
-                        <code class="block bg-text-primary text-mango-yellow p-4 font-mono text-sm">
-                            python -m venv venv
-                        </code>
-                        <code class="block bg-text-primary text-mango-yellow p-4 font-mono text-sm">
-                            ./bootstrap.sh
-                        </code>
+                        <CodeBlock code="python -m venv venv" />
+                        <CodeBlock code="./bootstrap.sh" />
                     </div>
                     <p class="text-text-muted text-sm">For Python developers. Requires <strong>Python 3.12</strong> or higher.</p>
                 </div>
@@ -111,9 +108,7 @@ const dataPreparationSteps = [
                         <span class="bg-[#24292e] text-white px-2 py-1 text-xs font-bold">GITHUB</span>
                         Clone Repository
                     </h3>
-                    <code class="block bg-text-primary text-mango-yellow p-4 font-mono text-sm mb-5 overflow-x-auto">
-                        git clone https://github.com/civictechdc/cib-mango-tree.git
-                    </code>
+                    <CodeBlock code="git clone https://github.com/civictechdc/cib-mango-tree.git" class="mb-5" />
                     <p class="text-text-muted text-sm">For contributors. Get the latest development version.</p>
                 </div>
             </div>
@@ -147,10 +142,7 @@ const dataPreparationSteps = [
             <div class="mt-12 bg-white p-8 border border-border-color">
                 <h3 class="font-semibold text-text-primary mb-5">Expected CSV Format</h3>
                 <div class="overflow-x-auto">
-                    <code class="block bg-text-primary text-mango-yellow p-5 font-mono text-xs">
-user_id,username,post_content,timestamp,retweets,likes
-12345,@example_user,"Sample post content here",2025-01-15T10:30:00Z,5,12
-                    </code>
+                    <CodeBlock code="user_id,username,post_content,timestamp,retweets,likes<br/>12345,@example_user,&quot;Sample post content here&quot;,2025-01-15T10:30:00Z,5,12" />
                 </div>
             </div>
         </div>
@@ -181,24 +173,17 @@ user_id,username,post_content,timestamp,retweets,likes
             <div class="space-y-6">
                 <div class="quick-step">
                     <p class="text-text-muted mb-3 font-semibold">1. Activate your virtual environment:</p>
-                    <code class="block bg-text-primary text-mango-yellow p-4 font-mono text-sm">
-                        source venv/bin/activate &nbsp;&nbsp;&nbsp;# macOS/Linux<br/>
-                        venv\Scripts\activate &nbsp;&nbsp;&nbsp;# Windows
-                    </code>
+                    <CodeBlock code="source venv/bin/activate&nbsp;&nbsp;&nbsp;# macOS/Linux<br/>venv\\Scripts\\activate&nbsp;&nbsp;&nbsp;# Windows" />
                 </div>
                 
                 <div class="quick-step">
                     <p class="text-text-muted mb-3 font-semibold">2. Run the application:</p>
-                    <code class="block bg-text-primary text-mango-yellow p-4 font-mono text-sm">
-                        python -m cibmangotree
-                    </code>
+                    <CodeBlock code="python -m cibmangotree" />
                 </div>
                 
                 <div class="quick-step">
                     <p class="text-text-muted mb-3 font-semibold">3. See available commands:</p>
-                    <code class="block bg-text-primary text-mango-yellow p-4 font-mono text-sm">
-                        python -m cibmangotree --help
-                    </code>
+                    <CodeBlock code="python -m cibmangotree --help" />
                 </div>
             </div>
         </div>
