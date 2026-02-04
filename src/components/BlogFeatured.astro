@@ -1,5 +1,6 @@
 ---
 import { ArrowRight, ExternalLink } from '@lucide/astro';
+import defaultPlaceholder from '../assets/blog/mango_placeholder_5.png';
 
 interface BlogPost {
     title: string;
@@ -19,12 +20,8 @@ const { posts, mediumUrl = 'https://medium.com/@cibmangotree' } = Astro.props;
 const featuredPost = posts[0];
 const otherPosts = posts.slice(1, 4); // Get 3 posts for the right side
 
-// Default Medium placeholder images based on article themes
-const defaultImages = [
-    'https://miro.medium.com/v2/resize:fit:720/format:webp/1*vbHf1vAyBb2u4K1-RGtaYA.jpeg',
-    'https://miro.medium.com/v2/resize:fit:720/format:webp/1*Y3Yd9tOwuF_gy_s0aK3vsg.jpeg',
-    'https://miro.medium.com/v2/resize:fit:720/format:webp/1*8Z_LSzL-b24jlX_g8e9k4A.png'
-];
+// Default fallback image
+const defaultImage = defaultPlaceholder.src;
 ---
 
 <div class="blog-featured">
@@ -37,7 +34,7 @@ const defaultImages = [
                     <!-- Stacked Image on top -->
                     <div class="h-44 md:h-48 relative overflow-hidden">
                         <img 
-                            src={featuredPost.imageUrl || defaultImages[0]}
+                            src={featuredPost.imageUrl || defaultImage}
                             alt={featuredPost.title}
                             class="featured-image w-full h-full object-cover"
                         />

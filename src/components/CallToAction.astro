@@ -1,5 +1,11 @@
 ---
-import { Download, BookOpen, Users, Heart } from '@lucide/astro';
+import { Download, BookOpen, Users, Heart, Calendar, Video, MapPin } from '@lucide/astro';
+
+const meetings = [
+    { name: 'Engagement Scrum', day: 'Tuesday', time: '7-8pm', type: 'virtual' as const },
+    { name: 'Product Scrum', day: 'Thursday', time: '7-8pm', type: 'virtual' as const },
+    { name: 'Civic Tech DC Project Night', day: '2nd & 4th Wed', time: 'Evening', type: 'in-person' as const, link: 'https://lu.ma/civictechdc' }
+];
 ---
 
 <section class="py-20 px-8 md:px-12 bg-mango-green-dark">
@@ -7,9 +13,42 @@ import { Download, BookOpen, Users, Heart } from '@lucide/astro';
         <h2 class="font-display italic text-3xl md:text-4xl text-white mb-6">
             Ready to Make an Impact?
         </h2>
-        <p class="text-white/80 text-lg mb-12 max-w-2xl mx-auto">
+        <p class="text-white/80 text-lg mb-8 max-w-2xl mx-auto">
             Join our community of researchers, developers, and citizens working to protect digital democracy.
         </p>
+        
+        <!-- Compact Meeting Schedule -->
+        <div class="mb-12 max-w-3xl mx-auto">
+            <h3 class="text-white/90 text-sm font-semibold uppercase tracking-wider mb-4 flex items-center justify-center gap-2">
+                <Calendar class="w-4 h-4" />
+                Meeting Schedule
+            </h3>
+            <div class="flex flex-col sm:flex-row gap-3 justify-center">
+                {meetings.map((meeting) => (
+                    <div class="meeting-chip flex items-center gap-3 bg-white/10 backdrop-blur-sm px-4 py-3 border border-white/20">
+                        {meeting.type === 'virtual' ? (
+                            <Video class="w-4 h-4 text-cyan-300 flex-shrink-0" />
+                        ) : (
+                            <MapPin class="w-4 h-4 text-mango-yellow flex-shrink-0" />
+                        )}
+                        <div class="text-left">
+                            <div class="text-white text-sm font-medium">{meeting.name}</div>
+                            <div class="text-white/60 text-xs">{meeting.day} @ {meeting.time}</div>
+                        </div>
+                        {meeting.link && (
+                            <a 
+                                href={meeting.link} 
+                                target="_blank" 
+                                rel="noopener noreferrer"
+                                class="text-mango-yellow hover:text-white text-xs font-medium ml-2"
+                            >
+                                RSVP →
+                            </a>
+                        )}
+                    </div>
+                ))}
+            </div>
+        </div>
         
         <div class="flex flex-col sm:flex-row gap-4 justify-center items-center flex-wrap">
             <!-- Primary CTA - Download (most prominent) -->
@@ -113,5 +152,14 @@ import { Download, BookOpen, Users, Heart } from '@lucide/astro';
 
     .cta-btn:active {
         transform: translateY(-1px) scale(1);
+    }
+
+    .meeting-chip {
+        transition: all 0.3s ease;
+    }
+
+    .meeting-chip:hover {
+        background-color: rgba(255, 255, 255, 0.15);
+        transform: translateY(-2px);
     }
 </style>

@@ -6,6 +6,10 @@ import NewsQuote from '../components/NewsQuote.astro';
 import SprintCalendar from '../components/SprintCalendar.astro';
 import teamMeeting from '../assets/team-meeting.jpg';
 
+// News images
+import newsCivicTech from '../assets/news/img_civictechinaction.jpg';
+import newsGW from '../assets/news/img_CIBmangoandGW.png';
+
 const values = [
     {
         title: 'Transparency',
@@ -31,7 +35,7 @@ const newsItems = [
         date: 'January 24, 2025',
         link: 'https://technical.ly/civic-news/civic-tech-dc-volunteers-climate-ris/',
         excerpt: 'Civic Tech DC held their annual public Show & Tell Night on Jan 22, where we demoed our software to government and nonprofit leaders.',
-        imageUrl: 'https://technical.ly/wp-content/uploads/2025/01/IMG_0090-scaled.jpg'
+        imageUrl: newsCivicTech.src
     },
     {
         title: 'CIB Mango Tree at GW Open Source Conference',
@@ -39,7 +43,7 @@ const newsItems = [
         date: 'March 24, 2025',
         link: '#',
         excerpt: 'We are excited to announce that CIB Mango Tree will be presenting at GW\'s First Annual Open Source Conference.',
-        imageUrl: 'https://www.gwu.edu/themes/gwsub/images/gw-primary-logo.svg'
+        imageUrl: newsGW.src
     }
 ];
 ---

@@ -41,36 +41,36 @@ import { Download } from '@lucide/astro';
 					</div>
 					
 					<!-- Stat Card 1: Bad bots -->
-					<div class="stat-card bg-[#FFE099] p-6 flex flex-col justify-center cursor-default" style="animation-delay: 0.1s;">
+					<a href="https://www.imperva.com/resources/resource-library/reports/2025-bad-bot-report/" target="_blank" rel="noopener noreferrer" class="stat-card bg-[#FFE099] p-6 flex flex-col justify-center cursor-pointer block" style="animation-delay: 0.1s;">
 						<div class="stat-number font-display italic text-3xl md:text-4xl lg:text-5xl text-text-primary mb-2">
-							40%<a href="https://www.imperva.com/resources/resource-library/reports/2025-bad-bot-report/" target="_blank" rel="noopener noreferrer" class="citation-link"><sup>[1]</sup></a>
+							40%<sup class="citation-sup">[1]</sup>
 						</div>
 						<div class="text-xs md:text-sm text-text-primary/80">Bad bots in internet traffic</div>
-					</div>
+					</a>
 					
 					<!-- Stat Card 2: Worried about disinformation -->
-					<div class="stat-card bg-[#E5F7F8] p-6 flex flex-col justify-center cursor-default" style="animation-delay: 0.2s;">
+					<a href="https://www.ipsos.com/en/elections-social-media-battle-against-disinformation-and-trust-issues" target="_blank" rel="noopener noreferrer" class="stat-card bg-[#E5F7F8] p-6 flex flex-col justify-center cursor-pointer block" style="animation-delay: 0.2s;">
 						<div class="stat-number font-display italic text-3xl md:text-4xl lg:text-5xl text-text-primary mb-2">
-							87%<a href="https://www.ipsos.com/en/elections-social-media-battle-against-disinformation-and-trust-issues" target="_blank" rel="noopener noreferrer" class="citation-link"><sup>[2]</sup></a>
+							87%<sup class="citation-sup">[2]</sup>
 						</div>
 						<div class="text-xs md:text-sm text-text-primary/80">Worried about disinfo</div>
-					</div>
+					</a>
 					
 					<!-- Stat Card 3: Twitter bot users -->
-					<div class="stat-card bg-[#FFF5E6] p-6 flex flex-col justify-center cursor-default" style="animation-delay: 0.3s;">
+					<a href="https://polisci.wustl.edu/news/are-bots-winning-war-control-social-media" target="_blank" rel="noopener noreferrer" class="stat-card bg-[#FFF5E6] p-6 flex flex-col justify-center cursor-pointer block" style="animation-delay: 0.3s;">
 						<div class="stat-number font-display italic text-2xl md:text-3xl lg:text-4xl text-text-primary mb-2">
-							25-68%<a href="https://polisci.wustl.edu/news/are-bots-winning-war-control-social-media" target="_blank" rel="noopener noreferrer" class="citation-link"><sup>[3]</sup></a>
+							25-68%<sup class="citation-sup">[3]</sup>
 						</div>
 						<div class="text-xs md:text-sm text-text-primary/80">Twitter users are bots</div>
-					</div>
+					</a>
 					
 					<!-- Stat Card 4: Bot accounts spreading misinfo -->
-					<div class="stat-card bg-mango-green-light p-6 flex flex-col justify-center cursor-default" style="animation-delay: 0.4s;">
+					<a href="https://www.pewresearch.org/internet/2018/04/09/bots-in-the-twittersphere/" target="_blank" rel="noopener noreferrer" class="stat-card bg-mango-green-light p-6 flex flex-col justify-center cursor-pointer block" style="animation-delay: 0.4s;">
 						<div class="stat-number font-display italic text-3xl md:text-4xl lg:text-5xl text-text-primary mb-2">
-							33%<a href="https://www.pewresearch.org/internet/2018/04/09/bots-in-the-twittersphere/" target="_blank" rel="noopener noreferrer" class="citation-link"><sup>[4]</sup></a>
+							33%<sup class="citation-sup">[4]</sup>
 						</div>
 						<div class="text-xs md:text-sm text-text-primary/80">Bot accounts spread misinfo</div>
-					</div>
+					</a>
 				</div>
 			</div>
 		</div>
@@ -208,18 +208,11 @@ import { Download } from '@lucide/astro';
 		transform: scale(1.1);
 	}
 
-	/* Citation links */
-	.citation-link {
+	/* Citation superscript */
+	.citation-sup {
 		color: #5A8A4A;
-		text-decoration: none;
 		font-size: 0.5em;
-		vertical-align: super;
-		transition: color 0.2s ease;
-	}
-
-	.citation-link:hover {
-		color: #4A7A3A;
-		text-decoration: underline;
+		margin-left: 2px;
 	}
 
 	/* Mango card special hover */

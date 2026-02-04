@@ -6,6 +6,12 @@ import BlogFeatured from '../components/BlogFeatured.astro';
 import GlossaryAccordion from '../components/GlossaryAccordion.astro';
 import { ExternalLink, FileText, Database, BookOpen, Newspaper, HelpCircle } from '@lucide/astro';
 
+// Blog placeholder images
+import blogImg1 from '../assets/blog/Mango_Placeholder_1.png';
+import blogImg2 from '../assets/blog/Mango_Placeholder_2.png';
+import blogImg3 from '../assets/blog/Mango_Placeholder_3.png';
+import blogImg4 from '../assets/blog/Mango_Placeholder_4.png';
+
 const researchPapers = [
     {
         title: 'The Spread of True and False News Online',
@@ -116,25 +122,28 @@ const blogPosts = [
         date: '2025',
         link: 'https://medium.com/@cibmangotree/behind-the-screens-how-coordinated-inauthentic-behavior-shapes-online-narratives-dae5bb2b5a18',
         author: 'Helen Glover',
-        imageUrl: 'https://miro.medium.com/v2/resize:fit:1200/1*placeholder.png'
+        imageUrl: blogImg1.src
     },
     {
         title: 'A Year of Community and Growth at CIB Mango Tree',
         publication: 'Medium',
         date: 'December 17, 2025',
-        link: 'https://medium.com/@cibmangotree/a-year-of-community-and-growth-at-cib-mango-tree-3c9a49383ceb'
+        link: 'https://medium.com/@cibmangotree/a-year-of-community-and-growth-at-cib-mango-tree-3c9a49383ceb',
+        imageUrl: blogImg2.src
     },
     {
         title: 'Inauthentic Trends: Tracking Coordinated Campaigns',
         publication: 'Medium',
         date: 'June 11, 2025',
-        link: 'https://medium.com/@cibmangotree/inauthentic-trends-tracking-coordinated-campaigns-on-social-media-through-hashtag-usage-2d8015966ebd'
+        link: 'https://medium.com/@cibmangotree/inauthentic-trends-tracking-coordinated-campaigns-on-social-media-through-hashtag-usage-2d8015966ebd',
+        imageUrl: blogImg3.src
     },
     {
         title: 'Meet the team using social media analysis for social change',
         publication: 'Medium',
         date: 'May 15, 2025',
-        link: 'https://medium.com/@cibmangotree/meet-the-team-using-social-media-analysis-as-a-tool-for-social-change-018009c889a8'
+        link: 'https://medium.com/@cibmangotree/meet-the-team-using-social-media-analysis-as-a-tool-for-social-change-018009c889a8',
+        imageUrl: blogImg4.src
     }
 ];
 
@@ -166,11 +175,11 @@ const glossaryTerms = [
 ];
 
 const navItems = [
+    { id: 'understanding', label: 'Understanding CIB', icon: 'HelpCircle' },
+    { id: 'blog', label: 'From Our Blog', icon: 'Newspaper' },
     { id: 'research', label: 'Research Papers', icon: 'FileText' },
     { id: 'tools', label: 'Additional Tools', icon: 'BookOpen' },
     { id: 'datasets', label: 'Datasets', icon: 'Database' },
-    { id: 'understanding', label: 'Understanding CIB', icon: 'HelpCircle' },
-    { id: 'blog', label: 'From Our Blog', icon: 'Newspaper' },
     { id: 'glossary', label: 'Glossary', icon: 'BookOpen' }
 ];
 ---
@@ -208,6 +217,36 @@ const navItems = [
                     <p class="text-xl text-text-muted mb-16 leading-relaxed">
                         Curated resources to help you understand coordinated inauthentic behavior, bot detection, and information integrity.
                     </p>
+
+                    <!-- Understanding CIB - Now First -->
+                    <div id="understanding" class="mb-20 scroll-mt-24">
+                        <h2 class="font-display italic text-3xl text-text-primary mb-8 flex items-center gap-3">
+                            <HelpCircle class="w-8 h-8 text-mango-green-dark" />
+                            Understanding CIB
+                        </h2>
+                        
+                        <div class="bg-mango-yellow-light p-8 md:p-10">
+                            <p class="text-text-muted mb-8 leading-relaxed text-lg">
+                                Coordinated Inauthentic Behavior (CIB) refers to the use of fake accounts or automated tools to artificially amplify content, manipulate public discourse, or mislead users about who is behind certain messages. CIB campaigns can be domestic or foreign, and may target elections, public health discussions, or other civic topics.
+                            </p>
+                            <div class="flex flex-wrap gap-4">
+                                <span class="keyword-tag bg-white px-4 py-2 text-sm text-text-primary">Bot Networks</span>
+                                <span class="keyword-tag bg-white px-4 py-2 text-sm text-text-primary">Astroturfing</span>
+                                <span class="keyword-tag bg-white px-4 py-2 text-sm text-text-primary">Sockpuppets</span>
+                                <span class="keyword-tag bg-white px-4 py-2 text-sm text-text-primary">Troll Farms</span>
+                                <span class="keyword-tag bg-white px-4 py-2 text-sm text-text-primary">Information Operations</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Blog Section - Now Second -->
+                    <div id="blog" class="mb-20 scroll-mt-24">
+                        <h2 class="font-display italic text-3xl text-text-primary mb-8 flex items-center gap-3">
+                            <Newspaper class="w-8 h-8 text-mango-green-dark" />
+                            From Our Blog
+                        </h2>
+                        <BlogFeatured posts={blogPosts} />
+                    </div>
 
                     <!-- Research Papers - Compact 2-column grid -->
                     <div id="research" class="mb-20 scroll-mt-24">
@@ -295,36 +334,6 @@ const navItems = [
                                 </a>
                             ))}
                         </div>
-                    </div>
-
-                    <!-- Understanding CIB -->
-                    <div id="understanding" class="mb-20 scroll-mt-24">
-                        <h2 class="font-display italic text-3xl text-text-primary mb-8 flex items-center gap-3">
-                            <HelpCircle class="w-8 h-8 text-mango-green-dark" />
-                            Understanding CIB
-                        </h2>
-                        
-                        <div class="bg-mango-yellow-light p-8 md:p-10">
-                            <p class="text-text-muted mb-8 leading-relaxed text-lg">
-                                Coordinated Inauthentic Behavior (CIB) refers to the use of fake accounts or automated tools to artificially amplify content, manipulate public discourse, or mislead users about who is behind certain messages. CIB campaigns can be domestic or foreign, and may target elections, public health discussions, or other civic topics.
-                            </p>
-                            <div class="flex flex-wrap gap-4">
-                                <span class="keyword-tag bg-white px-4 py-2 text-sm text-text-primary">Bot Networks</span>
-                                <span class="keyword-tag bg-white px-4 py-2 text-sm text-text-primary">Astroturfing</span>
-                                <span class="keyword-tag bg-white px-4 py-2 text-sm text-text-primary">Sockpuppets</span>
-                                <span class="keyword-tag bg-white px-4 py-2 text-sm text-text-primary">Troll Farms</span>
-                                <span class="keyword-tag bg-white px-4 py-2 text-sm text-text-primary">Information Operations</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Blog Section -->
-                    <div id="blog" class="mb-20 scroll-mt-24">
-                        <h2 class="font-display italic text-3xl text-text-primary mb-8 flex items-center gap-3">
-                            <Newspaper class="w-8 h-8 text-mango-green-dark" />
-                            From Our Blog
-                        </h2>
-                        <BlogFeatured posts={blogPosts} />
                     </div>
 
                     <!-- Glossary Section -->
