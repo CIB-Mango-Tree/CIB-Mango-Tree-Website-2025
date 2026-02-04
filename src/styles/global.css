@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
-/* Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap');
+/* Google Fonts - Inter with extended weights for sans-serif hierarchy */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 
 @theme {
   /* Colors - Lighter Mango CIB Palette */
@@ -23,8 +23,8 @@
   --color-border: #E5E2DC;
   --color-cyan-tint: #E5F7F8;
   
-  /* Fonts */
-  --font-display: 'Playfair Display', Georgia, serif;
+  /* Fonts - Sans-serif throughout */
+  --font-display: 'Inter', system-ui, sans-serif;
   --font-body: 'Inter', system-ui, sans-serif;
 }
 
@@ -49,11 +49,11 @@ body {
   font-family: var(--font-body);
 }
 
-/* Headline Style - Editorial Italic */
+/* Headline Style - Bold Sans-Serif */
 .headline {
   font-family: var(--font-display);
-  font-style: italic;
-  letter-spacing: -0.02em;
+  font-weight: 700;
+  letter-spacing: -0.03em;
 }
 
 /* Animation Utilities */
