@@ -1,236 +1,178 @@
 ---
-import mangoAnimation from "../assets/mango_animation.gif";
-import { Download } from '@lucide/astro';
+import { Download } from "@lucide/astro";
+import StatCard from "@components/StatCard.astro";
 ---
 
 <section class="bg-background py-20 md:py-24 px-8 md:px-12">
-	<div class="max-w-7xl mx-auto">
-		<div class="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
-			<!-- Left side: Text content -->
-			<div class="flex-1 flex flex-col justify-center opacity-0 animate-fade-in">
-				<h1 class="font-display italic text-4xl md:text-5xl lg:text-6xl text-text-primary mb-8 leading-tight tracking-tight">
-					<span class="block headline-word">Harvest Knowledge.</span>
-					<span class="block headline-word" style="animation-delay: 0.1s;">Share the Fruit.</span>
-					<span class="block headline-word" style="animation-delay: 0.2s;">Defend Democracy.</span>
-				</h1>
-				<p class="text-lg md:text-xl text-text-muted mb-10 max-w-xl leading-relaxed opacity-0 animate-fade-in-up" style="animation-delay: 0.3s;">
-					An open-source library to detect and analyze coordinated
-					inauthentic behavior online
-				</p>
-				<div class="opacity-0 animate-fade-in-up" style="animation-delay: 0.4s;">
-					<a 
-						href="/download" 
-						class="download-btn group inline-flex items-center justify-center gap-2 bg-mango-green-dark text-white px-8 py-4 font-semibold text-lg"
-					>
-						<Download class="w-5 h-5 btn-icon" />
-						Download Now
-					</a>
-				</div>
-			</div>
+  <div class="max-w-7xl mx-auto">
+    <div class="flex flex-col lg:flex-row items-center">
+      <!-- Left side: Text content -->
+      <div
+        class="flex-1 flex flex-col justify-between opacity-0 animate-fade-in"
+      >
+        <h1
+          class="font-bold text-4xl md:text-5xl lg:text-6xl text-primary mb-8 leading-tight tracking-tight"
+        >
+          <span class="block headline-word">Harvest Knowledge.</span>
+          <span class="block headline-word animate-delay-100">
+            Share the Fruit.
+          </span>
+          <span class="block headline-word animate-delay-200">
+            Defend Democracy.
+          </span>
+        </h1>
+        <p
+          class="text-lg md:text-xl text-muted mb-10 max-w-xl leading-relaxed opacity-0 animate-fade-in-up animate-delay-300"
+        >
+          An open-source library to detect and analyze coordinated inauthentic
+          behavior online
+        </p>
+        <div class="opacity-0 animate-fade-in-up animate-delay-400">
+          <a
+            href="/download"
+            class="download-btn group inline-flex items-center justify-center gap-2 bg-mango-green-dark text-white px-8 py-4 font-semibold text-lg"
+          >
+            <Download class="w-5 h-5 btn-icon" />
+            Download Now
+          </a>
+        </div>
+      </div>
 
-			<!-- Right side: Bento Grid with Stats and Mango Animation -->
-			<div class="flex-1 opacity-0 animate-fade-in max-w-xl lg:max-w-2xl" style="animation-delay: 0.5s;">
-				<div class="grid grid-cols-2 md:grid-cols-3 gap-5">
-					<!-- Mango Animation - Large cell spanning 2 rows -->
-					<div class="mango-card bg-white flex items-center justify-center overflow-hidden row-span-2">
-						<img 
-							class="mango-img w-full h-full object-cover" 
-							src={mangoAnimation.src} 
-							alt="Mango tree illustration" 
-						/>
-					</div>
-					
-					<!-- Stat Card 1: Bad bots -->
-					<a href="https://www.imperva.com/resources/resource-library/reports/2025-bad-bot-report/" target="_blank" rel="noopener noreferrer" class="stat-card bg-[#FFE099] p-6 flex flex-col justify-center cursor-pointer block" style="animation-delay: 0.1s;">
-						<div class="stat-number font-display italic text-3xl md:text-4xl lg:text-5xl text-text-primary mb-2">
-							40%<sup class="citation-sup">[1]</sup>
-						</div>
-						<div class="text-xs md:text-sm text-text-primary/80">Bad bots in internet traffic</div>
-					</a>
-					
-					<!-- Stat Card 2: Worried about disinformation -->
-					<a href="https://www.ipsos.com/en/elections-social-media-battle-against-disinformation-and-trust-issues" target="_blank" rel="noopener noreferrer" class="stat-card bg-[#E5F7F8] p-6 flex flex-col justify-center cursor-pointer block" style="animation-delay: 0.2s;">
-						<div class="stat-number font-display italic text-3xl md:text-4xl lg:text-5xl text-text-primary mb-2">
-							87%<sup class="citation-sup">[2]</sup>
-						</div>
-						<div class="text-xs md:text-sm text-text-primary/80">Worried about disinfo</div>
-					</a>
-					
-					<!-- Stat Card 3: Twitter bot users -->
-					<a href="https://polisci.wustl.edu/news/are-bots-winning-war-control-social-media" target="_blank" rel="noopener noreferrer" class="stat-card bg-[#FFF5E6] p-6 flex flex-col justify-center cursor-pointer block" style="animation-delay: 0.3s;">
-						<div class="stat-number font-display italic text-2xl md:text-3xl lg:text-4xl text-text-primary mb-2">
-							25-68%<sup class="citation-sup">[3]</sup>
-						</div>
-						<div class="text-xs md:text-sm text-text-primary/80">Twitter users are bots</div>
-					</a>
-					
-					<!-- Stat Card 4: Bot accounts spreading misinfo -->
-					<a href="https://www.pewresearch.org/internet/2018/04/09/bots-in-the-twittersphere/" target="_blank" rel="noopener noreferrer" class="stat-card bg-mango-green-light p-6 flex flex-col justify-center cursor-pointer block" style="animation-delay: 0.4s;">
-						<div class="stat-number font-display italic text-3xl md:text-4xl lg:text-5xl text-text-primary mb-2">
-							33%<sup class="citation-sup">[4]</sup>
-						</div>
-						<div class="text-xs md:text-sm text-text-primary/80">Bot accounts spread misinfo</div>
-					</a>
-				</div>
-			</div>
-		</div>
-	</div>
+      <!-- Right side: Bento Grid with Stats and Mango Animation -->
+      <div class="opacity-0 animate-fade-in max-w-xl animte-delay-500">
+        <div class="grid grid-cols-2 gap-5">
+          <!-- Stat Card 1: Bad bots -->
+          <StatCard
+            href="https://www.imperva.com/resources/resource-library/reports/2025-bad-bot-report"
+            sourceIndex={1}
+            percentage="40%"
+            class="bg-mango-yellow animate-delay-100"
+          >
+            Bad bots in internet traffic
+          </StatCard>
+          <!-- Stat Card 2: Worried about disinformation -->
+          <StatCard
+            href="https://www.ipsos.com/en/elections-social-media-battle-against-disinformation-and-trust-issues"
+            sourceIndex={2}
+            percentage="87%"
+            class="bg-cyan-tint animate-delay-200"
+          >
+            Worried about disinfo
+          </StatCard>
+          <!-- Stat Card 3: Twitter bot users -->
+          <StatCard
+            href="https://polisci.wustl.edu/news/are-bots-winning-war-control-social-media"
+            sourceIndex={3}
+            percentage="25-68%"
+            class="bg-mango-yellow-light animate-delay-300"
+          >
+            Twitter users are bots
+          </StatCard>
+          <!-- Stat Card 4: Bot accounts spreading misinfo -->
+          <StatCard
+            href="https://www.pewresearch.org/internet/2018/04/09/bots-in-the-twittersphere"
+            sourceIndex={4}
+            percentage="33%"
+            class="bg-mango-green-light animate-delay-400"
+          >
+            Bot accounts spread misinfo
+          </StatCard>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
 <style>
-	@keyframes fadeIn {
-		from {
-			opacity: 0;
-			transform: translateY(10px);
-		}
-		to {
-			opacity: 1;
-			transform: translateY(0);
-		}
-	}
+  /* Headline word animation */
+  .headline-word {
+    opacity: 0;
+    animation: slideIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  }
 
-	@keyframes fadeInUp {
-		from {
-			opacity: 0;
-			transform: translateY(20px);
-		}
-		to {
-			opacity: 1;
-			transform: translateY(0);
-		}
-	}
+  @keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: translateX(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
 
-	.animate-fade-in {
-		animation: fadeIn 0.6s ease-out forwards;
-	}
+  /* Download button hover */
+  .download-btn {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 0 4px 12px rgba(90, 138, 74, 0.3);
+  }
 
-	.animate-fade-in-up {
-		animation: fadeInUp 0.6s ease-out forwards;
-	}
+  .download-btn::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.3),
+      transparent
+    );
+    transition: left 0.5s ease;
+  }
 
-	/* Headline word animation */
-	.headline-word {
-		opacity: 0;
-		animation: slideIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-	}
+  .download-btn:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(90, 138, 74, 0.5);
+    background-color: #4a7a3a;
+  }
 
-	@keyframes slideIn {
-		from {
-			opacity: 0;
-			transform: translateX(-20px);
-		}
-		to {
-			opacity: 1;
-			transform: translateX(0);
-		}
-	}
+  .download-btn:hover::before {
+    left: 100%;
+  }
 
-	/* Download button hover */
-	.download-btn {
-		position: relative;
-		overflow: hidden;
-		transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-		box-shadow: 0 4px 12px rgba(90, 138, 74, 0.3);
-	}
+  .download-btn:active {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(90, 138, 74, 0.3);
+  }
 
-	.download-btn::before {
-		content: '';
-		position: absolute;
-		top: 0;
-		left: -100%;
-		width: 100%;
-		height: 100%;
-		background: linear-gradient(
-			90deg,
-			transparent,
-			rgba(255, 255, 255, 0.3),
-			transparent
-		);
-		transition: left 0.5s ease;
-	}
+  .btn-icon {
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
 
-	.download-btn:hover {
-		transform: translateY(-4px);
-		box-shadow: 0 8px 24px rgba(90, 138, 74, 0.5);
-		background-color: #4A7A3A;
-	}
+  .download-btn:hover .btn-icon {
+    animation: bounceDown 0.5s ease infinite;
+  }
 
-	.download-btn:hover::before {
-		left: 100%;
-	}
+  @keyframes bounceDown {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(3px);
+    }
+  }
 
-	.download-btn:active {
-		transform: translateY(-1px);
-		box-shadow: 0 2px 8px rgba(90, 138, 74, 0.3);
-	}
+  .mango-card {
+    transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 0 4px 16px rgba(139, 191, 114, 0.1);
+  }
 
-	.btn-icon {
-		transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-	}
+  .mango-card:hover {
+    transform: scale(1.03) translateY(-4px);
+    box-shadow: 0 12px 32px rgba(139, 191, 114, 0.25);
+  }
 
-	.download-btn:hover .btn-icon {
-		animation: bounceDown 0.5s ease infinite;
-	}
+  .mango-img {
+    transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
 
-	@keyframes bounceDown {
-		0%, 100% { transform: translateY(0); }
-		50% { transform: translateY(3px); }
-	}
-
-	/* Stat cards hover */
-	.stat-card {
-		transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
-		position: relative;
-	}
-
-	.stat-card::after {
-		content: '';
-		position: absolute;
-		inset: 0;
-		background: rgba(255, 255, 255, 0);
-		transition: background 0.3s ease;
-	}
-
-	.stat-card:hover {
-		transform: scale(1.05) translateY(-4px);
-		box-shadow: 0 12px 28px rgba(45, 58, 36, 0.15);
-	}
-
-	.stat-card:hover::after {
-		background: rgba(255, 255, 255, 0.1);
-	}
-
-	.stat-number {
-		transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-	}
-
-	.stat-card:hover .stat-number {
-		transform: scale(1.1);
-	}
-
-	/* Citation superscript */
-	.citation-sup {
-		color: #5A8A4A;
-		font-size: 0.5em;
-		margin-left: 2px;
-	}
-
-	/* Mango card special hover */
-	.mango-card {
-		transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
-		box-shadow: 0 4px 16px rgba(139, 191, 114, 0.1);
-	}
-
-	.mango-card:hover {
-		transform: scale(1.03) translateY(-4px);
-		box-shadow: 0 12px 32px rgba(139, 191, 114, 0.25);
-	}
-
-	.mango-img {
-		transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-	}
-
-	.mango-card:hover .mango-img {
-		transform: scale(1.15) rotate(5deg);
-	}
+  .mango-card:hover .mango-img {
+    transform: scale(1.15) rotate(5deg);
+  }
 </style>
