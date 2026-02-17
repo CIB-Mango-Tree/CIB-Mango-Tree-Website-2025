@@ -1,38 +1,37 @@
 ---
-import Toolbar from '../components/Toolbar.astro';
-import '../styles/global.css';
+import Toolbar from "../components/Toolbar.astro";
+import "../styles/global.css";
 ---
 
 <!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<meta name="description" content="CIB Mango Tree - An open-source library to detect and analyze coordinated inauthentic behavior online" />
-		
-		<!-- Google Fonts -->
-		<link rel="preconnect" href="https://fonts.googleapis.com" />
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet" />
-		
-		<title>CIB Mango Tree</title>
-	</head>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <meta
+      name="description"
+      content="CIB Mango Tree - An open-source library to detect and analyze coordinated inauthentic behavior online"
+    />
 
-	<body class="bg-background font-body text-text-primary">
-		<Toolbar />
-		<main>
-			<slot />
-		</main>
-	</body>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap"
+      rel="stylesheet"
+    />
+
+    <title>CIB Mango Tree</title>
+  </head>
+
+  <body
+    class="flex flex-col w-full min-h-svh bg-background font-body text-text-primary scroll-smooth leading-[1.6]"
+  >
+    <Toolbar />
+    <main>
+      <slot />
+    </main>
+  </body>
 </html>
-
-<style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		min-height: 100vh;
-	}
-</style>

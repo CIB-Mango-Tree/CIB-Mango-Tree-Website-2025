@@ -1,52 +1,28 @@
 @import "tailwindcss";
 
-/* Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap');
-
 @theme {
   /* Colors - Lighter Mango CIB Palette */
-  --color-mango-green: #8BBF72;
-  --color-mango-green-dark: #5A8A4A;
-  --color-mango-green-darker: #3D6B32;
-  --color-mango-green-darkest: #2A4A23;
-  --color-mango-green-light: #A8D48F;
-  --color-mango-yellow: #FFE099;
-  --color-mango-yellow-light: #FFF0CC;
-  --color-mango-orange: #FFAA4D;
+  --color-mango-green: oklch(0.7495 0.1187 136.05);
+  --color-mango-green-dark: oklch(0.5829 0.1066 138.26);
+  --color-mango-green-darker: oklch(0.4801 0.1001 139.76);
+  --color-mango-green-darkest: oklch(0.3734 0.0739 140.05);
+  --color-mango-green-light: oklch(0.8216 0.104 134.64);
+  --color-mango-yellow: oklch(0.9166 0.0954 86.93);
+  --color-mango-yellow-light: oklch(0.9579 0.0495 88.08);
+  --color-mango-orange: oklch(0.8052 0.14596 65.2304);
   
   /* Editorial Colors */
-  --color-background: #FDFCF9;
-  --color-background-alt: #F8F6F2;
-  --color-text-primary: #2D3A24;
-  --color-text-muted: #5A6B52;
-  --color-text-light: #7A8872;
-  --color-border: #E5E2DC;
-  --color-cyan-tint: #E5F7F8;
+  --color-background: oklch(0.991 0.0041 91.45);
+  --color-background-alt: oklch(0.9736 0.0057 84.57);
+  --color-text-primary: oklch(0.3299 0.041 133.11);
+  --color-text-muted: oklch(0.5063 0.0437 135.72);
+  --color-text-light: oklch(0.6089 0.0364 134.1);
+  --color-border: oklch(0.9135 0.0087 84.57);
+  --color-cyan-tint: oklch(0.9632 0.019 200.87);
   
   /* Fonts */
   --font-display: 'Playfair Display', Georgia, serif;
   --font-body: 'Inter', system-ui, sans-serif;
-}
-
-/* Base Styles */
-html {
-  background-color: var(--color-background);
-  scroll-behavior: smooth;
-}
-
-body {
-  font-family: var(--font-body);
-  color: var(--color-text-primary);
-  line-height: 1.6;
-}
-
-/* Typography Utilities */
-.font-display {
-  font-family: var(--font-display);
-}
-
-.font-body {
-  font-family: var(--font-body);
 }
 
 /* Headline Style - Editorial Italic */
