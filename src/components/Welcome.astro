@@ -1,6 +1,7 @@
 ---
 import { Download } from "@lucide/astro";
 import StatCard from "@components/StatCard.astro";
+import DownloadButton from "@components/LinkButtons/DownloadButton.astro";
 ---
 
 <section class="bg-background py-20 md:py-24 px-8 md:px-12">
@@ -13,11 +14,13 @@ import StatCard from "@components/StatCard.astro";
         <h1
           class="font-bold text-4xl md:text-5xl lg:text-6xl text-primary mb-8 leading-tight tracking-tight"
         >
-          <span class="block headline-word">Harvest Knowledge.</span>
-          <span class="block headline-word animate-delay-100">
+          <span class="block opacity-0 animate-slide-in">
+            Harvest Knowledge.
+          </span>
+          <span class="block opacity-0 animate-slide-in animate-delay-100">
             Share the Fruit.
           </span>
-          <span class="block headline-word animate-delay-200">
+          <span class="block opacity-0 animate-slide-in animate-delay-200">
             Defend Democracy.
           </span>
         </h1>
@@ -28,16 +31,9 @@ import StatCard from "@components/StatCard.astro";
           behavior online
         </p>
         <div class="opacity-0 animate-fade-in-up animate-delay-400">
-          <a
-            href="/download"
-            class="download-btn group inline-flex items-center justify-center gap-2 bg-mango-green-dark text-white px-8 py-4 font-semibold text-lg"
-          >
-            <Download class="w-5 h-5 btn-icon" />
-            Download Now
-          </a>
+          <DownloadButton href="/download" />
         </div>
       </div>
-
       <!-- Right side: Bento Grid with Stats and Mango Animation -->
       <div class="opacity-0 animate-fade-in max-w-xl animte-delay-500">
         <div class="grid grid-cols-2 gap-5">
@@ -47,7 +43,7 @@ import StatCard from "@components/StatCard.astro";
             class="bg-mango-yellow animate-delay-100"
           >
             <Fragment slot="percentage">40%</Fragment>
-            <Fragment slot="index">1</Fragment>
+            <Fragment slot="index">[1]</Fragment>
             Bad bots in internet traffic
           </StatCard>
           <!-- Stat Card 2: Worried about disinformation -->
@@ -56,7 +52,7 @@ import StatCard from "@components/StatCard.astro";
             class="bg-cyan-tint animate-delay-200"
           >
             <Fragment slot="percentage">87%</Fragment>
-            <Fragment slot="index">2</Fragment>
+            <Fragment slot="index">[2]</Fragment>
             Worried about disinfo
           </StatCard>
           <!-- Stat Card 3: Twitter bot users -->
@@ -65,7 +61,7 @@ import StatCard from "@components/StatCard.astro";
             class="bg-mango-yellow-light animate-delay-300"
           >
             <Fragment slot="percentage">25-68%</Fragment>
-            <Fragment slot="index">3</Fragment>
+            <Fragment slot="index">[3]</Fragment>
             Twitter users are bots
           </StatCard>
           <!-- Stat Card 4: Bot accounts spreading misinfo -->
@@ -74,7 +70,7 @@ import StatCard from "@components/StatCard.astro";
             class="bg-mango-green-light animate-delay-400"
           >
             <Fragment slot="percentage">33%</Fragment>
-            <Fragment slot="index">4</Fragment>
+            <Fragment slot="index">[4]</Fragment>
             Bot accounts spread misinfo
           </StatCard>
         </div>
@@ -84,80 +80,6 @@ import StatCard from "@components/StatCard.astro";
 </section>
 
 <style>
-  /* Headline word animation */
-  .headline-word {
-    opacity: 0;
-    animation: slideIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-  }
-
-  @keyframes slideIn {
-    from {
-      opacity: 0;
-      transform: translateX(-20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateX(0);
-    }
-  }
-
-  /* Download button hover */
-  .download-btn {
-    position: relative;
-    overflow: hidden;
-    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-    box-shadow: 0 4px 12px rgba(90, 138, 74, 0.3);
-  }
-
-  .download-btn::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(
-      90deg,
-      transparent,
-      rgba(255, 255, 255, 0.3),
-      transparent
-    );
-    transition: left 0.5s ease;
-  }
-
-  .download-btn:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 24px rgba(90, 138, 74, 0.5);
-    background-color: #4a7a3a;
-  }
-
-  .download-btn:hover::before {
-    left: 100%;
-  }
-
-  .download-btn:active {
-    transform: translateY(-1px);
-    box-shadow: 0 2px 8px rgba(90, 138, 74, 0.3);
-  }
-
-  .btn-icon {
-    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-  }
-
-  .download-btn:hover .btn-icon {
-    animation: bounceDown 0.5s ease infinite;
-  }
-
-  @keyframes bounceDown {
-    0%,
-    100% {
-      transform: translateY(0);
-    }
-    50% {
-      transform: translateY(3px);
-    }
-  }
-
   .mango-card {
     transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
     box-shadow: 0 4px 16px rgba(139, 191, 114, 0.1);
