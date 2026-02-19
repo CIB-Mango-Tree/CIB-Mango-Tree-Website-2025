@@ -1,202 +1,169 @@
 ---
-import Button from "./Button.astro";
+import { Menu } from "@lucide/astro";
 import Download from "./Download.astro";
-import logo from '../assets/logo.png';
-import { Menu } from '@lucide/astro';
+import HeaderNavLink from "@components/NavLinks/HeaderNavLink.astro";
+import BaseButton from "@components/LinkButtons/BaseButton.astro";
+import DownloadButton from "@components/LinkButtons/DownloadButton.astro";
+import logo from "../assets/logo.png";
 ---
 
 <header class="bg-mango-green-darker w-full sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-        <!-- Logo -->
-        <a href="/" class="flex items-center gap-3 transition-opacity hover:opacity-90">
-            <img src={logo.src} alt="CIB Mango Tree" class="h-10 w-10 object-contain" />
-        </a>
+  <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+    <!-- Logo -->
+    <a
+      href="/"
+      class="flex items-center gap-3 transition-opacity hover:opacity-90"
+    >
+      <img
+        src={logo.src}
+        alt="CIB Mango Tree"
+        class="h-10 w-10 object-contain"
+      />
+    </a>
 
-        <!-- Navigation -->
-        <nav id="toolbar-nav" class="nav hidden md:flex" role="navigation" aria-label="Main">
-            <ul class="flex items-center gap-1">
-                <li>
-                    <a href="/about" class="nav-link">About Us</a>
-                </li>
-                <li>
-                    <a href="/docs" class="nav-link">Documentation</a>
-                </li>
-                <li>
-                    <a href="/resources" class="nav-link">Resources</a>
-                </li>
-                <li>
-                    <a href="/get-involved" class="nav-link cta">Get Involved</a>
-                </li>
-                <li class="ml-2">
-                    <Download />
-                </li>
-            </ul>
-        </nav>
-
-        <!-- Mobile Menu Toggle -->
-        <button 
-            id="menu-toggle" 
-            class="md:hidden p-2 text-white hover:bg-white/10 transition-colors"
-            aria-label="Toggle menu"
-            aria-expanded="false"
-        >
-            <Menu class="w-6 h-6" />
-        </button>
-    </div>
-
-    <!-- Mobile Navigation -->
-    <nav id="mobile-nav" class="mobile-nav md:hidden hidden" role="navigation" aria-label="Mobile">
-        <ul class="flex flex-col py-4 px-6 bg-mango-green-darker border-t border-white/20">
-            <li>
-                <a href="/about" class="mobile-nav-link">About Us</a>
-            </li>
-            <li>
-                <a href="/docs" class="mobile-nav-link">Documentation</a>
-            </li>
-            <li>
-                <a href="/resources" class="mobile-nav-link">Resources</a>
-            </li>
-            <li>
-                <a href="/get-involved" class="mobile-nav-link cta-mobile">Get Involved</a>
-            </li>
-            <li class="mt-4">
-                <Download />
-            </li>
-        </ul>
+    <!-- Navigation -->
+    <nav
+      id="toolbar-nav"
+      class="nav hidden md:flex"
+      role="navigation"
+      aria-label="Main"
+    >
+      <ul class="flex items-center gap-1">
+        <li><HeaderNavLink href="/about">About Us</HeaderNavLink></li>
+        <li><HeaderNavLink href="/docs">Documentation</HeaderNavLink></li>
+        <li><HeaderNavLink href="/resources">Resources</HeaderNavLink></li>
+        <li>
+          <BaseButton
+            href="/get-involved"
+            class="bg-[#ffcc33] text-[#2d3a24] ml-2 shadow-[0_0.125rem_0.5rem_rgba(0,0,0,0.1)] hover:bg-[#ffd966] hover:shadow-[0_0.375rem_1.0rem_rgba(0,0,0,0.15)] after:hidden active:-translate-y-[0.0625rem] active:shadow-[0_0.125rem_0.25rem_rgba(0,0,0,0.1)]"
+            padding="small"
+            hoverAnimation
+          >
+            Get Involved
+          </BaseButton>
+        </li>
+        <li class="ml-2">
+          <Download />
+        </li>
+      </ul>
     </nav>
+
+    <!-- Mobile Menu Toggle -->
+    <button
+      id="menu-toggle"
+      class="md:hidden p-2 text-white hover:bg-white/10 transition-colors"
+      aria-label="Toggle menu"
+      aria-expanded="false"
+    >
+      <Menu class="w-6 h-6" />
+    </button>
+  </div>
+
+  <!-- Mobile Navigation -->
+  <nav
+    id="mobile-nav"
+    class="mobile-nav md:hidden hidden"
+    role="navigation"
+    aria-label="Mobile"
+  >
+    <ul
+      class="flex flex-col py-4 px-6 bg-mango-green-darker border-t border-white/20"
+    >
+      <li>
+        <a href="/about" class="mobile-nav-link">About Us</a>
+      </li>
+      <li>
+        <a href="/docs" class="mobile-nav-link">Documentation</a>
+      </li>
+      <li>
+        <a href="/resources" class="mobile-nav-link">Resources</a>
+      </li>
+      <li>
+        <a href="/get-involved" class="mobile-nav-link cta-mobile"
+          >Get Involved</a
+        >
+      </li>
+      <li class="mt-4">
+        <Download />
+      </li>
+    </ul>
+  </nav>
 </header>
 
 <script>
-    const menuToggle = document.getElementById('menu-toggle');
-    const mobileNav = document.getElementById('mobile-nav');
-    
-    menuToggle?.addEventListener('click', () => {
-        const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
-        menuToggle.setAttribute('aria-expanded', (!isExpanded).toString());
-        mobileNav?.classList.toggle('hidden');
-    });
+  const menuToggle = document.getElementById("menu-toggle");
+  const mobileNav = document.getElementById("mobile-nav");
 
-    // Add active state to current page navigation link
-    const currentPath = window.location.pathname;
-    const navLinks = document.querySelectorAll('.nav-link, .mobile-nav-link');
-    
-    navLinks.forEach(link => {
-        const href = link.getAttribute('href');
-        if (href && currentPath.startsWith(href) && href !== '/') {
-            link.classList.add('active');
-        }
-    });
+  menuToggle?.addEventListener("click", () => {
+    const isExpanded = menuToggle.getAttribute("aria-expanded") === "true";
+    menuToggle.setAttribute("aria-expanded", (!isExpanded).toString());
+    mobileNav?.classList.toggle("hidden");
+  });
+
+  // Add active state to current page navigation link
+  const currentPath = window.location.pathname;
+  const navLinks = document.querySelectorAll(".nav-link, .mobile-nav-link");
+
+  navLinks.forEach((link) => {
+    const href = link.getAttribute("href");
+    if (href && currentPath.startsWith(href) && href !== "/") {
+      link.classList.add("active");
+    }
+  });
 </script>
 
 <style>
-    .nav-link {
-        display: block;
-        padding: 0.5rem 1rem;
-        color: white;
-        font-weight: 500;
-        font-size: 0.95rem;
-        text-decoration: none;
-        position: relative;
-        transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-    }
+  .mobile-nav-link {
+    display: block;
+    padding: 0.75rem 0;
+    color: white;
+    font-weight: 500;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.25s ease;
+    transform-origin: left;
+  }
 
-    .nav-link::after {
-        content: '';
-        position: absolute;
-        bottom: 0;
-        left: 50%;
-        width: 0;
-        height: 2px;
-        background-color: #FFE099;
-        transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-        transform: translateX(-50%);
-    }
+  .mobile-nav-link:hover,
+  .mobile-nav-link.active {
+    padding-left: 0.5rem;
+    background: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.1) 0%,
+      transparent 100%
+    );
+  }
 
-    .nav-link:hover::after,
-    .nav-link:focus::after,
-    .nav-link.active::after {
-        width: 80%;
-    }
+  .mobile-nav-link.active {
+    border-left: 3px solid #ffe099;
+  }
 
-    .nav-link.active {
-        background-color: rgba(255, 255, 255, 0.1);
-    }
+  .mobile-nav-link.cta-mobile {
+    color: #ffcc33;
+    font-weight: 600;
+  }
 
-    .nav-link:hover,
-    .nav-link:focus {
-        background-color: rgba(255, 255, 255, 0.1);
-        transform: translateY(-2px);
-        outline: none;
-    }
+  /* Logo hover */
+  header a:first-child img {
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
 
-    .nav-link.cta {
-        background-color: #FFCC33;
-        color: #2D3A24;
-        font-weight: 600;
-        margin-left: 0.5rem;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    }
+  header a:first-child:hover img {
+    transform: rotate(-5deg) scale(1.1);
+  }
 
-    .nav-link.cta::after {
-        display: none;
-    }
+  /* Menu toggle animation */
+  #menu-toggle {
+    transition:
+      transform 0.2s ease,
+      background-color 0.2s ease;
+  }
 
-    .nav-link.cta:hover {
-        background-color: #FFD966;
-        transform: translateY(-3px);
-        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
-    }
+  #menu-toggle:hover {
+    transform: scale(1.1);
+  }
 
-    .nav-link.cta:active {
-        transform: translateY(-1px);
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
-
-    .mobile-nav-link {
-        display: block;
-        padding: 0.75rem 0;
-        color: white;
-        font-weight: 500;
-        text-decoration: none;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        transition: all 0.25s ease;
-        transform-origin: left;
-    }
-
-    .mobile-nav-link:hover,
-    .mobile-nav-link.active {
-        padding-left: 0.5rem;
-        background: linear-gradient(90deg, rgba(255,255,255,0.1) 0%, transparent 100%);
-    }
-
-    .mobile-nav-link.active {
-        border-left: 3px solid #FFE099;
-    }
-
-    .mobile-nav-link.cta-mobile {
-        color: #FFCC33;
-        font-weight: 600;
-    }
-
-    /* Logo hover */
-    header a:first-child img {
-        transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-    }
-
-    header a:first-child:hover img {
-        transform: rotate(-5deg) scale(1.1);
-    }
-
-    /* Menu toggle animation */
-    #menu-toggle {
-        transition: transform 0.2s ease, background-color 0.2s ease;
-    }
-
-    #menu-toggle:hover {
-        transform: scale(1.1);
-    }
-
-    #menu-toggle:active {
-        transform: scale(0.95);
-    }
+  #menu-toggle:active {
+    transform: scale(0.95);
+  }
 </style>
