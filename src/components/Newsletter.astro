@@ -1,108 +1,129 @@
 ---
+
 ---
 
 <section class="py-16 px-8 md:px-12 bg-mango-yellow">
-    <div class="max-w-3xl mx-auto">
-        <h2 class="font-display italic text-2xl md:text-3xl text-text-primary text-center mb-10" style="letter-spacing: -0.02em;">
-            Subscribe to our Newsletter
-        </h2>
-        
-        <form class="newsletter-form flex flex-col sm:flex-row gap-5 justify-center items-stretch">
-            <input
-                type="email"
-                placeholder="Enter your email"
-                class="newsletter-input flex-1 px-5 py-4 bg-white border-2 border-border-color text-text-primary placeholder-text-light"
-                required
-            />
-            <button
-                type="submit"
-                class="newsletter-btn bg-mango-green-dark text-white px-8 py-4 font-semibold"
-            >
-                <span class="btn-text">Subscribe</span>
-                <svg class="btn-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M5 12h14m-7-7l7 7-7 7"/>
-                </svg>
-            </button>
-        </form>
-    </div>
+  <div class="max-w-3xl mx-auto">
+    <h2 class="font-bold text-2xl md:text-3xl text-primary text-center mb-10">
+      Subscribe to our Newsletter
+    </h2>
+
+    <form
+      class="newsletter-form flex flex-col sm:flex-row gap-5 justify-center items-stretch"
+    >
+      <input
+        type="email"
+        placeholder="Enter your email"
+        class="newsletter-input flex-1 px-5 py-4 bg-white border-2 border-border-color text-text-primary placeholder-text-light"
+        required
+      />
+      <button
+        type="submit"
+        class="newsletter-btn bg-mango-green-dark text-white px-8 py-4 font-semibold"
+      >
+        <span class="btn-text">Subscribe</span>
+        <svg
+          class="btn-arrow"
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path d="M5 12h14m-7-7l7 7-7 7"></path>
+        </svg>
+      </button>
+    </form>
+  </div>
 </section>
 
 <style>
-    .newsletter-input {
-        transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-        outline: none;
-    }
+  .newsletter-input {
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    outline: none;
+  }
 
-    .newsletter-input:hover {
-        border-color: #8BBF72;
-        box-shadow: 0 4px 12px rgba(139, 191, 114, 0.15);
-    }
+  .newsletter-input:hover {
+    border-color: #8bbf72;
+    box-shadow: 0 4px 12px rgba(139, 191, 114, 0.15);
+  }
 
-    .newsletter-input:focus {
-        border-color: #5A8A4A;
-        box-shadow: 0 0 0 4px rgba(90, 138, 74, 0.15);
-        transform: scale(1.01);
-    }
+  .newsletter-input:focus {
+    border-color: #5a8a4a;
+    box-shadow: 0 0 0 4px rgba(90, 138, 74, 0.15);
+    transform: scale(1.01);
+  }
 
-    .newsletter-btn {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 0.5rem;
-        position: relative;
-        overflow: hidden;
-        transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-        box-shadow: 0 4px 12px rgba(90, 138, 74, 0.2);
-    }
+  .newsletter-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 0 4px 12px rgba(90, 138, 74, 0.2);
+  }
 
-    .newsletter-btn::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: -100%;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-        transition: left 0.5s ease;
-    }
+  .newsletter-btn::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.2),
+      transparent
+    );
+    transition: left 0.5s ease;
+  }
 
-    .newsletter-btn:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 8px 24px rgba(90, 138, 74, 0.35);
-        background-color: #4A7A3A;
-    }
+  .newsletter-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(90, 138, 74, 0.35);
+    background-color: #4a7a3a;
+  }
 
-    .newsletter-btn:hover::before {
-        left: 100%;
-    }
+  .newsletter-btn:hover::before {
+    left: 100%;
+  }
 
-    .newsletter-btn:active {
-        transform: translateY(-1px);
-        box-shadow: 0 4px 12px rgba(90, 138, 74, 0.2);
-    }
+  .newsletter-btn:active {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(90, 138, 74, 0.2);
+  }
 
-    .btn-text {
-        transition: transform 0.3s ease;
-    }
+  .btn-text {
+    transition: transform 0.3s ease;
+  }
 
-    .btn-arrow {
-        opacity: 0;
-        width: 0;
-        transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-    }
+  .btn-arrow {
+    opacity: 0;
+    width: 0;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
 
-    .newsletter-btn:hover .btn-text {
-        transform: translateX(-4px);
-    }
+  .newsletter-btn:hover .btn-text {
+    transform: translateX(-4px);
+  }
 
-    .newsletter-btn:hover .btn-arrow {
-        opacity: 1;
-        width: 20px;
-        animation: arrowBounce 0.6s ease infinite;
-    }
+  .newsletter-btn:hover .btn-arrow {
+    opacity: 1;
+    width: 20px;
+    animation: arrowBounce 0.6s ease infinite;
+  }
 
-    @keyframes arrowBounce {
-        0%, 100% { transform: translateX(0); }
-        50% { transform: translateX(4px); }
+  @keyframes arrowBounce {
+    0%,
+    100% {
+      transform: translateX(0);
     }
+    50% {
+      transform: translateX(4px);
+    }
+  }
 </style>

@@ -43,15 +43,13 @@ export default function ToolsSelector() {
   return (
     <div className="mt-12 max-w-4xl mx-auto">
       {/* Section Title */}
-      <h3 className="font-bold text-2xl md:text-3xl mb-6 tracking-heading">
-        Methodologies
-      </h3>
+      <h3 className="font-bold text-2xl md:text-3xl mb-6">Methodologies</h3>
 
       {/* Main Container */}
       <div className="flex flex-col md:flex-row gap-0">
         {/* Left Navigation */}
         <div
-          className="w-full md:w-72 border flex-shrink-0"
+          className="w-full md:w-72 border shrink-0"
           style={{ borderColor: "#E5E2DC" }}
         >
           {/* Navigation Label */}
@@ -141,7 +139,7 @@ export default function ToolsSelector() {
                 </div>
                 <ChevronRight
                   size={16}
-                  className="flex-shrink-0"
+                  className="shrink-0"
                   style={{
                     color: isSelected
                       ? "#FFFFFF"

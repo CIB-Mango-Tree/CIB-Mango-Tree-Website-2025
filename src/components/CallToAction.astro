@@ -1,165 +1,136 @@
 ---
-import { Download, BookOpen, Users, Heart, Calendar, Video, MapPin } from '@lucide/astro';
+import {
+  Download,
+  BookOpen,
+  Users,
+  Heart,
+  Calendar,
+  Video,
+  MapPin,
+} from "@lucide/astro";
+import CTAButton from "@components/LinkButtons/CTAButton.astro";
 
-const meetings = [
-    { name: 'Engagement Scrum', day: 'Tuesday', time: '7-8pm', type: 'virtual' as const },
-    { name: 'Product Scrum', day: 'Thursday', time: '7-8pm', type: 'virtual' as const },
-    { name: 'Civic Tech DC Project Night', day: '2nd & 4th Wed', time: 'Evening', type: 'in-person' as const, link: 'https://lu.ma/civictechdc' }
+type MeetingInfo = {
+  name: string;
+  day: string;
+  time: string;
+  type: "virtual" | "in-person";
+  link?: string;
+};
+
+const meetings: Array<MeetingInfo> = [
+  {
+    name: "Engagement Scrum",
+    day: "Tuesday",
+    time: "7-8pm",
+    type: "virtual" as const,
+  },
+  {
+    name: "Product Scrum",
+    day: "Thursday",
+    time: "7-8pm",
+    type: "virtual" as const,
+  },
+  {
+    name: "Civic Tech DC Project Night",
+    day: "2nd & 4th Wed",
+    time: "Evening",
+    type: "in-person" as const,
+    link: "https://lu.ma/civictechdc",
+  },
 ];
 ---
 
 <section class="py-20 px-8 md:px-12 bg-mango-green-dark">
-    <div class="max-w-5xl mx-auto text-center">
-        <h2 class="font-display italic text-3xl md:text-4xl text-white mb-6">
-            Ready to Make an Impact?
-        </h2>
-        <p class="text-white/80 text-lg mb-8 max-w-2xl mx-auto">
-            Join our community of researchers, developers, and citizens working to protect digital democracy.
-        </p>
-        
-        <!-- Compact Meeting Schedule -->
-        <div class="mb-12 max-w-3xl mx-auto">
-            <h3 class="text-white/90 text-sm font-semibold uppercase tracking-wider mb-4 flex items-center justify-center gap-2">
-                <Calendar class="w-4 h-4" />
-                Meeting Schedule
-            </h3>
-            <div class="flex flex-col sm:flex-row gap-3 justify-center">
-                {meetings.map((meeting) => (
-                    <div class="meeting-chip flex items-center gap-3 bg-white/10 backdrop-blur-sm px-4 py-3 border border-white/20">
-                        {meeting.type === 'virtual' ? (
-                            <Video class="w-4 h-4 text-cyan-300 flex-shrink-0" />
-                        ) : (
-                            <MapPin class="w-4 h-4 text-mango-yellow flex-shrink-0" />
-                        )}
-                        <div class="text-left">
-                            <div class="text-white text-sm font-medium">{meeting.name}</div>
-                            <div class="text-white/60 text-xs">{meeting.day} @ {meeting.time}</div>
-                        </div>
-                        {meeting.link && (
-                            <a 
-                                href={meeting.link} 
-                                target="_blank" 
-                                rel="noopener noreferrer"
-                                class="text-mango-yellow hover:text-white text-xs font-medium ml-2"
-                            >
-                                RSVP →
-                            </a>
-                        )}
-                    </div>
-                ))}
-            </div>
-        </div>
-        
-        <div class="flex flex-col sm:flex-row gap-4 justify-center items-center flex-wrap">
-            <!-- Primary CTA - Download (most prominent) -->
-            <a 
-                href="/download" 
-                class="cta-btn cta-primary inline-flex items-center gap-2 bg-white text-mango-green-dark px-8 py-4 font-semibold text-lg"
-            >
-                <Download class="w-5 h-5" />
-                Download Now
-            </a>
-            
-            <!-- Secondary CTA - Get Involved -->
-            <a 
-                href="/get-involved" 
-                class="cta-btn cta-secondary inline-flex items-center gap-2 bg-mango-yellow text-text-primary px-8 py-4 font-semibold text-lg"
-            >
-                <Users class="w-5 h-5" />
-                Get Involved
-            </a>
-            
-            <!-- Tertiary CTA - Documentation -->
-            <a 
-                href="/docs" 
-                class="cta-btn cta-tertiary inline-flex items-center gap-2 bg-transparent text-white border-2 border-white/50 px-8 py-4 font-semibold text-lg"
-            >
-                <BookOpen class="w-5 h-5" />
-                View Docs
-            </a>
-            
-            <!-- Donate CTA -->
-            <a 
-                href="https://www.civictechdc.org/donate" 
-                target="_blank"
-                rel="noopener noreferrer"
-                class="cta-btn cta-donate inline-flex items-center gap-2 bg-transparent text-white border-2 border-mango-yellow px-8 py-4 font-semibold text-lg"
-            >
-                <Heart class="w-5 h-5" />
-                Donate
-            </a>
-        </div>
+  <div class="max-w-5xl mx-auto text-center">
+    <h2 class="font-bold text-3xl md:text-4xl text-white mb-6">
+      Ready to Make an Impact?
+    </h2>
+    <p class="text-white/80 text-lg mb-8 max-w-2xl mx-auto">
+      Join our community of researchers, developers, and citizens working to
+      protect digital democracy.
+    </p>
+
+    <!-- Compact Meeting Schedule -->
+    <div class="mb-12 max-w-3xl mx-auto">
+      <h3
+        class="text-white/90 text-sm font-semibold uppercase tracking-wider mb-4 flex items-center justify-center gap-2"
+      >
+        <Calendar class="w-4 h-4" />
+        Meeting Schedule
+      </h3>
+      <div class="flex flex-col sm:flex-row gap-3 justify-center">
+        {
+          meetings.map(
+            (meeting: MeetingInfo): HTMLDivElement => (
+              <div class="flex items-center gap-3 transition-all duration-300 ease-linear bg-white/10 backdrop-blur-sm px-4 py-3 border border-white/20 hover:bg-[rgba(255,255,255,0.15)] hover:-translate-y-0.5">
+                {meeting.type === "virtual" ? (
+                  <Video class="w-4 h-4 text-cyan-300 shrink-0" />
+                ) : (
+                  <MapPin class="w-4 h-4 text-mango-yellow shrink-0" />
+                )}
+                <div class="text-left">
+                  <div class="text-white text-sm font-medium">
+                    {meeting.name}
+                  </div>
+                  <div class="text-white/60 text-xs">
+                    {meeting.day} @ {meeting.time}
+                  </div>
+                </div>
+                {meeting.link && (
+                  <a
+                    href={meeting.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="text-mango-yellow hover:text-white text-xs font-medium ml-2"
+                  >
+                    RSVP →
+                  </a>
+                )}
+              </div>
+            ),
+          )
+        }
+      </div>
     </div>
+
+    <div
+      class="flex flex-col sm:flex-row gap-4 justify-center items-center flex-wrap"
+    >
+      <!-- Primary CTA - Download (most prominent) -->
+      <CTAButton
+        href="/download"
+        class="bg-white text-mango-green-dark shadow-[0_0.25rem_1.0rem_rgba(255,255,255,0.3)] hover:shadow-[0_0.50rem_1.50rem_rgba(255,255,255,0.4)]"
+      >
+        <Download class="w-5 h-5" />
+        Download Now
+      </CTAButton>
+      <!-- Secondary CTA - Get Involved -->
+      <CTAButton
+        href="/get-involved"
+        class="bg-mango-yellow text-primary shadow-[0_0.25rem_1.0rem_rgba(255,224,153,0.3)] hover:shadow-[0_0.50rem_1.50rem_rgba(255,224,153,0.4)] hover:bg-[#ffd966]"
+      >
+        <Users class="w-5 h-5" />
+        Get Involved
+      </CTAButton>
+      <!-- Tertiary CTA - Documentation -->
+      <CTAButton
+        href="/docs"
+        class="bg-transparent text-white border-2 border-white/50 hover:bg-[rgba(255,255,255,0.1)] hover:border-white"
+      >
+        <BookOpen class="w-5 h-5" />
+        View Docs
+      </CTAButton>
+      <!-- Donate CTA -->
+      <CTAButton
+        href="https://www.civictechdc.org/donate"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="bg-transparent text-white border-2 border-mango-yellow shadow-[0_0.25rem_1.0rem_rgba(255,224,153,0.2)] hover:bg-[rgba(255,224,153,0.15)] hover:border-[#ffd966] hover:shadow-[0_0.50rem_1.50rem_rgba(255,224,153,0.3)]"
+      >
+        <Heart class="w-5 h-5" />
+        Donate
+      </CTAButton>
+    </div>
+  </div>
 </section>
-
-<style>
-    .cta-btn {
-        transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-        position: relative;
-        overflow: hidden;
-    }
-
-    .cta-btn::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: -100%;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-        transition: left 0.5s ease;
-    }
-
-    .cta-btn:hover::before {
-        left: 100%;
-    }
-
-    .cta-primary {
-        box-shadow: 0 4px 16px rgba(255, 255, 255, 0.3);
-    }
-
-    .cta-primary:hover {
-        transform: translateY(-3px) scale(1.02);
-        box-shadow: 0 8px 24px rgba(255, 255, 255, 0.4);
-    }
-
-    .cta-secondary {
-        box-shadow: 0 4px 16px rgba(255, 224, 153, 0.3);
-    }
-
-    .cta-secondary:hover {
-        transform: translateY(-3px) scale(1.02);
-        box-shadow: 0 8px 24px rgba(255, 224, 153, 0.4);
-        background-color: #FFD966;
-    }
-
-    .cta-tertiary:hover {
-        transform: translateY(-3px) scale(1.02);
-        background-color: rgba(255, 255, 255, 0.1);
-        border-color: white;
-    }
-
-    .cta-donate {
-        box-shadow: 0 4px 16px rgba(255, 224, 153, 0.2);
-    }
-
-    .cta-donate:hover {
-        transform: translateY(-3px) scale(1.02);
-        background-color: rgba(255, 224, 153, 0.15);
-        border-color: #FFD966;
-        box-shadow: 0 8px 24px rgba(255, 224, 153, 0.3);
-    }
-
-    .cta-btn:active {
-        transform: translateY(-1px) scale(1);
-    }
-
-    .meeting-chip {
-        transition: all 0.3s ease;
-    }
-
-    .meeting-chip:hover {
-        background-color: rgba(255, 255, 255, 0.15);
-        transform: translateY(-2px);
-    }
-</style>
