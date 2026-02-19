@@ -9,7 +9,7 @@ interface Props {
 
 const { href, class: className } = Astro.props;
 const buttonClasses: string = cn(
-  "inline-flex items-center justify-center gap-2 relative overflow-hidden transition-all transform-gpu ease-custom duration-300 shadow-[0_0.25rem_0.75rem_rgba(90,138,74,0.3)] group bg-mango-green-dark text-white px-8 py-4 font-semibold text-lg hover:-translate-y-[0.25rem] hover:shadow-[0_0.5rem_1.5rem_rgba(90,138,74,0.5)] hover:bg-[#4a7a3a] hover:before:left-full hover:*:data-download-icon:animate-bounce before:absolute before:w-full before:h-full before:top-0 before:-left-full before:bg-linear-90 before:from-transparent before:via-[rgba(255,255,255,0.3)] before:to-transparent before:transition-[left] before:duration-500 before:ease-linear active:-translate-y-[0.0625rem] active:shadow-[0_0.125rem_0.5rem_rgba(90,138,74,0.3)]",
+  "inline-flex items-center justify-center gap-2 relative overflow-hidden transition-all transform-gpu ease-default duration-300 shadow-[0_0.25rem_0.75rem_rgba(90,138,74,0.3)] group bg-mango-green-dark text-white px-8 py-4 font-semibold text-lg hover:-translate-y-[0.25rem] hover:shadow-[0_0.5rem_1.5rem_rgba(90,138,74,0.5)] hover:bg-[#4a7a3a] hover:before:left-full hover:*:data-download-icon:animate-bounce before:absolute before:w-full before:h-full before:top-0 before:-left-full before:bg-linear-90 before:from-transparent before:via-[rgba(255,255,255,0.3)] before:to-transparent before:transition-[left] before:duration-500 before:ease-linear active:-translate-y-[0.0625rem] active:shadow-[0_0.125rem_0.5rem_rgba(90,138,74,0.3)]",
   {
     [className as string]: className != null && className.length > 0,
   },
