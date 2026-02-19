@@ -1,5 +1,4 @@
 ---
-import { Download } from "@lucide/astro";
 import StatCard from "@components/StatCard.astro";
 import DownloadButton from "@components/LinkButtons/DownloadButton.astro";
 ---
@@ -78,23 +77,3 @@ import DownloadButton from "@components/LinkButtons/DownloadButton.astro";
     </div>
   </div>
 </section>
-
-<style>
-  .mango-card {
-    transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
-    box-shadow: 0 4px 16px rgba(139, 191, 114, 0.1);
-  }
-
-  .mango-card:hover {
-    transform: scale(1.03) translateY(-4px);
-    box-shadow: 0 12px 32px rgba(139, 191, 114, 0.25);
-  }
-
-  .mango-img {
-    transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-  }
-
-  .mango-card:hover .mango-img {
-    transform: scale(1.15) rotate(5deg);
-  }
-</style>
