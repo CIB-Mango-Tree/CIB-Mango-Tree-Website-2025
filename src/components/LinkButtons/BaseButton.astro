@@ -7,7 +7,7 @@ interface Props {
   target?: "_self" | "_blank" | "_top" | "_parent" | "_unfencedTop";
   rel?: string;
   hoverAnimation?: boolean;
-  padding?: "small" | "medium" | "large";
+  padding?: "sm" | "md" | "lg";
 }
 
 const {
@@ -15,7 +15,7 @@ const {
   target,
   rel,
   hoverAnimation,
-  padding = "medium",
+  padding = "md",
   class: className,
 } = Astro.props;
 const buttonClasses: string = resolveClasses(
@@ -23,9 +23,9 @@ const buttonClasses: string = resolveClasses(
   className,
   {
     "hover:-translate-y-1 hover:shadow-lg": hoverAnimation,
-    "px-4 py-2": padding === "small",
-    "px-6 py-3": padding === "medium",
-    "px-8 py-6": padding === "large",
+    "px-4 py-2": padding === "sm",
+    "px-6 py-3": padding === "md",
+    "px-8 py-6": padding === "lg",
   },
 );
 ---
