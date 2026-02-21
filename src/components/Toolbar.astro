@@ -1,14 +1,15 @@
 ---
 import { Menu } from "@lucide/astro";
-import Download from "./Download.astro";
 import HeaderNavLink from "@components/NavLinks/HeaderNavLink.astro";
 import BaseButton from "@components/LinkButtons/BaseButton.astro";
 import DownloadButton from "@components/LinkButtons/DownloadButton.astro";
 import logo from "../assets/logo.png";
 ---
 
-<header class="bg-mango-green-darker w-full sticky top-0 z-50">
-  <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+<header
+  class="flex justify-center bg-mango-green-darker w-full sticky top-0 z-50"
+>
+  <div class="w-7xl py-4 flex items-center justify-between">
     <!-- Logo -->
     <a
       href="/"
@@ -36,14 +37,14 @@ import logo from "../assets/logo.png";
           <BaseButton
             href="/get-involved"
             class="bg-[#ffcc33] text-[#2d3a24] ml-2 shadow-[0_0.125rem_0.5rem_rgba(0,0,0,0.1)] hover:bg-[#ffd966] hover:shadow-[0_0.375rem_1.0rem_rgba(0,0,0,0.15)] after:hidden active:-translate-y-px active:shadow-[0_0.125rem_0.25rem_rgba(0,0,0,0.1)]"
-            padding="small"
+            padding="sm"
             hoverAnimation
           >
             Get Involved
           </BaseButton>
         </li>
         <li class="ml-2">
-          <Download />
+          <DownloadButton size="sm" href="/download" />
         </li>
       </ul>
     </nav>
@@ -84,7 +85,7 @@ import logo from "../assets/logo.png";
         >
       </li>
       <li class="mt-4">
-        <Download />
+        <DownloadButton size="sm" href="/download" />
       </li>
     </ul>
   </nav>
