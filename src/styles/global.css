@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@layer utilities {}
+
 @theme {
   /* Colors - Lighter Mango CIB Palette */
   --color-mango-green: oklch(0.7495 0.1187 136.05);
@@ -32,6 +34,10 @@
   --animation-delay-value-300: 300ms;
   --animation-delay-value-400: 400ms;
 
+  /* glass shine opacities */
+  --glass-shine-opacity-20: 20%;
+  --glass-shine-opacity-30: 30%;
+
   /* animations */
   --animate-fade-in: fadeIn 600ms ease-out forwards;
 
@@ -40,6 +46,7 @@
       opacity: 0;
       transform: translateY(0.625rem);
     }
+
     to {
       opacity: 1;
       transform: translateY(0);
@@ -53,6 +60,7 @@
       opacity: 0;
       transform: translateY(1.25rem);
     }
+
     to {
       opacity: 1;
       transform: translateY(0);
@@ -66,6 +74,7 @@
       opacity: 0;
       transform: translateX(-1.25rem);
     }
+
     to {
       opacity: 1;
       transform: translateX(0);
@@ -77,4 +86,35 @@
   animation-delay: calc(--value(integer) * 1ms);
   animation-delay: --value([*]);
   animation-delay: --value(--animation-delay-value-*);
+}
+
+@utility glass-shine-* {
+  &::before {
+    @apply absolute;
+    @apply w-full;
+    @apply h-full;
+    @apply top-0;
+    @apply -left-full;
+    @apply duration-500;
+
+    content: var(--tw-content);
+    transition-property: left;
+    transition-timing-function: ease;
+    background: linear-gradient(90deg,
+        transparent,
+        rgba(255, 255, 255, --value(--glass-shine-opacity-*, [integer])),
+        transparent);
+    background: linear-gradient(90deg,
+        transparent,
+        rgba(255, 255, 255, calc(--value(integer) * 1%)),
+        transparent);
+  }
+
+  &:hover {
+    @media(hover: hover) {
+      &::before {
+        @apply left-full;
+      }
+    }
+  }
 }
