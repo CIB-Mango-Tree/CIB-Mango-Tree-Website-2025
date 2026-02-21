@@ -1,7 +1,5 @@
 @import "tailwindcss";
 
-@layer utilities {}
-
 @theme {
   /* Colors - Lighter Mango CIB Palette */
   --color-mango-green: oklch(0.7495 0.1187 136.05);
@@ -80,12 +78,27 @@
       transform: translateX(0);
     }
   }
+
+  --animate-bounce-x: bounceX 1000ms infinite;
+
+  @keyframes bounceX {
+
+    0%,
+    100% {
+      transform: translateX(-25%);
+      animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+    }
+
+    50% {
+      transform: none;
+      animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+    }
+  }
 }
 
 @utility animate-delay-* {
   animation-delay: calc(--value(integer) * 1ms);
-  animation-delay: --value([*]);
-  animation-delay: --value(--animation-delay-value-*);
+  animation-delay: --value(--animation-delay-value-*, [*]);
 }
 
 @utility glass-shine-* {
