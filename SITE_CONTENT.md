@@ -244,7 +244,7 @@ Each value is displayed as a full-width colored block:
 - Civic Tech DC Project Night: 2nd & 4th Wednesday (In-person)
 
 **Buttons:**
-- RSVP → https://lu.ma/civictechdc
+- RSVP → https://lu.ma/civic-tech-dc
 - Join Civic Tech DC Slack → https://codefordc.slack.com
 - Donate → https://www.civictechdc.org/donate
 

@@ -5,6 +5,7 @@ interface Platform {
     description: string;
     downloadLink: string;
     fileName: string;
+    fileSize: string;
     requirements?: string;
 }
 
@@ -55,6 +56,11 @@ const { platforms } = Astro.props;
             <!-- File Name -->
             <span class="text-xs text-text-light mt-2">
                 {platform.fileName}
+            </span>
+
+            <!-- File Size -->
+            <span class="text-xs text-text-light mt-2">
+                {platform.fileSize}
             </span>
         </div>
     ))}
