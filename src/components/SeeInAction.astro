@@ -1,29 +1,44 @@
 ---
-import cli_screenshot from '../assets/cliscreenshot.png';
+import cli_screenshot from "../assets/cliscreenshot.png";
 ---
 
-<section>
-    <div class="bg-[#C8F0F1] text-center p-10">
-		<h2 class="pb-10 text-3xl">See it in Action</h2>
-		<img class="m-auto" src={cli_screenshot.src} alt="Screenshot of the CIB Mango Tree CLI" />
-		<div class="flex justify-center mt-10">
-			<div class="w-[600px] text-left pr-2">
-				CIB Mango Tree makes social media bot detection simple for everyone. 
-				It begins with easy-to-run tests, the “low-hanging fruit,” that help reveal 
-				clear signs of unsophisticated coordinated inauthentic behavior (CIB) 
-				in social media and online data.
-			</div>
-			<div class="w-[600px] text-left pl-2">
-				As you move up the Mango Tree, our tests become more advanced,
-				 helping experienced users tackle deeper, more complex cases of manipulation
-			</div>
-		</div>
-		
-	</div>
-     <div class="bg-[#C8F0F1] h-32" style={{
-        clipPath: 'ellipse(70% 70% at top)',
-        WebkitClipPath: 'ellipse(70% 70% at top)'
-        }
-    }>
+<section class="flex flex-col relative">
+  <div class="flex justify-center w-full bg-cyan-tint py-20 md:py-24">
+    <div class="flex flex-col items-center max-w-5xl">
+      <h2
+        class="font-bold text-3xl md:text-4xl text-text-primary text-center mb-16"
+      >
+        See it in Action
+      </h2>
+
+      <!-- Video/Screenshot Placeholder - TODO: Replace with embedded video -->
+      <div class="mb-16 shadow-lg overflow-hidden">
+        <img
+          class="w-full"
+          src={cli_screenshot.src}
+          alt="Screenshot of the CIB Mango Tree CLI"
+        />
+      </div>
+
+      <!-- Description -->
+      <div class="grid md:grid-cols-2 gap-10">
+        <p class="text-text-muted leading-relaxed text-lg">
+          CIB Mango Tree makes social media bot detection simple for everyone.
+          It begins with easy-to-run tests, the "low-hanging fruit," that help
+          reveal clear signs of unsophisticated coordinated inauthentic behavior
+          (CIB) in social media and online data.
+        </p>
+        <p class="text-text-muted leading-relaxed text-lg">
+          As you move up the Mango Tree, our tests become more advanced, helping
+          experienced users tackle deeper, more complex cases of manipulation.
+        </p>
+      </div>
     </div>
+  </div>
+
+  <!-- Curved bottom edge -->
+  <div
+    class="flex bg-cyan-tint h-24 md:h-32 [clip-path:ellipse(70%_100%_at_50%_0%)]"
+  >
+  </div>
 </section>

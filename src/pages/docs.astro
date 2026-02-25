@@ -1,0 +1,126 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Footer from '../components/Footer.astro';
+import CodeBlock from '../components/CodeBlock.astro';
+import cliScreenshot from '../assets/CLI_Image_CIB.png';
+import { Github, BookOpen, FileCode, Database, Terminal } from '@lucide/astro';
+---
+
+<Layout>
+	<section class="py-20 md:py-24 px-8 md:px-12 bg-background">
+		<div class="max-w-5xl mx-auto">
+			<h1 class="font-display italic text-4xl md:text-5xl lg:text-6xl text-text-primary mb-10 leading-tight">
+				Documentation
+			</h1>
+			
+			<p class="text-xl text-text-muted mb-16 leading-relaxed max-w-3xl">
+				Everything you need to get started with CIB Mango Tree. From installation to advanced usage, we've got you covered.
+			</p>
+
+			<!-- Quick Start Section -->
+			<div class="bg-background-alt border border-border-color p-8 md:p-10 mb-16">
+				<h2 class="font-display italic text-3xl text-text-primary mb-8">Quick Start</h2>
+				
+				<div class="space-y-8">
+					<div>
+						<h3 class="text-lg font-semibold text-text-primary mb-3">1. Clone the repository</h3>
+						<CodeBlock code="git clone https://github.com/civictechdc/cib-mango-tree.git" />
+					</div>
+					
+					<div>
+						<h3 class="text-lg font-semibold text-text-primary mb-3">2. Create virtual environment and install dependencies</h3>
+						<div class="space-y-3">
+							<CodeBlock code="python -m venv venv" />
+							<p class="text-text-muted text-sm">Then run the bootstrap script:</p>
+							<CodeBlock code="./bootstrap.sh&nbsp;&nbsp;&nbsp;# macOS/Linux<br/>bootstrap.ps1&nbsp;&nbsp;&nbsp;# Windows PowerShell" />
+						</div>
+					</div>
+					
+					<div>
+						<h3 class="text-lg font-semibold text-text-primary mb-3">3. Run the application</h3>
+						<CodeBlock code="python -m cibmangotree" />
+					</div>
+				</div>
+
+				<p class="text-text-muted text-sm mt-8">
+					<strong>Requirements:</strong> Python 3.12 or higher
+				</p>
+			</div>
+
+			<!-- CLI Preview -->
+			<div class="mb-16">
+				<h2 class="font-display italic text-3xl text-text-primary mb-8">CLI Interface</h2>
+				<div class="rounded-xl border-2 border-mango-green-dark/20 overflow-hidden shadow-lg">
+					<img 
+						src={cliScreenshot.src} 
+						alt="CIB Mango Tree CLI interface" 
+						class="w-full rounded-xl"
+					/>
+				</div>
+			</div>
+
+			<!-- Documentation Sections -->
+			<div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+				<a href="https://civictechdc.github.io/cib-mango-tree" target="_blank" rel="noopener noreferrer" class="doc-card bg-[#E5F7F8] p-8">
+					<h3 class="font-display italic text-2xl text-text-primary mb-4">Installation Guide</h3>
+					<p class="text-text-muted mb-4">Detailed instructions for setting up CIB Mango Tree on various platforms.</p>
+					<span class="text-mango-green-dark font-semibold hover:underline">Read more →</span>
+				</a>
+				
+				<a href="https://civictechdc.github.io/cib-mango-tree" target="_blank" rel="noopener noreferrer" class="doc-card bg-[#FFE099] p-8">
+					<h3 class="font-display italic text-2xl text-text-primary mb-4">Test Reference</h3>
+					<p class="text-text-muted mb-4">Complete documentation of all available detection tests and their parameters.</p>
+					<span class="text-mango-green-dark font-semibold hover:underline">Read more →</span>
+				</a>
+				
+				<a href="https://civictechdc.github.io/cib-mango-tree" target="_blank" rel="noopener noreferrer" class="doc-card bg-[#FFF5E6] p-8">
+					<h3 class="font-display italic text-2xl text-text-primary mb-4">Data Formats</h3>
+					<p class="text-text-muted mb-4">Supported input formats and how to prepare your social media datasets.</p>
+					<span class="text-mango-green-dark font-semibold hover:underline">Read more →</span>
+				</a>
+				
+				<a href="https://civictechdc.github.io/cib-mango-tree" target="_blank" rel="noopener noreferrer" class="doc-card bg-mango-green-light p-8">
+					<h3 class="font-display italic text-2xl text-text-primary mb-4">API Reference</h3>
+					<p class="text-text-muted mb-4">For developers who want to integrate CIB Mango Tree into their workflows.</p>
+					<span class="text-mango-green-dark font-semibold hover:underline">Read more →</span>
+				</a>
+			</div>
+
+			<!-- GitHub Link -->
+			<div class="text-center py-10 border-t border-border-color">
+				<p class="text-text-muted mb-6">Full documentation and source code available on GitHub</p>
+				<a 
+					href="https://github.com/civictechdc/cib-mango-tree" 
+					target="_blank"
+					rel="noopener noreferrer"
+					class="github-btn inline-flex items-center gap-2 bg-text-primary text-white px-6 py-3 font-semibold hover:bg-mango-green-dark transition-colors"
+				>
+					<Github class="w-5 h-5" />
+					View on GitHub
+				</a>
+			</div>
+		</div>
+	</section>
+	<Footer />
+</Layout>
+
+<style>
+	.doc-card {
+		display: block;
+		transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+	}
+
+	.doc-card:hover {
+		transform: translateY(-4px);
+		box-shadow: 0 8px 24px rgba(90, 138, 74, 0.15);
+	}
+
+	.github-btn {
+		transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+	}
+
+	.github-btn:hover {
+		transform: translateY(-2px);
+		box-shadow: 0 4px 12px rgba(90, 138, 74, 0.3);
+	}
+</style>

@@ -1,0 +1,20 @@
+---
+import { resolveClasses } from "@utils/classMerge";
+
+interface Props {
+  href: string;
+  class?: string;
+  target?: "_self" | "_blank" | "_top" | "_parent" | "_unfencedTop";
+  rel?: string;
+}
+
+const { href, target, rel, class: className } = Astro.props;
+const buttonClasses: string = resolveClasses(
+  "inline-flex items-center relative overflow-hidden transform-gpu transition-all duration-300 ease-default gap-2 px-8 py-4 font-semibold text-lg glass-shine-20 hover:-translate-x-0.75 hover:scale-[1.02] active:-translate-y-[0.0625rem] active:scale-[1]",
+  className,
+);
+---
+
+<a href={href} target={target} rel={rel} class={buttonClasses}>
+  <slot />
+</a>

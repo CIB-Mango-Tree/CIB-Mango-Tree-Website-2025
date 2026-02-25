@@ -1,0 +1,81 @@
+---
+import { Copy, Check } from '@lucide/astro';
+
+interface Props {
+    code: string;
+    class?: string;
+}
+
+const { code, class: className = '' } = Astro.props;
+const uniqueId = `code-${Math.random().toString(36).substr(2, 9)}`;
+---
+
+<div class={`code-block-wrapper relative group ${className}`}>
+    <code 
+        id={uniqueId}
+        class="block bg-text-primary text-mango-yellow p-4 font-mono text-sm pr-12 overflow-x-auto"
+        set:html={code}
+    />
+    <button 
+        class="copy-btn absolute top-2 right-2 p-2 bg-white/10 hover:bg-white/20 text-white/70 hover:text-white rounded transition-all opacity-0 group-hover:opacity-100"
+        data-code-id={uniqueId}
+        aria-label="Copy to clipboard"
+    >
+        <Copy class="copy-icon w-4 h-4" />
+        <Check class="check-icon w-4 h-4 hidden" />
+    </button>
+</div>
+
+<style>
+    .copy-btn {
+        transition: all 0.2s ease;
+    }
+
+    .copy-btn:active {
+        transform: scale(0.95);
+    }
+
+    .copy-btn.copied {
+        background-color: rgba(139, 191, 114, 0.3);
+    }
+
+    .copy-btn.copied .copy-icon {
+        display: none;
+    }
+
+    .copy-btn.copied .check-icon {
+        display: block;
+    }
+</style>
+
+<script>
+    document.querySelectorAll('.copy-btn').forEach(button => {
+        button.addEventListener('click', async () => {
+            const codeId = button.getAttribute('data-code-id');
+            const codeElement = document.getElementById(codeId!);
+            
+            if (codeElement) {
+                // Get text content, handling <br> tags
+                const text = codeElement.innerHTML
+                    .replace(/<br\s*\/?>/gi, '\n')
+                    .replace(/&nbsp;/g, ' ')
+                    .replace(/<[^>]*>/g, '')
+                    .trim();
+                
+                try {
+                    await navigator.clipboard.writeText(text);
+                    
+                    // Show success state
+                    button.classList.add('copied');
+                    
+                    // Reset after 2 seconds
+                    setTimeout(() => {
+                        button.classList.remove('copied');
+                    }, 2000);
+                } catch (err) {
+                    console.error('Failed to copy:', err);
+                }
+            }
+        });
+    });
+</script>

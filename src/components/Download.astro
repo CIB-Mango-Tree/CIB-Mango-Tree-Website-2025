@@ -1,7 +1,60 @@
 ---
-import Button from "./Button.astro";
-
-const downloadLink = ()=>{}
 ---
 
-<Button styles="bg-[#FFB900]" onClick={downloadLink}>Download</Button>
+<a 
+    href="/download" 
+    class="nav-download-btn inline-flex items-center gap-2 bg-mango-green-dark text-white px-5 py-2.5 font-bold text-sm"
+>
+    <svg class="download-icon w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+    </svg>
+    Download
+</a>
+
+<style>
+    .nav-download-btn {
+        position: relative;
+        overflow: hidden;
+        transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        box-shadow: 0 2px 8px rgba(90, 138, 74, 0.4), 0 0 0 2px rgba(90, 138, 74, 0.2);
+    }
+
+    .nav-download-btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+        transition: left 0.4s ease;
+    }
+
+    .nav-download-btn:hover {
+        transform: translateY(-2px) scale(1.02);
+        box-shadow: 0 8px 20px rgba(90, 138, 74, 0.5), 0 0 0 2px rgba(90, 138, 74, 0.3);
+        background-color: #4A7A3A;
+    }
+
+    .nav-download-btn:hover::before {
+        left: 100%;
+    }
+
+    .nav-download-btn:active {
+        transform: translateY(0) scale(1);
+        box-shadow: 0 2px 4px rgba(90, 138, 74, 0.3);
+    }
+
+    .download-icon {
+        transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .nav-download-btn:hover .download-icon {
+        animation: downloadBounce 0.5s ease infinite;
+    }
+
+    @keyframes downloadBounce {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(2px); }
+    }
+</style>

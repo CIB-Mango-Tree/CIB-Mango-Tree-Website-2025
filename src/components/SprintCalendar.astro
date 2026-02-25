@@ -1,0 +1,108 @@
+---
+interface Meeting {
+  name: string;
+  day: string;
+  time: string;
+  type: "virtual" | "in-person";
+  link?: string;
+}
+
+const meetings: Meeting[] = [
+  { name: "Engagement Scrum", day: "Tuesday", time: "7-8pm", type: "virtual" },
+  { name: "Product Scrum", day: "Thursday", time: "7-8pm", type: "virtual" },
+  {
+    name: "Civic Tech DC Project Night",
+    day: "2nd & 4th Wednesday",
+    time: "Evening",
+    type: "in-person",
+    link: "https://lu.ma/civic-tech-dc",
+  },
+];
+---
+
+<div class="sprint-calendar bg-[#F8F6F2] p-6 md:p-8 border border-border">
+  <h4
+    class="font-bold text-xl text-text-primary mb-6 flex items-center gap-2"
+  >
+    <svg
+      class="w-5 h-5 text-mango-green-dark"
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+      ></path>
+    </svg>
+    Meeting Schedule
+  </h4>
+
+  <div class="space-y-4">
+    {
+      meetings.map((meeting, index) => (
+        <div
+          class="meeting-item flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 p-4 bg-white border-l-4 border-mango-green-light"
+          style={`animation-delay: ${index * 0.1}s;`}
+        >
+          <div class="flex-1">
+            <div class="font-semibold text-text-primary">{meeting.name}</div>
+            <div class="text-sm text-text-muted">
+              {meeting.day} @ {meeting.time}
+            </div>
+          </div>
+          <div class="flex items-center gap-2">
+            <span
+              class={`px-3 py-1 text-xs font-medium ${meeting.type === "virtual" ? "bg-[#E5F7F8] text-cyan-700" : "bg-mango-yellow text-text-primary"}`}
+            >
+              {meeting.type === "virtual" ? "💻 Virtual" : "📍 In-Person"}
+            </span>
+            {meeting.link && (
+              <a
+                href={meeting.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-mango-green-dark hover:underline text-sm font-medium"
+              >
+                RSVP →
+              </a>
+            )}
+          </div>
+        </div>
+      ))
+    }
+  </div>
+
+  <div class="mt-6 pt-6 border-t border-border-color">
+    <p class="text-sm text-text-muted">
+      <strong>Sprint Cycle:</strong> 2-month sprints starting at Project Nights
+    </p>
+  </div>
+</div>
+
+<style>
+  .meeting-item {
+    opacity: 0;
+    animation: fadeInMeeting 0.4s ease-out forwards;
+    transition: all 0.3s ease;
+  }
+
+  .meeting-item:hover {
+    transform: translateX(4px);
+    border-left-color: #5a8a4a;
+    box-shadow: 0 2px 8px rgba(90, 138, 74, 0.1);
+  }
+
+  @keyframes fadeInMeeting {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>
