@@ -1,16 +1,14 @@
 {
-	"main": "dist/_worker.js/index.js",
-	"name": "cib-mango-tree-website",
+  "main": "dist/_worker.js/index.js",
+  "name": "cib-mango-tree-website-2025",
   "compatibility_date": "2026-02-25",
-  "compatibility_flags": [
-    "nodejs_compat",
-    "global_fetch_strictly_public"
-  ],
-	"assets": {
-		"binding": "ASSETS",
-		"directory": "./dist"
-	},
-	"observability": {
-    "enabled": true
-  }
+  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+  "assets": {
+    "binding": "ASSETS",
+    "directory": "./dist",
+  },
+  "observability": {
+    "enabled": true,
+  },
 }
+
