@@ -184,10 +184,8 @@ export default function ToolsSelector() {
 
           {/* Content Title */}
           <h4
-            className="text-xl mb-4"
+            className="text-xl mb-4 font-bold"
             style={{
-              fontFamily: "'Playfair Display', Georgia, serif",
-              fontStyle: "italic",
               color: "#5A8A4A",
               letterSpacing: "-0.01em",
               animation: "fadeSlideIn 0.3s ease",
