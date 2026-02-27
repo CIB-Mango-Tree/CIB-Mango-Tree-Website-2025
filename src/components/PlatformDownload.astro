@@ -26,18 +26,18 @@ const { platforms } = Astro.props;
             <div class="os-icon text-6xl md:text-7xl mb-4" set:html={platform.icon} />
             
             <!-- Platform Name -->
-            <h3 class="font-display italic text-xl md:text-2xl text-text-primary mb-2">
+            <h3 class="font-bold text-xl md:text-2xl mb-2">
                 {platform.name}
             </h3>
             
             <!-- Description -->
-            <p class="text-text-muted text-sm mb-4">
+            <p class="text-muted text-sm mb-4">
                 {platform.description}
             </p>
             
             <!-- Requirements -->
             {platform.requirements && (
-                <p class="text-text-light text-xs mb-4">
+                <p class="text-light text-xs mb-4">
                     {platform.requirements}
                 </p>
             )}
@@ -45,7 +45,7 @@ const { platforms } = Astro.props;
             <!-- Download Button -->
             <a 
                 href={platform.downloadLink}
-                class="download-btn mt-auto w-full flex items-center justify-center gap-2 bg-mango-yellow text-text-primary px-6 py-3 font-semibold"
+                class="download-btn mt-auto w-full flex items-center justify-center gap-2 bg-mango-yellow px-6 py-3 font-semibold"
             >
                 <svg class="w-5 h-5 download-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
@@ -54,12 +54,12 @@ const { platforms } = Astro.props;
             </a>
             
             <!-- File Name -->
-            <span class="text-xs text-text-light mt-2">
+            <span class="text-xs text-light mt-2">
                 {platform.fileName}
             </span>
 
             <!-- File Size -->
-            <span class="text-xs text-text-light mt-2">
+            <span class="text-xs text-light mt-2">
                 {platform.fileSize}
             </span>
         </div>

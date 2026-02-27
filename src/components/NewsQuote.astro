@@ -56,9 +56,11 @@ const { title, publication, date, link, excerpt, imageUrl } = Astro.props;
           }
 
           <div class="flex flex-wrap items-center gap-2 md:gap-4 text-sm">
-            <span class="font-semibold text-mango-green-dark">{publication}</span>
-            <span class="text-text-light hidden sm:inline">|</span>
-            <span class="text-text-light">{date}</span>
+            <span class="font-semibold text-mango-green-dark"
+              >{publication}</span
+            >
+            <span class="text-light hidden sm:inline">|</span>
+            <span class="text-light">{date}</span>
             <span
               class="read-more ml-auto text-mango-green-dark font-medium flex items-center gap-1"
             >

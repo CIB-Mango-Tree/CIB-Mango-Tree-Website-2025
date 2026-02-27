@@ -20,7 +20,7 @@ const containerClasses: string = resolveClasses(
   >
     {
       iconPath && (
-        <div class="value-icon shrink-0 w-16 h-16 flex items-center justify-center transition-all duration-300 ease-default group-hover:scale-110 group-hover:-rotate-5">
+        <div class="shrink-0 w-16 h-16 flex items-center justify-center transition-all duration-300 ease-default group-hover:scale-110 group-hover:-rotate-5">
           <svg
             class="w-8 h-8 text-mango-green-dark"
             fill="none"
@@ -39,7 +39,7 @@ const containerClasses: string = resolveClasses(
     }
 
     <div class="flex flex-col flex-1">
-      <h3 class="font-bold text-2xl md:text-3xl text-primary mb-3">
+      <h3 class="font-bold text-2xl md:text-3xl mb-3">
         <slot name="title" />
       </h3>
       <p class="text-muted leading-relaxed text-lg">

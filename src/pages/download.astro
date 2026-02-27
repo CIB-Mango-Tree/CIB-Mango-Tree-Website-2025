@@ -1,299 +1,347 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Footer from '../components/Footer.astro';
-import PlatformDownload from '../components/PlatformDownload.astro';
-import CodeBlock from '../components/CodeBlock.astro';
-import cliScreenshot from '../assets/CLI_Image_CIB.png';
-import { BookOpen, Github, MessageCircle, Bug } from '@lucide/astro';
+import Layout from "../layouts/Layout.astro";
+import Footer from "../components/Footer.astro";
+import PlatformDownload from "../components/PlatformDownload.astro";
+import CodeBlock from "../components/CodeBlock.astro";
+import cliScreenshot from "../assets/CLI_Image_CIB.png";
+import { BookOpen } from "@lucide/astro";
 
 const platforms = [
-    {
-        name: 'Windows',
-        icon: '<svg viewBox="0 0 24 24" fill="currentColor" class="w-16 h-16 text-[#0078D4]"><path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801"/></svg>',
-        description: 'For Windows 10 and later',
-        downloadLink: 'https://github.com/civictechdc/cib-mango-tree/releases/download/v0.10.0/cibmangotree_windows.exe',
-        fileName: 'cibmangotree_windows.exe',
-        fileSize: '132 MB',
-        requirements: 'Windows 10+ • 64-bit'
-    },
-    {
-        name: 'macOS (Intel)',
-        icon: '<svg viewBox="0 0 24 24" fill="currentColor" class="w-16 h-16 text-[#555555]"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>',
-        description: 'For Intel-based Macs',
-        downloadLink: 'https://github.com/civictechdc/cib-mango-tree/releases/download/v0.10.0/cibmangotree_macos-x86.pkg',
-        fileName: 'cibmangotree_macos-x86.pkg',
-        fileSize: '130 MB',
-        requirements: 'macOS 10.15+ • Intel processor'
-    },
-    {
-        name: 'macOS (Apple Silicon)',
-        icon: '<svg viewBox="0 0 24 24" fill="currentColor" class="w-16 h-16 text-[#555555]"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>',
-        description: 'For M1/M2/M3 Macs',
-        downloadLink: 'https://github.com/civictechdc/cib-mango-tree/releases/download/v0.10.0/cibmangotree_macos-arm64.pkg',
-        fileName: 'cibmangotree_macos-arm64.pkg',
-        fileSize: '120 MB',
-        requirements: 'macOS 11+ • Apple M-series chip'
-    }
+  {
+    name: "Windows",
+    icon: '<svg viewBox="0 0 24 24" fill="currentColor" class="w-16 h-16 text-[#0078D4]"><path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801"/></svg>',
+    description: "For Windows 10 and later",
+    downloadLink:
+      "https://github.com/civictechdc/cib-mango-tree/releases/download/v0.10.0/cibmangotree_windows.exe",
+    fileName: "cibmangotree_windows.exe",
+    fileSize: "132 MB",
+    requirements: "Windows 10+ • 64-bit",
+  },
+  {
+    name: "macOS (Intel)",
+    icon: '<svg viewBox="0 0 24 24" fill="currentColor" class="w-16 h-16 text-[#555555]"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>',
+    description: "For Intel-based Macs",
+    downloadLink:
+      "https://github.com/civictechdc/cib-mango-tree/releases/download/v0.10.0/cibmangotree_macos-x86.pkg",
+    fileName: "cibmangotree_macos-x86.pkg",
+    fileSize: "130 MB",
+    requirements: "macOS 10.15+ • Intel processor",
+  },
+  {
+    name: "macOS (Apple Silicon)",
+    icon: '<svg viewBox="0 0 24 24" fill="currentColor" class="w-16 h-16 text-[#555555]"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>',
+    description: "For M1/M2/M3 Macs",
+    downloadLink:
+      "https://github.com/civictechdc/cib-mango-tree/releases/download/v0.10.0/cibmangotree_macos-arm64.pkg",
+    fileName: "cibmangotree_macos-arm64.pkg",
+    fileSize: "120 MB",
+    requirements: "macOS 11+ • Apple M-series chip",
+  },
 ];
 
 const dataPreparationSteps = [
-    {
-        step: 1,
-        title: 'Gather Your Data',
-        description: 'Export social media data from platforms like Twitter/X, Facebook, or use datasets from academic sources.'
-    },
-    {
-        step: 2,
-        title: 'Format as CSV',
-        description: 'Ensure your data is in CSV format with columns for: user_id, username, post_content, timestamp, and engagement_metrics.'
-    },
-    {
-        step: 3,
-        title: 'Clean & Validate',
-        description: 'Remove duplicates, handle missing values, and ensure text encoding is UTF-8 for consistent analysis.'
-    },
-    {
-        step: 4,
-        title: 'Run Analysis',
-        description: 'Use the CLI to run detection tests on your prepared dataset. Start with the copypasta test for quick results.'
-    }
+  {
+    step: 1,
+    title: "Gather Your Data",
+    description:
+      "Export social media data from platforms like Twitter/X, Facebook, or use datasets from academic sources.",
+  },
+  {
+    step: 2,
+    title: "Format as CSV",
+    description:
+      "Ensure your data is in CSV format with columns for: user_id, username, post_content, timestamp, and engagement_metrics.",
+  },
+  {
+    step: 3,
+    title: "Clean & Validate",
+    description:
+      "Remove duplicates, handle missing values, and ensure text encoding is UTF-8 for consistent analysis.",
+  },
+  {
+    step: 4,
+    title: "Run Analysis",
+    description:
+      "Use the CLI to run detection tests on your prepared dataset. Start with the copypasta test for quick results.",
+  },
 ];
 ---
 
 <Layout>
-    <!-- Hero Section -->
-    <section class="py-20 md:py-24 px-8 md:px-12 bg-background">
-        <div class="max-w-5xl mx-auto">
-            <h1 class="font-display italic text-4xl md:text-5xl lg:text-6xl text-text-primary mb-10 leading-tight">
-                Download CIB Mango Tree
-            </h1>
-            
-            <p class="text-xl text-text-muted mb-16 leading-relaxed max-w-3xl">
-                Get CIB Mango Tree running on your machine in minutes. Our tools run locally, ensuring your data stays private and secure.
-            </p>
-        </div>
-    </section>
+  <!-- Hero Section -->
+  <section class="py-20 md:py-24 px-8 md:px-12 bg-background">
+    <div class="max-w-5xl mx-auto">
+      <h1
+        class="font-bold text-4xl md:text-5xl lg:text-6xl mb-10 leading-tight"
+      >
+        Download CIB Mango Tree
+      </h1>
 
-    <!-- Platform Downloads -->
-    <section class="py-16 px-8 md:px-12 bg-[#F8F6F2]">
-        <div class="max-w-5xl mx-auto">
-            <h2 class="font-display italic text-3xl text-text-primary mb-12 text-center">Choose Your Platform</h2>
-            <PlatformDownload platforms={platforms} />
-            
-            <p class="text-center text-text-muted text-sm mt-10">
-                All downloads include the full CIB Mango Tree CLI with all detection modules.
-            </p>
-        </div>
-    </section>
+      <p class="text-xl text-muted mb-16 leading-relaxed max-w-3xl">
+        Get CIB Mango Tree running on your machine in minutes. Our tools run
+        locally, ensuring your data stays private and secure.
+      </p>
+    </div>
+  </section>
 
-    <!-- Alternative Installation -->
-    <section class="py-20 md:py-24 px-8 md:px-12 bg-background">
-        <div class="max-w-5xl mx-auto">
-            <h2 class="font-display italic text-3xl text-text-primary mb-12">Alternative Installation Methods</h2>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <!-- Python setup -->
-                <div class="install-card bg-background-alt border border-border-color p-8">
-                    <h3 class="font-semibold text-lg text-text-primary mb-5 flex items-center gap-2">
-                        <span class="bg-mango-yellow text-text-primary px-2 py-1 text-xs font-bold">PYTHON</span>
-                        From Source
-                    </h3>
-                    <div class="space-y-4 mb-5">
-                        <CodeBlock code="python -m venv venv" />
-                        <CodeBlock code="./bootstrap.sh" />
-                    </div>
-                    <p class="text-text-muted text-sm">For Python developers. Requires <strong>Python 3.12</strong> or higher.</p>
-                </div>
-                
-                <!-- GitHub clone -->
-                <div class="install-card bg-background-alt border border-border-color p-8">
-                    <h3 class="font-semibold text-lg text-text-primary mb-5 flex items-center gap-2">
-                        <span class="bg-[#24292e] text-white px-2 py-1 text-xs font-bold">GITHUB</span>
-                        Clone Repository
-                    </h3>
-                    <CodeBlock code="git clone https://github.com/civictechdc/cib-mango-tree.git" class="mb-5" />
-                    <p class="text-text-muted text-sm">For contributors. Get the latest development version.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+  <!-- Platform Downloads -->
+  <section class="py-16 px-8 md:px-12 bg-[#F8F6F2]">
+    <div class="max-w-5xl mx-auto">
+      <h2 class="font-bold text-3xl mb-12 text-center">Choose Your Platform</h2>
+      <PlatformDownload platforms={platforms} />
 
-    <!-- Data Preparation -->
-    <section class="py-20 md:py-24 px-8 md:px-12 bg-mango-yellow-light">
-        <div class="max-w-5xl mx-auto">
-            <h2 class="font-display italic text-3xl text-text-primary mb-6">Preparing Your Data</h2>
-            <p class="text-text-muted mb-12 max-w-3xl">
-                Before running analysis, you'll need to prepare your social media dataset. Follow these steps:
-            </p>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                {dataPreparationSteps.map((item, index) => (
-                    <div 
-                        class="data-step bg-white p-8 relative"
-                        style={`animation-delay: ${index * 0.1}s;`}
-                    >
-                        <div class="step-number absolute -top-3 -left-3 w-12 h-12 bg-mango-green-dark text-white font-bold flex items-center justify-center text-lg">
-                            {item.step}
-                        </div>
-                        <h3 class="font-semibold text-text-primary mb-4 mt-3">{item.title}</h3>
-                        <p class="text-text-muted text-sm leading-relaxed">{item.description}</p>
-                    </div>
-                ))}
-            </div>
+      <p class="text-center text-muted text-sm mt-10">
+        All downloads include the full CIB Mango Tree CLI with all detection
+        modules.
+      </p>
+    </div>
+  </section>
 
-            <!-- CSV Format Example -->
-            <div class="mt-12 bg-white p-8 border border-border-color">
-                <h3 class="font-semibold text-text-primary mb-5">Expected CSV Format</h3>
-                <div class="overflow-x-auto">
-                    <CodeBlock code="user_id,username,post_content,timestamp,retweets,likes<br/>12345,@example_user,&quot;Sample post content here&quot;,2025-01-15T10:30:00Z,5,12" />
-                </div>
-            </div>
-        </div>
-    </section>
+  <!-- Alternative Installation -->
+  <section class="py-20 md:py-24 px-8 md:px-12 bg-background">
+    <div class="max-w-5xl mx-auto">
+      <h2 class="font-bold text-3xl mb-12">Alternative Installation Methods</h2>
 
-    <!-- CLI Preview -->
-    <section class="py-20 md:py-24 px-8 md:px-12 bg-background">
-        <div class="max-w-5xl mx-auto">
-            <h2 class="font-display italic text-3xl text-text-primary mb-10">What You'll Get</h2>
-            <div class="rounded-xl border-2 border-mango-green-dark/20 overflow-hidden shadow-lg">
-                <img 
-                    src={cliScreenshot.src} 
-                    alt="CIB Mango Tree CLI interface" 
-                    class="cli-preview w-full rounded-xl"
-                />
-            </div>
-            <p class="text-text-muted text-sm mt-6 text-center">
-                An interactive command-line interface for analyzing social media datasets
-            </p>
-        </div>
-    </section>
-
-    <!-- Technical Documentation -->
-    <section class="py-16 px-8 md:px-12 bg-mango-green-dark text-white">
-        <div class="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8">
-            <div>
-                <h2 class="font-display italic text-2xl mb-3">Technical Documentation</h2>
-                <p class="text-white/80">
-                    Detailed API reference, advanced configuration, and integration guides.
-                </p>
-            </div>
-            <a 
-                href="https://civictechdc.github.io/cib-mango-tree" 
-                target="_blank"
-                rel="noopener noreferrer"
-                class="docs-btn inline-flex items-center gap-2 bg-white text-mango-green-dark px-6 py-3 font-semibold"
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <!-- Python setup -->
+        <div
+          class="install-card bg-background-alt border border-border-color p-8"
+        >
+          <h3 class="font-semibold text-lg mb-5 flex items-center gap-2">
+            <span class="bg-mango-yellow px-2 py-1 text-xs font-bold"
+              >PYTHON</span
             >
-                <BookOpen class="w-5 h-5" />
-                View Documentation
-            </a>
+            From Source
+          </h3>
+          <div class="space-y-4 mb-5">
+            <CodeBlock code="python -m venv venv" />
+            <CodeBlock code="./bootstrap.sh" />
+          </div>
+          <p class="text-muted text-sm">
+            For Python developers. Requires <strong>Python 3.12</strong> or higher.
+          </p>
         </div>
-    </section>
 
-    <!-- Help Section -->
-    <section class="py-16 px-8 md:px-12 bg-background">
-        <div class="max-w-5xl mx-auto text-center">
-            <h3 class="font-display italic text-2xl text-text-primary mb-6">Need Help?</h3>
-            <p class="text-text-muted mb-8">Check our documentation or reach out to the community</p>
-            <div class="flex flex-wrap justify-center gap-5">
-                <a 
-                    href="/docs" 
-                    class="help-btn inline-flex items-center gap-2 bg-mango-green-dark text-white px-6 py-3 font-semibold"
-                >
-                    Documentation
-                </a>
-                <a 
-                    href="https://github.com/civictechdc/cib-mango-tree/issues" 
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="help-btn inline-flex items-center gap-2 border-2 border-border-color text-text-primary px-6 py-3 font-semibold"
-                >
-                    Report an Issue
-                </a>
-                <a 
-                    href="https://codefordc.slack.com" 
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="help-btn inline-flex items-center gap-2 border-2 border-border-color text-text-primary px-6 py-3 font-semibold"
-                >
-                    Ask on Slack
-                </a>
+        <!-- GitHub clone -->
+        <div
+          class="install-card bg-background-alt border border-border-color p-8"
+        >
+          <h3 class="font-semibold text-lg mb-5 flex items-center gap-2">
+            <span class="bg-[#24292e] text-white px-2 py-1 text-xs font-bold"
+              >GITHUB</span
+            >
+            Clone Repository
+          </h3>
+          <CodeBlock
+            code="git clone https://github.com/civictechdc/cib-mango-tree.git"
+            class="mb-5"
+          />
+          <p class="text-muted text-sm">
+            For contributors. Get the latest development version.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Data Preparation -->
+  <section class="py-20 md:py-24 px-8 md:px-12 bg-mango-yellow-light">
+    <div class="max-w-5xl mx-auto">
+      <h2 class="font-bold text-3xl mb-6">Preparing Your Data</h2>
+      <p class="text-muted mb-12 max-w-3xl">
+        Before running analysis, you'll need to prepare your social media
+        dataset. Follow these steps:
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        {
+          dataPreparationSteps.map((item, index) => (
+            <div
+              class="data-step bg-white p-8 relative"
+              style={`animation-delay: ${index * 0.1}s;`}
+            >
+              <div class="step-number absolute -top-3 -left-3 w-12 h-12 bg-mango-green-dark text-white font-bold flex items-center justify-center text-lg">
+                {item.step}
+              </div>
+              <h3 class="font-semibold mb-4 mt-3">{item.title}</h3>
+              <p class="text-muted text-sm leading-relaxed">
+                {item.description}
+              </p>
             </div>
-        </div>
-    </section>
+          ))
+        }
+      </div>
 
-    <Footer />
+      <!-- CSV Format Example -->
+      <div class="mt-12 bg-white p-8 border border-border-color">
+        <h3 class="font-semibold mb-5">Expected CSV Format</h3>
+        <div class="overflow-x-auto">
+          <CodeBlock
+            code='user_id,username,post_content,timestamp,retweets,likes<br/>12345,@example_user,"Sample post content here",2025-01-15T10:30:00Z,5,12'
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CLI Preview -->
+  <section class="py-20 md:py-24 px-8 md:px-12 bg-background">
+    <div class="max-w-5xl mx-auto">
+      <h2 class="font-bold text-3xl mb-10">What You'll Get</h2>
+      <div
+        class="rounded-xl border-2 border-mango-green-dark/20 overflow-hidden shadow-lg"
+      >
+        <img
+          src={cliScreenshot.src}
+          alt="CIB Mango Tree CLI interface"
+          class="cli-preview w-full rounded-xl"
+        />
+      </div>
+      <p class="text-muted text-sm mt-6 text-center">
+        An interactive command-line interface for analyzing social media
+        datasets
+      </p>
+    </div>
+  </section>
+
+  <!-- Technical Documentation -->
+  <section class="py-16 px-8 md:px-12 bg-mango-green-dark text-white">
+    <div
+      class="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8"
+    >
+      <div>
+        <h2 class="font-bold text-2xl mb-3">Technical Documentation</h2>
+        <p class="text-white/80">
+          Detailed API reference, advanced configuration, and integration
+          guides.
+        </p>
+      </div>
+      <a
+        href="https://civictechdc.github.io/cib-mango-tree"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="docs-btn inline-flex items-center gap-2 bg-white text-mango-green-dark px-6 py-3 font-semibold"
+      >
+        <BookOpen class="w-5 h-5" />
+        View Documentation
+      </a>
+    </div>
+  </section>
+
+  <!-- Help Section -->
+  <section class="py-16 px-8 md:px-12 bg-background">
+    <div class="max-w-5xl mx-auto text-center">
+      <h3 class="font-bold text-2xl mb-6">Need Help?</h3>
+      <p class="text-muted mb-8">
+        Check our documentation or reach out to the community
+      </p>
+      <div class="flex flex-wrap justify-center gap-5">
+        <a
+          href="/docs"
+          class="help-btn inline-flex items-center gap-2 bg-mango-green-dark text-white px-6 py-3 font-semibold"
+        >
+          Documentation
+        </a>
+        <a
+          href="https://github.com/civictechdc/cib-mango-tree/issues"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="help-btn inline-flex items-center gap-2 border-2 border-border-color px-6 py-3 font-semibold"
+        >
+          Report an Issue
+        </a>
+        <a
+          href="https://codefordc.slack.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="help-btn inline-flex items-center gap-2 border-2 border-border-color px-6 py-3 font-semibold"
+        >
+          Ask on Slack
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <Footer />
 </Layout>
 
 <style>
-    .install-card {
-        transition: all 0.3s ease;
-    }
+  .install-card {
+    transition: all 0.3s ease;
+  }
 
-    .install-card:hover {
-        border-color: #5A8A4A;
-        transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(90, 138, 74, 0.1);
-    }
+  .install-card:hover {
+    border-color: #5a8a4a;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(90, 138, 74, 0.1);
+  }
 
-    .data-step {
-        opacity: 0;
-        animation: fadeInStep 0.5s ease-out forwards;
-        transition: all 0.3s ease;
-    }
+  .data-step {
+    opacity: 0;
+    animation: fadeInStep 0.5s ease-out forwards;
+    transition: all 0.3s ease;
+  }
 
-    @keyframes fadeInStep {
-        from {
-            opacity: 0;
-            transform: translateY(15px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
+  @keyframes fadeInStep {
+    from {
+      opacity: 0;
+      transform: translateY(15px);
     }
-
-    .data-step:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 8px 20px rgba(90, 138, 74, 0.15);
+    to {
+      opacity: 1;
+      transform: translateY(0);
     }
+  }
 
-    .step-number {
-        transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-    }
+  .data-step:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(90, 138, 74, 0.15);
+  }
 
-    .data-step:hover .step-number {
-        transform: scale(1.1) rotate(-5deg);
-        background-color: #4A7A3A;
-    }
+  .step-number {
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
 
-    .cli-preview {
-        transition: all 0.3s ease;
-    }
+  .data-step:hover .step-number {
+    transform: scale(1.1) rotate(-5deg);
+    background-color: #4a7a3a;
+  }
 
-    .cli-preview:hover {
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-    }
+  .cli-preview {
+    transition: all 0.3s ease;
+  }
 
-    .quick-step {
-        opacity: 0;
-        animation: fadeInStep 0.5s ease-out forwards;
-    }
+  .cli-preview:hover {
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  }
 
-    .quick-step:nth-child(1) { animation-delay: 0.1s; }
-    .quick-step:nth-child(2) { animation-delay: 0.2s; }
-    .quick-step:nth-child(3) { animation-delay: 0.3s; }
+  .quick-step {
+    opacity: 0;
+    animation: fadeInStep 0.5s ease-out forwards;
+  }
 
-    .docs-btn, .help-btn {
-        transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-    }
+  .quick-step:nth-child(1) {
+    animation-delay: 0.1s;
+  }
+  .quick-step:nth-child(2) {
+    animation-delay: 0.2s;
+  }
+  .quick-step:nth-child(3) {
+    animation-delay: 0.3s;
+  }
 
-    .docs-btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 16px rgba(255, 255, 255, 0.3);
-    }
+  .docs-btn,
+  .help-btn {
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
 
-    .help-btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(90, 138, 74, 0.2);
-    }
+  .docs-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(255, 255, 255, 0.3);
+  }
+
+  .help-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(90, 138, 74, 0.2);
+  }
 </style>
