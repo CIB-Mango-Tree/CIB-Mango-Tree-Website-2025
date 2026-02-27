@@ -1,0 +1,26 @@
+---
+import { resolveClasses } from "@utils/classMerge";
+
+interface Props {
+  href: string;
+  class?: string;
+}
+
+const { href, class: className } = Astro.props;
+const cardClasses: string = resolveClasses(
+  "flex flex-col transition-all duration-300 ease-default p-8 hover:-translate-1 hover:shadow-[0_0.50rem_1.50rem_rgba(90,138,74,0.15)]",
+  className,
+);
+---
+
+<a href={href} target="_blank" rel="noopener noreferrer" class={cardClasses}>
+  <h3 class="font-bold text-2xl mb-4">
+    <slot name="heading" />
+  </h3>
+  <p class="text-muted mb-4">
+    <slot name="description" />
+  </p>
+  <span class="text-mango-green-dark font-semibold hover:underline"
+    >Read more →</span
+  >
+</a>
