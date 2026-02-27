@@ -1,9 +1,9 @@
 ---
-import Layout from "../layouts/Layout.astro";
-import Footer from "../components/Footer.astro";
-import Newsletter from "../components/Newsletter.astro";
-import BlogFeatured from "../components/BlogFeatured.astro";
-import GlossaryAccordion from "../components/GlossaryAccordion.astro";
+import Layout from "@layouts/Layout.astro";
+import Footer from "@components/Footer.astro";
+import Newsletter from "@components/Newsletter.astro";
+import BlogFeatured from "@components/BlogFeatured.astro";
+import GlossaryAccordion from "@components/GlossaryAccordion.astro";
 import {
   ExternalLink,
   FileText,
@@ -13,12 +13,10 @@ import {
   HelpCircle,
 } from "@lucide/astro";
 import { cn } from "@utils/classMerge";
-
-// Blog placeholder images
-import blogImg1 from "../assets/blog/Mango_Placeholder_1.png";
-import blogImg2 from "../assets/blog/Mango_Placeholder_2.png";
-import blogImg3 from "../assets/blog/Mango_Placeholder_3.png";
-import blogImg4 from "../assets/blog/Mango_Placeholder_4.png";
+import blogImg1 from "@assets/blog/Mango_Placeholder_1.png";
+import blogImg2 from "@assets/blog/Mango_Placeholder_2.png";
+import blogImg3 from "@assets/blog/Mango_Placeholder_3.png";
+import blogImg4 from "@assets/blog/Mango_Placeholder_4.png";
 
 const researchPapers = [
   {
