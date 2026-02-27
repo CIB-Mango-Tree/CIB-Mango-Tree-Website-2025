@@ -12,7 +12,7 @@ import {
   Newspaper,
   HelpCircle,
 } from "@lucide/astro";
-import { resolveClasses } from "@utils/classMerge";
+import { cn } from "@utils/classMerge";
 
 // Blog placeholder images
 import blogImg1 from "../assets/blog/Mango_Placeholder_1.png";
@@ -259,21 +259,21 @@ const navItems = [
                 other civic topics.
               </p>
               <div class="flex flex-wrap gap-4">
-                <span class="keyword-tag bg-white px-4 py-2 text-sm"
-                  >Bot Networks</span
-                >
-                <span class="keyword-tag bg-white px-4 py-2 text-sm"
-                  >Astroturfing</span
-                >
-                <span class="keyword-tag bg-white px-4 py-2 text-sm"
-                  >Sockpuppets</span
-                >
-                <span class="keyword-tag bg-white px-4 py-2 text-sm"
-                  >Troll Farms</span
-                >
-                <span class="keyword-tag bg-white px-4 py-2 text-sm"
-                  >Information Operations</span
-                >
+                <span class="keyword-tag bg-white px-4 py-2 text-sm">
+                  Bot Networks
+                </span>
+                <span class="keyword-tag bg-white px-4 py-2 text-sm">
+                  Astroturfing
+                </span>
+                <span class="keyword-tag bg-white px-4 py-2 text-sm">
+                  Sockpuppets
+                </span>
+                <span class="keyword-tag bg-white px-4 py-2 text-sm">
+                  Troll Farms
+                </span>
+                <span class="keyword-tag bg-white px-4 py-2 text-sm">
+                  Information Operations
+                </span>
               </div>
             </div>
           </div>
@@ -359,27 +359,35 @@ const navItems = [
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
               {
-                datasets.map((dataset) => (
-                  <a
-                    href={dataset.link}
-                    target="_blank"
-                    rel="noopener"
-                    class={`dataset-card ${dataset.color} p-6 block`}
-                  >
-                    <div class="flex justify-between items-start mb-3">
-                      <h3 class="font-bold text-lg">{dataset.name}</h3>
-                      <span
-                        class={`text-xs px-2 py-1 ${dataset.access === "Free" ? "bg-mango-green-light text-mango-green-dark" : "bg-mango-yellow-light text-muted"}`}
-                      >
-                        {dataset.access}
+                datasets.map((dataset) => {
+                  const datasetClasses: string = cn("text-xs px-2 py-1", {
+                    "bg-mango-green-light text-mango-green-dark":
+                      dataset.access === "Free",
+                    "bg-mango-yellow-light text-muted":
+                      dataset.access !== "Free",
+                  });
+
+                  return (
+                    <a
+                      href={dataset.link}
+                      target="_blank"
+                      rel="noopener"
+                      class={`dataset-card ${dataset.color} p-6 block`}
+                    >
+                      <div class="flex justify-between items-start mb-3">
+                        <h3 class="font-bold text-lg">{dataset.name}</h3>
+                        <span class={datasetClasses}>{dataset.access}</span>
+                      </div>
+                      <p class="text-muted text-sm mb-4">
+                        {dataset.description}
+                      </p>
+                      <span class="text-mango-green-dark font-semibold text-sm inline-flex items-center gap-1">
+                        Access dataset
+                        <ExternalLink class="w-3 h-3" />
                       </span>
-                    </div>
-                    <p class="text-muted text-sm mb-4">{dataset.description}</p>
-                    <span class="text-mango-green-dark font-semibold text-sm inline-flex items-center gap-1">
-                      Access dataset <ExternalLink class="w-3 h-3" />
-                    </span>
-                  </a>
-                ))
+                    </a>
+                  );
+                })
               }
             </div>
           </div>
