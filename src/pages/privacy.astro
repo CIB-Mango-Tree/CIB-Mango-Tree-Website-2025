@@ -4,53 +4,85 @@ import Footer from "@components/Footer.astro";
 ---
 
 <Layout>
-  <h1 class="font-bold text-4xl md:text-5xl lg:text-6xl mb-10 leading-tight">
-    CIB Mango Tree Website Privacy Policy
-  </h1>
-  <p>
-    This privacy policy will explain how our organization uses the personal data
-    we collect from you when you use our website.<br />
-    <br />
-    Topics:<br />
-    - What data do we collect?<br />
-    - How will we use your data?<br />
-    - How do we store your data?<br />
-    - Do we use cookies?<br />
-    - Privacy policies of other websites<br />
-    - Changes to our privacy policy<br />
-    - How to contact us?<br />
-    <br />
-    What data do we collect?<br />
-    For users who opt in to our newletter, we save you email address.<br />
-    <br />
-    How will we use your data?<br />
-    We will use your email address to inform you of updates to CIB Mango Tree tools
-    and for outreach purposes. <br />
-    <br />
-    How do we store your data?<br />
-    We use Mailchimp to manage our newsletters and email lists.<br />
-    <br />
-    Do we use cookies?<br />
-    No, we do not use cookies.<br />
-    <br />
-    How to delete your data?<br />
-    If you no longer wish to be part of our email list, please contact us.<br />
-    <br />
-    Privacy policies of other websites<br />
-    The CIB Mango Tree website contains links to other websites. Our privacy policy
-    applies only to our website, so if you click on a link to another website, you
-    should read their privacy policy.<br />
-    <br />
-    Changes to our privacy policy<br />
-    CIB Mango Tree keeps its privacy policy under regular review and places any updates
-    on this web page. This privacy policy was last updated on 25 February 2026.<br
-    />
-    <br />
-    How to contact us?<br />
-    If you have any questions about CIB Mango Tree's privacy policy, the data we hold
-    on you, or you would like to exercise one of your data protection rights, please
-    do not hesitate to contact us.<br />
-    Email us at: cibmangotree@proton.me
-  </p>
-  <Footer />
+  <section class="flex-container-wrapper">
+    <div class="flex flex-col items-start justify-center w-7xl gap-y-4">
+      <h1
+        class="font-bold text-3xl md:text-4xl lg:text-5xl leading-tight self-center"
+      >
+        CIB Mango Tree Website Privacy Policy
+      </h1>
+      <p class="self-center">
+        This privacy policy will explain how our organization uses the personal
+        data we collect from you when you use our website.
+      </p>
+      <h2 class="font-bold text-2xl md:text-3xl lg:text-4xl">Topics:</h2>
+      <ul class="list-disc ml-12">
+        <li>What data do we collect?</li>
+        <li>How will we use your data?</li>
+        <li>How do we store your data?</li>
+        <li>Do we use cookies?</li>
+        <li>Privacy policies of other websites</li>
+        <li>Changes to our privacy policy</li>
+        <li>How to contact us?</li>
+      </ul>
+      <h3 class="font-bold text-xl md:text-2xl lg:text-3xl">
+        What data do we collect?
+      </h3>
+      <p>For users who opt in to our newletter, we save you email address.</p>
+      <h3 class="font-bold text-xl md:text-2xl lg:text-3xl">
+        How will we use your data?
+      </h3>
+      <p>
+        We will use your email address to inform you of updates to CIB Mango
+        Tree tools and for outreach purposes.
+      </p>
+      <h3 class="font-bold text-xl md:text-2xl lg:text-3xl">
+        How do we store your data?
+      </h3>
+      <p>We use Mailchimp to manage our newsletters and email lists.</p>
+      <h3 class="font-bold text-xl md:text-2xl lg:text-3xl">
+        Do we use cookies?<br />
+      </h3>
+      <p>No, we do not use cookies.</p>
+      <h3 class="font-bold text-xl md:text-2xl lg:text-3xl">
+        How to delete your data?
+      </h3>
+      <p>
+        If you no longer wish to be part of our email list, please contact us.
+      </p>
+      <h3 class="font-bold text-xl md:text-2xl lg:text-3xl">
+        Privacy policies of other websites
+      </h3>
+      <p>
+        The CIB Mango Tree website contains links to other websites. Our privacy
+        policy applies only to our website, so if you click on a link to another
+        website, you should read their privacy policy.
+      </p>
+      <h3 class="font-bold text-xl md:text-2xl lg:text-3xl">
+        Changes to our privacy policy
+      </h3>
+      <p>
+        CIB Mango Tree keeps its privacy policy under regular review and places
+        any updates on this web page. This privacy policy was last updated on 25
+        February 2026.
+      </p>
+      <h3 class="font-bold text-xl md:text-2xl lg:text-3xl">
+        How to contact us?
+      </h3>
+      <p>
+        If you have any questions about CIB Mango Tree's privacy policy, the
+        data we hold on you, or you would like to exercise one of your data
+        protection rights, please do not hesitate to contact us.<br />
+        Email us at:
+        <a
+          href="mailto:cibmangotree@proton.me?subject=Privacy%20Policy%20Inquiry"
+          class="no-underline text-mango-green-dark hover:text-mango-green transition-colors"
+        >
+          cibmangotree@proton.me
+        </a>
+      </p>
+    </div>
+  </section>
 </Layout>
+
+<Footer />
