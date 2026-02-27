@@ -1,19 +1,21 @@
 ---
 import { Copy, Check } from "@lucide/astro";
+import { resolveClasses } from "@utils/classMerge";
 
 interface Props {
   code: string;
   class?: string;
 }
 
-const { code, class: className = "" } = Astro.props;
+const { code, class: className } = Astro.props;
 const uniqueId = `code-${Math.random().toString(36).substr(2, 9)}`;
+const containerClasses = resolveClasses("relative group", className);
 ---
 
-<div class={`code-block-wrapper relative group ${className}`}>
+<div class={containerClasses}>
   <code
     id={uniqueId}
-    class="block text-mango-yellow p-4 font-mono text-sm pr-12 overflow-x-auto"
+    class="block text-mango-yellow p-4 font-mono text-sm pr-12 overflow-x-auto bg-mango-green-darkest"
     set:html={code}
   />
   <button
