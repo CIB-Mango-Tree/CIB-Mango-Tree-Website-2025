@@ -1,10 +1,10 @@
 ---
+import { BookOpen } from "@lucide/astro";
 import Layout from "@layouts/Layout.astro";
 import Footer from "@components/Footer.astro";
 import PlatformDownload from "@components/PlatformDownload.astro";
 import CodeBlock from "@components/CodeBlock.astro";
 import cliScreenshot from "@assets/CLI_Image_CIB.png";
-import { BookOpen } from "@lucide/astro";
 
 const platforms = [
   {
@@ -69,8 +69,8 @@ const dataPreparationSteps = [
 
 <Layout>
   <!-- Hero Section -->
-  <section class="py-20 md:py-24 px-8 md:px-12 bg-background">
-    <div class="max-w-5xl mx-auto">
+  <section class="flex-container-wrapper bg-background">
+    <div class="flex-container-main w-5xl">
       <h1
         class="font-bold text-4xl md:text-5xl lg:text-6xl mb-10 leading-tight"
       >
@@ -85,8 +85,8 @@ const dataPreparationSteps = [
   </section>
 
   <!-- Platform Downloads -->
-  <section class="py-16 px-8 md:px-12 bg-[#F8F6F2]">
-    <div class="max-w-5xl mx-auto">
+  <section class="flex justify-center py-16 bg-[#F8F6F2]">
+    <div class="flex-container-main w-5xl">
       <h2 class="font-bold text-3xl mb-12 text-center">Choose Your Platform</h2>
       <PlatformDownload platforms={platforms} />
 
@@ -98,8 +98,8 @@ const dataPreparationSteps = [
   </section>
 
   <!-- Alternative Installation -->
-  <section class="py-20 md:py-24 px-8 md:px-12 bg-background">
-    <div class="max-w-5xl mx-auto">
+  <section class="flex-container-wrapper bg-background">
+    <div class="flex-container-main w-5xl">
       <h2 class="font-bold text-3xl mb-12">Alternative Installation Methods</h2>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -145,8 +145,8 @@ const dataPreparationSteps = [
   </section>
 
   <!-- Data Preparation -->
-  <section class="py-20 md:py-24 px-8 md:px-12 bg-mango-yellow-light">
-    <div class="max-w-5xl mx-auto">
+  <section class="flex-container-wrapper bg-mango-yellow-light">
+    <div class="flex-container-main w-5xl">
       <h2 class="font-bold text-3xl mb-6">Preparing Your Data</h2>
       <p class="text-muted mb-12 max-w-3xl">
         Before running analysis, you'll need to prepare your social media
@@ -185,8 +185,8 @@ const dataPreparationSteps = [
   </section>
 
   <!-- CLI Preview -->
-  <section class="py-20 md:py-24 px-8 md:px-12 bg-background">
-    <div class="max-w-5xl mx-auto">
+  <section class="flex-container-wrapper bg-background">
+    <div class="flex-container-main w-5xl">
       <h2 class="font-bold text-3xl mb-10">What You'll Get</h2>
       <div
         class="rounded-xl border-2 border-mango-green-dark/20 overflow-hidden shadow-lg"
@@ -205,9 +205,9 @@ const dataPreparationSteps = [
   </section>
 
   <!-- Technical Documentation -->
-  <section class="py-16 px-8 md:px-12 bg-mango-green-dark text-white">
+  <section class="flex justify-center py-16 bg-mango-green-dark text-white">
     <div
-      class="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8"
+      class="w-5xl flex flex-col md:flex-row items-center justify-between gap-8"
     >
       <div>
         <h2 class="font-bold text-2xl mb-3">Technical Documentation</h2>
@@ -229,8 +229,8 @@ const dataPreparationSteps = [
   </section>
 
   <!-- Help Section -->
-  <section class="py-16 px-8 md:px-12 bg-background">
-    <div class="max-w-5xl mx-auto text-center">
+  <section class="flex justify-center py-16 bg-background">
+    <div class="flex-container-main w-5xl text-center">
       <h3 class="font-bold text-2xl mb-6">Need Help?</h3>
       <p class="text-muted mb-8">
         Check our documentation or reach out to the community

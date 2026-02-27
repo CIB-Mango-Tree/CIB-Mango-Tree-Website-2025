@@ -1,5 +1,15 @@
-@import '@fontsource-variable/inter';
+@import "@fontsource-variable/inter";
 @import "tailwindcss";
+
+@layer components {
+  .flex-container-wrapper {
+    @apply flex justify-center py-20 md:py-24;
+  }
+
+  .flex-container-main {
+    @apply flex flex-col justify-center items-center;
+  }
+}
 
 @theme {
   /* Colors - Lighter Mango CIB Palette */
@@ -83,7 +93,6 @@
   --animate-bounce-x: bounceX 1000ms infinite;
 
   @keyframes bounceX {
-
     0%,
     100% {
       transform: translateX(-25%);
@@ -114,18 +123,22 @@
     content: var(--tw-content);
     transition-property: left;
     transition-timing-function: ease;
-    background: linear-gradient(90deg,
-        transparent,
-        rgba(255, 255, 255, --value(--glass-shine-opacity-*, [integer])),
-        transparent);
-    background: linear-gradient(90deg,
-        transparent,
-        rgba(255, 255, 255, calc(--value(integer) * 1%)),
-        transparent);
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, --value(--glass-shine-opacity-*, [integer])),
+      transparent
+    );
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, calc(--value(integer) * 1%)),
+      transparent
+    );
   }
 
   &:hover {
-    @media(hover: hover) {
+    @media (hover: hover) {
       &::before {
         @apply left-full;
       }

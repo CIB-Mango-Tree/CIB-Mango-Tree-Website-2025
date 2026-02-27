@@ -199,11 +199,11 @@ const navItems = [
 
 <Layout>
   <!-- Centered wrapper for nav + content -->
-  <div class="max-w-7xl mx-auto px-8 md:px-12">
-    <div class="flex">
+  <div class="flex justify-center">
+    <div class="flex justify-center w-7xl">
       <!-- Sticky Left Navigation -->
-      <aside class="hidden lg:block w-64 shrink-0">
-        <nav class="sticky top-24 py-20 pr-8">
+      <aside class="hidden lg:flex lg:flex-col w-64 shrink-0">
+        <nav class="sticky top-24 py-20">
           <h3
             class="text-xs font-bold uppercase tracking-widest text-muted mb-6"
           >
@@ -227,8 +227,8 @@ const navItems = [
       </aside>
 
       <!-- Main Content -->
-      <section class="flex-1 py-20 md:py-24 bg-background min-w-0">
-        <div class="max-w-4xl">
+      <section class="flex-container-wrapper flex-1 bg-background">
+        <div class="flex-conatiner-main w-4xl">
           <h1
             class="font-bold text-4xl md:text-5xl lg:text-6xl mb-10 leading-tight"
           >
