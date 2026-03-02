@@ -50,7 +50,7 @@ const meetings: Meeting[] = [
 
         return (
           <div
-            class="meeting-item flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 p-4 bg-white border-l-4 border-mango-green-light"
+            class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 p-4 bg-white border-l-4 border-mango-green-light opacity-0 animate-fade-in transition-all duration-300 ease-linear hover:translate-x-1 hover:shadow-[0_0.125rem_0.50rem_rgba(90,138,74,0.1)] hover:border-l-[#5a8a4a]"
             style={`animation-delay: ${index * 0.1}s;`}
           >
             <div class="flex-1">
@@ -86,28 +86,3 @@ const meetings: Meeting[] = [
     </p>
   </div>
 </div>
-
-<style>
-  .meeting-item {
-    opacity: 0;
-    animation: fadeInMeeting 0.4s ease-out forwards;
-    transition: all 0.3s ease;
-  }
-
-  .meeting-item:hover {
-    transform: translateX(4px);
-    border-left-color: #5a8a4a;
-    box-shadow: 0 2px 8px rgba(90, 138, 74, 0.1);
-  }
-
-  @keyframes fadeInMeeting {
-    from {
-      opacity: 0;
-      transform: translateY(10px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-</style>

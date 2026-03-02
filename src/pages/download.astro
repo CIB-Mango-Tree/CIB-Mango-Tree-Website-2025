@@ -3,7 +3,8 @@ import { BookOpen } from "@lucide/astro";
 import Layout from "@layouts/Layout.astro";
 import Footer from "@components/Footer.astro";
 import PlatformDownload from "@components/PlatformDownload.astro";
-import CodeBlock from "@components/CodeBlock.astro";
+import CodeBlock from "@components/CodeBlock";
+import BaseButton from "@components/LinkButtons/BaseButton.astro";
 import cliScreenshot from "@assets/CLI_Image_CIB.png";
 
 const platforms = [
@@ -105,17 +106,17 @@ const dataPreparationSteps = [
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
         <!-- Python setup -->
         <div
-          class="install-card bg-background-alt border border-border-color p-8"
+          class="bg-background-alt border border-border p-8 transition-all duration-300 ease-linear hover:border-[#5a8a4a] hover:shadow-[0_0.25rem_0.75rem_rgba(90,138,74,0.1)] hover:-translate-y-0.5"
         >
           <h3 class="font-semibold text-lg mb-5 flex items-center gap-2">
-            <span class="bg-mango-yellow px-2 py-1 text-xs font-bold"
-              >PYTHON</span
-            >
+            <span class="bg-mango-yellow px-2 py-1 text-xs font-bold">
+              PYTHON
+            </span>
             From Source
           </h3>
           <div class="space-y-4 mb-5">
-            <CodeBlock code="python -m venv venv" />
-            <CodeBlock code="./bootstrap.sh" />
+            <CodeBlock client:visible code="python -m venv venv" />
+            <CodeBlock client:visible code="./bootstrap.sh" className="mt-2" />
           </div>
           <p class="text-muted text-sm">
             For Python developers. Requires <strong>Python 3.12</strong> or higher.
@@ -124,7 +125,7 @@ const dataPreparationSteps = [
 
         <!-- GitHub clone -->
         <div
-          class="install-card bg-background-alt border border-border-color p-8"
+          class="bg-background-alt border border-border p-8 transition-all duration-300 ease-linear hover:border-[#5a8a4a] hover:shadow-[0_0.25rem_0.75rem_rgba(90,138,74,0.1)] hover:-translate-y-0.5"
         >
           <h3 class="font-semibold text-lg mb-5 flex items-center gap-2">
             <span class="bg-[#24292e] text-white px-2 py-1 text-xs font-bold"
@@ -133,8 +134,9 @@ const dataPreparationSteps = [
             Clone Repository
           </h3>
           <CodeBlock
+            client:visible
             code="git clone https://github.com/civictechdc/cib-mango-tree.git"
-            class="mb-5"
+            className="mb-5"
           />
           <p class="text-muted text-sm">
             For contributors. Get the latest development version.
@@ -157,10 +159,10 @@ const dataPreparationSteps = [
         {
           dataPreparationSteps.map((item, index) => (
             <div
-              class="data-step bg-white p-8 relative"
+              class="bg-white p-8 relative group opacity-0 transition-all duration-300 ease-linear animate-fade-in-step hover:-translate-y-1 hover:shadow-[0_0.5rem_1.25rem_rgba(90,138,74,0.15)]"
               style={`animation-delay: ${index * 0.1}s;`}
             >
-              <div class="step-number absolute -top-3 -left-3 w-12 h-12 bg-mango-green-dark text-white font-bold flex items-center justify-center text-lg">
+              <div class="absolute -top-3 -left-3 w-12 h-12 bg-mango-green-dark text-white font-bold flex items-center justify-center text-lg transition-all duration-300 ease-default group-hover:bg-[#4a7a3a] group-hover:scale-110 group-hover:-rotate-5">
                 {item.step}
               </div>
               <h3 class="font-semibold mb-4 mt-3">{item.title}</h3>
@@ -177,6 +179,7 @@ const dataPreparationSteps = [
         <h3 class="font-semibold mb-5">Expected CSV Format</h3>
         <div class="overflow-x-auto">
           <CodeBlock
+            client:visible
             code='user_id,username,post_content,timestamp,retweets,likes<br/>12345,@example_user,"Sample post content here",2025-01-15T10:30:00Z,5,12'
           />
         </div>
@@ -194,7 +197,7 @@ const dataPreparationSteps = [
         <img
           src={cliScreenshot.src}
           alt="CIB Mango Tree CLI interface"
-          class="cli-preview w-full rounded-xl"
+          class="w-full rounded-xl"
         />
       </div>
       <p class="text-muted text-sm mt-6 text-center">
@@ -216,15 +219,16 @@ const dataPreparationSteps = [
           guides.
         </p>
       </div>
-      <a
+      <BaseButton
         href="https://civictechdc.github.io/cib-mango-tree"
         target="_blank"
         rel="noopener noreferrer"
-        class="docs-btn inline-flex items-center gap-2 bg-white text-mango-green-dark px-6 py-3 font-semibold"
+        class="bg-white text-mango-green-dark"
+        hoverAnimation
       >
         <BookOpen class="w-5 h-5" />
         View Documentation
-      </a>
+      </BaseButton>
     </div>
   </section>
 
@@ -236,112 +240,33 @@ const dataPreparationSteps = [
         Check our documentation or reach out to the community
       </p>
       <div class="flex flex-wrap justify-center gap-5">
-        <a
+        <BaseButton
           href="/docs"
-          class="help-btn inline-flex items-center gap-2 bg-mango-green-dark text-white px-6 py-3 font-semibold"
+          class="inline-flex bg-mango-green-dark text-white"
+          hoverAnimation
         >
           Documentation
-        </a>
-        <a
+        </BaseButton>
+        <BaseButton
           href="https://github.com/civictechdc/cib-mango-tree/issues"
           target="_blank"
           rel="noopener noreferrer"
-          class="help-btn inline-flex items-center gap-2 border-2 border-border-color px-6 py-3 font-semibold"
+          class="border-2 border-border"
+          hoverAnimation
         >
           Report an Issue
-        </a>
-        <a
+        </BaseButton>
+        <BaseButton
           href="https://codefordc.slack.com"
           target="_blank"
           rel="noopener noreferrer"
-          class="help-btn inline-flex items-center gap-2 border-2 border-border-color px-6 py-3 font-semibold"
+          class="border-2 border-border"
+          hoverAnimation
         >
           Ask on Slack
-        </a>
+        </BaseButton>
       </div>
     </div>
   </section>
-
   <Footer />
 </Layout>
-
-<style>
-  .install-card {
-    transition: all 0.3s ease;
-  }
-
-  .install-card:hover {
-    border-color: #5a8a4a;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(90, 138, 74, 0.1);
-  }
-
-  .data-step {
-    opacity: 0;
-    animation: fadeInStep 0.5s ease-out forwards;
-    transition: all 0.3s ease;
-  }
-
-  @keyframes fadeInStep {
-    from {
-      opacity: 0;
-      transform: translateY(15px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  .data-step:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 20px rgba(90, 138, 74, 0.15);
-  }
-
-  .step-number {
-    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-  }
-
-  .data-step:hover .step-number {
-    transform: scale(1.1) rotate(-5deg);
-    background-color: #4a7a3a;
-  }
-
-  .cli-preview {
-    transition: all 0.3s ease;
-  }
-
-  .cli-preview:hover {
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-  }
-
-  .quick-step {
-    opacity: 0;
-    animation: fadeInStep 0.5s ease-out forwards;
-  }
-
-  .quick-step:nth-child(1) {
-    animation-delay: 0.1s;
-  }
-  .quick-step:nth-child(2) {
-    animation-delay: 0.2s;
-  }
-  .quick-step:nth-child(3) {
-    animation-delay: 0.3s;
-  }
-
-  .docs-btn,
-  .help-btn {
-    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-  }
-
-  .docs-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 16px rgba(255, 255, 255, 0.3);
-  }
-
-  .help-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(90, 138, 74, 0.2);
-  }
-</style>

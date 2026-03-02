@@ -10,6 +10,7 @@ import {
   BookOpen,
   ArrowRight,
 } from "@lucide/astro";
+import { cn } from "@utils/classMerge";
 
 interface Props {
   title: string;
@@ -38,15 +39,6 @@ const {
   color = "cream",
 } = Astro.props;
 
-const colorClasses = {
-  yellow: "bg-mango-yellow border-mango-yellow",
-  cyan: "bg-[#E5F7F8] border-[#E5F7F8]",
-  green: "bg-mango-green-light border-mango-green-light",
-  cream: "bg-[#F8F6F2] border-border-color",
-  peach: "bg-[#FFE5D9] border-[#FFE5D9]",
-  lavender: "bg-[#EDE7F6] border-[#EDE7F6]",
-};
-
 // Map icon names to components
 const iconMap: Record<string, any> = {
   code: Code,
@@ -60,13 +52,22 @@ const iconMap: Record<string, any> = {
 };
 
 const IconComponent = iconMap[icon];
+const cardClasses: string = cn(
+  "border-2 p-6 md:p-8 h-full flex flex-col group transition-all duration-300 ease-default hover:-translate-y-1.5 hover:border-[#5a8a4a] hover:shadow-[0_0.75rem_2.0rem_rgba(90,138,74,0.15)]",
+  {
+    "bg-mango-yellow border-mango-yellow": color === "yellow",
+    "bg-[#E5F7F8] border-[#E5F7F8]": color === "cyan",
+    "bg-mango-green-light border-mango-green-light": color === "green",
+    "bg-[#F8F6F2] border-border": color === "cream",
+    "bg-[#FFE5D9] border-[#FFE5D9]": color === "peach",
+    "bg-[#EDE7F6] border-[#EDE7F6]": color === "lavender",
+  },
+);
 ---
 
-<div
-  class={`contribution-card ${colorClasses[color]} border-2 p-6 md:p-8 h-full flex flex-col`}
->
+<div class={cardClasses}>
   <div
-    class="card-icon mb-5 w-14 h-14 bg-white/50 rounded-xl flex items-center justify-center"
+    class="mb-5 w-14 h-14 bg-white/50 rounded-xl flex items-center justify-center transition-all duration-300 ease-default group-hover:scale-110 group-hover:bg-[rgba(90,138,74,0.15)]"
   >
     {
       IconComponent ? (
@@ -88,48 +89,11 @@ const IconComponent = iconMap[icon];
         href={ctaLink}
         target={ctaLink.startsWith("http") ? "_blank" : undefined}
         rel={ctaLink.startsWith("http") ? "noopener noreferrer" : undefined}
-        class="cta-link inline-flex items-center gap-2 text-mango-green-dark font-semibold mt-auto"
+        class="inline-flex items-center gap-2 text-mango-green-dark font-semibold mt-auto transition-all duration-200 ease-linear group-hover:gap-3"
       >
         {ctaText}
-        <ArrowRight class="w-4 h-4 arrow-icon" />
+        <ArrowRight class="w-4 h-4 transition-transform duration-200 ease-linear group-hover:translate-x-1" />
       </a>
     )
   }
 </div>
-
-<style>
-  .contribution-card {
-    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-  }
-
-  .contribution-card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 12px 32px rgba(90, 138, 74, 0.15);
-    border-color: #5a8a4a;
-  }
-
-  .card-icon {
-    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-  }
-
-  .contribution-card:hover .card-icon {
-    transform: scale(1.1);
-    background-color: rgba(90, 138, 74, 0.15);
-  }
-
-  .cta-link {
-    transition: all 0.2s ease;
-  }
-
-  .cta-link:hover {
-    gap: 0.75rem;
-  }
-
-  .arrow-icon {
-    transition: transform 0.2s ease;
-  }
-
-  .cta-link:hover .arrow-icon {
-    transform: translateX(4px);
-  }
-</style>

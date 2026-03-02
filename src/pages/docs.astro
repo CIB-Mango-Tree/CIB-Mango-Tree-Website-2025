@@ -2,7 +2,7 @@
 import { Github } from "@lucide/astro";
 import Layout from "@layouts/Layout.astro";
 import Footer from "@components/Footer.astro";
-import CodeBlock from "@components/CodeBlock.astro";
+import CodeBlock from "@components/CodeBlock";
 import DocCard from "@components/DocCard.astro";
 import BaseButton from "@components/LinkButtons/BaseButton.astro";
 import cliScreenshot from "@assets/CLI_Image_CIB.png";
@@ -32,6 +32,7 @@ import cliScreenshot from "@assets/CLI_Image_CIB.png";
           <div>
             <h3 class="text-lg font-semibold mb-3">1. Clone the repository</h3>
             <CodeBlock
+              client:load
               code="git clone https://github.com/civictechdc/cib-mango-tree.git"
             />
           </div>
@@ -41,11 +42,12 @@ import cliScreenshot from "@assets/CLI_Image_CIB.png";
               2. Create virtual environment and install dependencies
             </h3>
             <div class="space-y-3">
-              <CodeBlock code="python -m venv venv" />
+              <CodeBlock client:load code="python -m venv venv" />
               <p class="text-text-muted text-sm">
                 Then run the bootstrap script:
               </p>
               <CodeBlock
+                client:load
                 code="./bootstrap.sh   # macOS/Linux<br/>bootstrap.ps1   # Windows PowerShell"
               />
             </div>
@@ -53,7 +55,7 @@ import cliScreenshot from "@assets/CLI_Image_CIB.png";
 
           <div>
             <h3 class="text-lg font-semibold mb-3">3. Run the application</h3>
-            <CodeBlock code="python -m cibmangotree" />
+            <CodeBlock client:load code="python -m cibmangotree" />
           </div>
         </div>
 

@@ -27,7 +27,12 @@ import DownloadButton from "@components/LinkButtons/DownloadButton.astro";
         behavior online
       </p>
       <div class="opacity-0 animate-fade-in-up animate-delay-400">
-        <DownloadButton href="/download" />
+        <DownloadButton
+          href="/download"
+          class="bg-mango-green-dark text-white text-lg px-8 py-4 shadow-[0_0.25rem_0.75rem_rgba(90,138,74,0.3)] hover:-translate-y-0.5 hover:shadow-[0_0.5rem_1.5rem_rgba(90,138,74,0.5)] hover:bg-[#4a7a3a] active:-translate-y-px active:shadow-[0_0.125rem_0.5rem_rgba(90,138,74,0.3)]"
+        >
+          Download Now
+        </DownloadButton>
       </div>
     </div>
     <!-- Right side: Bento Grid with Stats and Mango Animation -->

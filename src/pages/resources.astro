@@ -3,7 +3,8 @@ import Layout from "@layouts/Layout.astro";
 import Footer from "@components/Footer.astro";
 import Newsletter from "@components/Newsletter.astro";
 import BlogFeatured from "@components/BlogFeatured.astro";
-import GlossaryAccordion from "@components/GlossaryAccordion.astro";
+import GlossaryAccordion from "@components/GlossaryAccordion";
+import AnchorNavMenu from "@components/AnchorNav";
 import {
   ExternalLink,
   FileText,
@@ -202,30 +203,7 @@ const navItems = [
   <div class="flex justify-center">
     <div class="flex justify-center w-7xl">
       <!-- Sticky Left Navigation -->
-      <aside class="hidden lg:flex lg:flex-col w-64 shrink-0">
-        <nav class="sticky top-24 py-20">
-          <h3
-            class="text-xs font-bold uppercase tracking-widest text-muted mb-6"
-          >
-            On This Page
-          </h3>
-          <ul class="space-y-3">
-            {
-              navItems.map((item) => (
-                <li>
-                  <a
-                    href={`#${item.id}`}
-                    class="nav-link flex items-center gap-2 text-sm text-muted hover:text-mango-green-dark py-2 px-3 -mx-3 transition-colors"
-                  >
-                    {item.label}
-                  </a>
-                </li>
-              ))
-            }
-          </ul>
-        </nav>
-      </aside>
-
+      <AnchorNavMenu client:load title="ON THIS PAGE" items={navItems} />
       <!-- Main Content -->
       <section class="flex-container-wrapper flex-1 bg-background">
         <div class="flex-conatiner-main w-4xl">
@@ -257,19 +235,29 @@ const navItems = [
                 other civic topics.
               </p>
               <div class="flex flex-wrap gap-4">
-                <span class="keyword-tag bg-white px-4 py-2 text-sm">
+                <span
+                  class="transition-all duration-200 ease-linear bg-white px-4 py-2 text-sm hover:scale-105 hover:shadow-[0_0.125rem_0.50rem_rgba(90,138,74,0.2)]"
+                >
                   Bot Networks
                 </span>
-                <span class="keyword-tag bg-white px-4 py-2 text-sm">
+                <span
+                  class="transition-all duration-200 ease-linear bg-white px-4 py-2 text-sm hover:scale-105 hover:shadow-[0_0.125rem_0.50rem_rgba(90,138,74,0.2)]"
+                >
                   Astroturfing
                 </span>
-                <span class="keyword-tag bg-white px-4 py-2 text-sm">
+                <span
+                  class="transition-all duration-200 ease-linear bg-white px-4 py-2 text-sm hover:scale-105 hover:shadow-[0_0.125rem_0.50rem_rgba(90,138,74,0.2)]"
+                >
                   Sockpuppets
                 </span>
-                <span class="keyword-tag bg-white px-4 py-2 text-sm">
+                <span
+                  class="transition-all duration-200 ease-linear bg-white px-4 py-2 text-sm hover:scale-105 hover:shadow-[0_0.125rem_0.50rem_rgba(90,138,74,0.2)]"
+                >
                   Troll Farms
                 </span>
-                <span class="keyword-tag bg-white px-4 py-2 text-sm">
+                <span
+                  class="transition-all duration-200 ease-linear bg-white px-4 py-2 text-sm hover:scale-105 hover:shadow-[0_0.125rem_0.50rem_rgba(90,138,74,0.2)]"
+                >
                   Information Operations
                 </span>
               </div>
@@ -299,7 +287,7 @@ const navItems = [
                     href={paper.link}
                     target="_blank"
                     rel="noopener"
-                    class="paper-card group bg-background-alt p-5 border-l-4 border-mango-green-dark hover:border-mango-yellow"
+                    class="group bg-background-alt p-5 border-l-4 border-mango-green-dark transition-all duration-300 ease-linear hover:border-mango-yellow hover:translate-x-1 hover:shadow-[0_0.25rem_0.75rem_rgba(0,0,0,0.05)]"
                   >
                     <h3 class="font-semibold mb-2 text-sm leading-tight group-hover:text-mango-green-dark transition-colors">
                       {paper.title}
@@ -325,20 +313,27 @@ const navItems = [
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
               {
-                tools.map((tool) => (
-                  <a
-                    href={tool.link}
-                    target="_blank"
-                    rel="noopener"
-                    class={`tool-card ${tool.color} p-6 block`}
-                  >
-                    <h3 class="font-bold text-lg mb-3">{tool.name}</h3>
-                    <p class="text-muted text-sm mb-4">{tool.description}</p>
-                    <span class="text-mango-green-dark font-semibold text-sm inline-flex items-center gap-1">
-                      Visit site <ExternalLink class="w-3 h-3" />
-                    </span>
-                  </a>
-                ))
+                tools.map((tool) => {
+                  const toolCardClasses: string = cn(
+                    "block p-6 transition-all duration-300 ease-default hover:-translate-y-1 hover:shadow-[0_0.5rem_1.5rem_rgba(0,0,0,0.1)]",
+                    tool.color,
+                  );
+
+                  return (
+                    <a
+                      href={tool.link}
+                      target="_blank"
+                      rel="noopener"
+                      class={toolCardClasses}
+                    >
+                      <h3 class="font-bold text-lg mb-3">{tool.name}</h3>
+                      <p class="text-muted text-sm mb-4">{tool.description}</p>
+                      <span class="text-mango-green-dark font-semibold text-sm inline-flex items-center gap-1">
+                        Visit site <ExternalLink class="w-3 h-3" />
+                      </span>
+                    </a>
+                  );
+                })
               }
             </div>
           </div>
@@ -358,6 +353,10 @@ const navItems = [
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
               {
                 datasets.map((dataset) => {
+                  const cardClasses: string = cn(
+                    "block p-6 transition-all duration-300 ease-default hover:-translate-y-1 hover:shadow-[0_0.5rem_1.5rem_rgba(0,0,0,0.1)]",
+                    dataset.color,
+                  );
                   const datasetClasses: string = cn("text-xs px-2 py-1", {
                     "bg-mango-green-light text-mango-green-dark":
                       dataset.access === "Free",
@@ -370,7 +369,7 @@ const navItems = [
                       href={dataset.link}
                       target="_blank"
                       rel="noopener"
-                      class={`dataset-card ${dataset.color} p-6 block`}
+                      class={cardClasses}
                     >
                       <div class="flex justify-between items-start mb-3">
                         <h3 class="font-bold text-lg">{dataset.name}</h3>
@@ -396,7 +395,7 @@ const navItems = [
               <BookOpen class="w-8 h-8 text-mango-green-dark" />
               Glossary of Terms
             </h2>
-            <GlossaryAccordion terms={glossaryTerms} />
+            <GlossaryAccordion client:visible definitions={glossaryTerms} />
           </div>
         </div>
       </section>
@@ -406,96 +405,3 @@ const navItems = [
   <!-- <Newsletter /> -->
   <Footer />
 </Layout>
-
-<style>
-  .nav-link {
-    position: relative;
-  }
-
-  .nav-link::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 3px;
-    height: 0;
-    background-color: #5a8a4a;
-    transition: height 0.2s ease;
-  }
-
-  .nav-link:hover::before,
-  .nav-link.active::before {
-    height: 100%;
-  }
-
-  .paper-card {
-    transition: all 0.3s ease;
-  }
-
-  .paper-card:hover {
-    transform: translateX(4px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  }
-
-  .tool-card,
-  .dataset-card {
-    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-  }
-
-  .tool-card:hover,
-  .dataset-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-  }
-
-  .keyword-tag {
-    transition: all 0.2s ease;
-  }
-
-  .keyword-tag:hover {
-    transform: scale(1.05);
-    box-shadow: 0 2px 8px rgba(90, 138, 74, 0.2);
-  }
-
-  .scroll-mt-24 {
-    scroll-margin-top: 6rem;
-  }
-</style>
-
-<script>
-  // Highlight active nav item based on scroll position
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        const id = entry.target.getAttribute("id");
-        const navLink = document.querySelector(`a[href="#${id}"]`);
-        if (navLink) {
-          if (entry.isIntersecting) {
-            document
-              .querySelectorAll(".nav-link")
-              .forEach((link) =>
-                link.classList.remove(
-                  "active",
-                  "text-mango-green-dark",
-                  "font-semibold",
-                ),
-              );
-            navLink.classList.add(
-              "active",
-              "text-mango-green-dark",
-              "font-semibold",
-            );
-          }
-        }
-      });
-    },
-    { threshold: 0.2, rootMargin: "-100px 0px -50% 0px" },
-  );
-
-  document.querySelectorAll("[id]").forEach((section) => {
-    if (section.classList.contains("scroll-mt-24")) {
-      observer.observe(section);
-    }
-  });
-</script>
