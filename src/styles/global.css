@@ -15,7 +15,7 @@
   }
 }
 
-@theme {
+@theme inline {
   /* Colors - Lighter Mango CIB Palette */
   --color-mango-green: oklch(0.7495 0.1187 136.05);
   --color-mango-green-dark: oklch(0.5829 0.1066 138.26);
@@ -236,7 +236,7 @@
   --color-chart-3: var(--chart-3);
   --color-chart-4: var(--chart-4);
   --color-chart-5: var(--chart-5);
-  --color-sidebar: var(--sidebar);
+  --color-sidebar: var(--color-mango-green-darker);
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar-primary: var(--sidebar-primary);
   --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
@@ -370,4 +370,3 @@
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.552 0.016 285.938);
 }
-

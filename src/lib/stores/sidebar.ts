@@ -4,7 +4,7 @@ const SIDEBAR_COOKIE_NAME = "sidebar_state";
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7;
 
 // Core atoms
-export const $sidebarOpen = atom(true);
+export const $sidebarOpen = atom(false);
 export const $sidebarOpenMobile = atom(false);
 export const $isMobile = atom(false);
 

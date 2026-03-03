@@ -1,5 +1,7 @@
 ---
 import Toolbar from "@components/Toolbar.astro";
+import { SidebarProvider } from "@components/ui/sidebar";
+import MobileNavigation from "@components/MobileNavigation";
 import "../styles/global.css";
 ---
 
@@ -21,9 +23,12 @@ import "../styles/global.css";
   <body
     class="flex flex-col w-full min-h-svh bg-background font-body text-primary scroll-smooth leading-[1.6]"
   >
-    <Toolbar />
-    <main class="flex flex-col flex-1">
-      <slot />
-    </main>
+    <SidebarProvider client:load>
+      <Toolbar />
+      <main class="flex flex-col flex-1">
+        <slot />
+      </main>
+      <MobileNavigation client:only />
+    </SidebarProvider>
   </body>
 </html>
