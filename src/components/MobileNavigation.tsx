@@ -19,11 +19,20 @@ export default function MobileNavigation(): ReactElement<FC> {
 
   return (
     <Sidebar
-      side="right"
+      side="left"
       collapsible="offcanvas"
       className="border-white/20 text-base"
     >
-      <SidebarHeader className="flex-row justify-between px-6">
+      <SidebarHeader className="flex-row justify-between px-6 pt-4">
+        <Button
+          type="button"
+          variant="ghost"
+          size="icon-lg"
+          className="inline-flex justify-center cursor-pointer rounded-none transition-all duration-300 ease-default items-center text-white hover:text-white hover:bg-white/10 hover:scale-110 active:scale-95"
+          onClick={handleClick}
+        >
+          <X />
+        </Button>
         <a
           href="/"
           className="inline-flex items-center gap-3 group transition-opacity hover:opacity-90"
@@ -34,15 +43,6 @@ export default function MobileNavigation(): ReactElement<FC> {
             className="h-10 w-10 object-contain transition-transform duration-300 ease-default group-hover:-rotate-5 group-hover:scale-110"
           />
         </a>
-        <Button
-          type="button"
-          variant="ghost"
-          size="icon-lg"
-          className="inline-flex justify-center cursor-pointer rounded-none transition-all duration-300 ease-default items-center text-white hover:text-white hover:bg-white/10 hover:scale-110 active:scale-95"
-          onClick={handleClick}
-        >
-          <X />
-        </Button>
       </SidebarHeader>
       <SidebarContent>
         <nav
@@ -111,7 +111,7 @@ export default function MobileNavigation(): ReactElement<FC> {
           </ul>
         </nav>
       </SidebarContent>
-      <SidebarFooter className="px-6">
+      <SidebarFooter className="flex-row justify-end px-6">
         <a
           href="/download"
           className="inline-flex items-center justify-center gap-2 w-3/5 relative overflow-hidden transition-all transform-gpu ease-default duration-300 group font-semibold glass-shine-30 bg-mango-green-dark text-white shadow-[0_0.25rem_0.75rem_rgba(90,138,74,0.3)] px-4 py-2 hover:-translate-y-0.5 hover:shadow-[0_0.5rem_1.5rem_rgba(90,138,74,0.5)] hover:bg-[#4a7a3a] active:-translate-y-px active:shadow-[0_0.125rem_0.5rem_rgba(90,138,74,0.3)]"
