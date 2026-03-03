@@ -205,14 +205,17 @@ function SidebarTrigger({
       data-slot="sidebar-trigger"
       variant="ghost"
       size="icon-lg"
-      className={cn(className, "text-white hover:text-white")}
+      className={cn(
+        className,
+        "text-white p-2 transition-all duration-300 ease-default hover:text-white hover:scale-110 active:scale-95",
+      )}
       onClick={(event) => {
         onClick?.(event);
         toggleSidebar();
       }}
       {...props}
     >
-      <Menu />
+      <Menu className="size-6" />
       <span className="sr-only">Toggle Sidebar</span>
     </Button>
   );
