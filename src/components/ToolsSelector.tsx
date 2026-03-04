@@ -1,228 +1,103 @@
-import { useState } from "react";
-import type { ReactElement } from "react";
 import { FileText, Hash, Settings, ChevronRight } from "lucide-react";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@components/ui/tabs";
+import type { FC, ReactElement } from "react";
 
-interface Tool {
+export interface Tool {
   id: string;
   name: string;
-  icon: ReactElement;
+  icon: "file-text" | "hash" | "settings";
   description: string;
 }
 
-const tools: Tool[] = [
+export interface ToolSelectorProps {
+  tools: Array<Tool>;
+}
+
+export const TOOLS: Array<Tool> = [
   {
     id: "copypasta",
     name: "Copy Pasta Test",
-    icon: <FileText size={20} />,
+    icon: "file-text",
     description:
       'This test looks for repeated phrases—"copypasta"—that appears across posts in your dataset. Some coordinated campaigns may consist of bot accounts reposting the same phrases to cut down on time. Our test extracts these repeated phrases, and reveals which accounts posted them, and when, in order to reveal hidden networks.',
   },
   {
     id: "hashtag",
     name: "Hashtag Test",
-    icon: <Hash size={20} />,
+    icon: "hash",
     description:
       "The Hashtag Test analyzes hashtag usage patterns across your dataset to identify coordinated behavior. It detects unusual hashtag clustering, timing patterns, and account associations that may indicate inauthentic coordination. This helps reveal networks that use hashtags strategically to amplify messages.",
   },
   {
     id: "coming-soon",
     name: "More Coming Soon!",
-    icon: <Settings size={20} />,
+    icon: "settings",
     description:
       "We are continuously developing new tools to help detect coordinated inauthentic behavior. Stay tuned for additional tests and features that will help you analyze social media datasets more effectively.",
   },
 ];
 
-export default function ToolsSelector() {
-  const [selectedTool, setSelectedTool] = useState<string>("copypasta");
-  const [hoveredTool, setHoveredTool] = useState<string | null>(null);
+const iconMap: Record<string, ReactElement<FC>> = {
+  "file-text": <FileText className="size-6" />,
+  hash: <Hash className="size-6" />,
+  settings: <Settings className="size-6" />,
+};
 
-  const selectedToolData =
-    tools.find((tool) => tool.id === selectedTool) || tools[0];
-
+export default function ToolsSelector({
+  tools,
+}: ToolSelectorProps): ReactElement<FC> {
   return (
-    <div className="mt-12 max-w-4xl mx-auto">
-      {/* Section Title */}
-      <h3 className="font-bold text-2xl md:text-3xl mb-6">Methodologies</h3>
-
-      {/* Main Container */}
-      <div className="flex flex-col md:flex-row gap-0">
-        {/* Left Navigation */}
-        <div
-          className="w-full md:w-72 border shrink-0"
-          style={{ borderColor: "#E5E2DC" }}
-        >
-          {/* Navigation Label */}
-          <div
-            className="px-5 py-3 text-xs font-bold tracking-widest"
-            style={{
-              backgroundColor: "#F8F6F2",
-              borderBottom: "1px solid #E5E2DC",
-              color: "#7A8872",
-            }}
-          >
+    <Tabs orientation="vertical" className="border border-[#E5E2DC] gap-0">
+      <div className="flex flex-col shrink-0 w-full md:w-72 border-r-4 border-r-mango-green-dark">
+        <div className="px-5 py-3 bg-[#F8F6F2] border-b border-b-[#E5E2DC]">
+          <span className="text-xs text-[#7A8872] font-bold tracking-widest">
             SELECT A METHOD
-          </div>
-
-          {/* Navigation Items */}
-          {tools.map((tool) => {
-            const isSelected = tool.id === selectedTool;
-            const isHovered = tool.id === hoveredTool;
-            const isComingSoon = tool.id === "coming-soon";
-
+          </span>
+        </div>
+        <TabsList
+          variant="line"
+          className="rounded-none bg-white p-0 w-full gap-0 overflow-x-hidden"
+        >
+          {tools.map((tool: Tool): ReactElement<FC> => {
             return (
-              <button
+              <TabsTrigger
                 key={tool.id}
-                onClick={() => setSelectedTool(tool.id)}
-                onMouseEnter={() => setHoveredTool(tool.id)}
-                onMouseLeave={() => setHoveredTool(null)}
-                className="w-full flex items-center justify-between gap-3 px-5 py-4 group"
-                style={{
-                  backgroundColor: isSelected
-                    ? "#5A8A4A"
-                    : isHovered
-                      ? "#F0F4EC"
-                      : "#FDFCF9",
-                  borderLeft: isSelected
-                    ? "4px solid #FFE099"
-                    : isHovered
-                      ? "4px solid #8BBF72"
-                      : "4px solid transparent",
-                  borderBottom: !isSelected ? "1px solid #E5E2DC" : "none",
-                  transition: "all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1)",
-                  transform:
-                    isHovered && !isSelected
-                      ? "translateX(4px)"
-                      : "translateX(0)",
-                }}
+                value={tool.id}
+                className="group-data-vertical/tabs:justify-between cursor-pointer w-full gap-3 px-5 py-4 rounded-none h-auto border-l-4 border-l-transparent border-b border-b-[#E5E2DC] border-t-0 border-r-0 bg-white! text-[#5A6B52] transition-all duration-250 ease-default group/trigger *:pointer-events-none not-data-active:hover:bg-[#F0F4EC]! not-data-active:hover:text-[#2D3A24] not-data-active:hover:translate-x-1 not-data-active:hover:border-l-[#8BBF72] data-active:bg-mango-green-dark! data-active:text-white! data-active:border-l-[#FFE099] data-active:border-b-transparent data-active:translate-x-0 data-active:shadow-none! after:hidden!"
               >
-                <div
-                  className="flex items-center gap-3"
-                  style={{
-                    transition: "transform 0.25s ease",
-                  }}
-                >
-                  <span
-                    style={{
-                      color: isSelected
-                        ? "#FFFFFF"
-                        : isComingSoon
-                          ? "#7A8872"
-                          : "#5A6B52",
-                      transition:
-                        "transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)",
-                      display: "inline-block",
-                      transform:
-                        isHovered && !isSelected
-                          ? "scale(1.2) rotate(-5deg)"
-                          : "scale(1)",
-                    }}
-                  >
-                    {tool.icon}
+                <div className="flex flex-row items-center gap-3">
+                  <span className="inline-flex transition-transform duration-300 ease-default group-data-vertical/tabs:data-active:text-white data-[state=active]:text-white not-group-data-active/trigger:group-hover/trigger:scale-120 not-group-data-active/trigger:group-hover/trigger:-rotate-[5deg] data-active:scale-100 data-active:rotate-0">
+                    {iconMap[tool.icon]}
                   </span>
-                  <span
-                    className="font-medium text-left"
-                    style={{
-                      color: isSelected
-                        ? "#FFFFFF"
-                        : isHovered
-                          ? "#2D3A24"
-                          : isComingSoon
-                            ? "#7A8872"
-                            : "#5A6B52",
-                      fontSize: "15px",
-                      transition: "color 0.2s ease",
-                    }}
-                  >
+                  <span className="font-medium text-left text-base">
                     {tool.name}
                   </span>
                 </div>
-                <ChevronRight
-                  size={16}
-                  className="shrink-0"
-                  style={{
-                    color: isSelected
-                      ? "#FFFFFF"
-                      : isComingSoon
-                        ? "#7A8872"
-                        : "#5A8A4A",
-                    transition:
-                      "transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1)",
-                    transform:
-                      isHovered || isSelected
-                        ? "translateX(4px)"
-                        : "translateX(0)",
-                  }}
-                />
-              </button>
+                <span className="shrink-0 text-mango-green-dark transition-transform duration-250 ease-default group-data-active/trigger:text-white">
+                  <ChevronRight />
+                </span>
+              </TabsTrigger>
             );
           })}
-        </div>
-
-        {/* Right Content Panel */}
-        <div
-          className="flex-1 p-8 border border-l-0 relative overflow-hidden"
-          style={{
-            backgroundColor: "#F8F6F2",
-            borderColor: "#E5E2DC",
-            transition: "all 0.3s ease",
-          }}
-        >
-          {/* Animated background accent */}
-          <div
-            style={{
-              position: "absolute",
-              top: 0,
-              left: 0,
-              width: "4px",
-              height: "100%",
-              backgroundColor: "#5A8A4A",
-              transform: "scaleY(1)",
-              transition: "transform 0.3s ease",
-            }}
-          />
-
-          {/* Content Title */}
-          <h4
-            className="text-xl mb-4 font-bold"
-            style={{
-              color: "#5A8A4A",
-              letterSpacing: "-0.01em",
-              animation: "fadeSlideIn 0.3s ease",
-            }}
-            key={selectedToolData.id + "-title"}
-          >
-            {selectedToolData.name}
-          </h4>
-
-          {/* Content Description */}
-          <p
-            className="leading-relaxed max-w-md"
-            style={{
-              color: "#5A6B52",
-              fontSize: "15px",
-              lineHeight: "1.7",
-              animation: "fadeSlideIn 0.3s ease 0.1s both",
-            }}
-            key={selectedToolData.id + "-desc"}
-          >
-            {selectedToolData.description}
-          </p>
-        </div>
+        </TabsList>
       </div>
 
-      <style>{`
-        @keyframes fadeSlideIn {
-          from {
-            opacity: 0;
-            transform: translateY(8px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-      `}</style>
-    </div>
+      {tools.map((tool: Tool): ReactElement<FC> => {
+        return (
+          <TabsContent
+            key={tool.name}
+            value={tool.id}
+            className="flex-1 p-8 bg-[#F8F6F2] relative animate-fade-in-accordion overflow-y-auto"
+          >
+            <h4 className="text-xl mb-4 font-bold text-mango-green-dark tracking-tight">
+              {tool.name}
+            </h4>
+            <p className="leading-relaxed max-w-md text-[#5A6B52] text-[15px]">
+              {tool.description}
+            </p>
+          </TabsContent>
+        );
+      })}
+    </Tabs>
   );
 }

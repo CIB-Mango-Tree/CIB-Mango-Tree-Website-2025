@@ -1,5 +1,5 @@
 import { useCallback } from "react";
-import { Download, X } from "lucide-react";
+import { Download, ChevronRight } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
@@ -24,15 +24,6 @@ export default function MobileNavigation(): ReactElement<FC> {
       className="border-white/20 text-base"
     >
       <SidebarHeader className="flex-row justify-between px-6 pt-4">
-        <Button
-          type="button"
-          variant="ghost"
-          size="icon-lg"
-          className="inline-flex justify-center cursor-pointer rounded-none transition-all duration-300 ease-default items-center text-white hover:text-white hover:bg-white/10 hover:scale-110 active:scale-95"
-          onClick={handleClick}
-        >
-          <X />
-        </Button>
         <a
           href="/"
           className="inline-flex items-center gap-3 group transition-opacity hover:opacity-90"
@@ -43,6 +34,15 @@ export default function MobileNavigation(): ReactElement<FC> {
             className="h-10 w-10 object-contain transition-transform duration-300 ease-default group-hover:-rotate-5 group-hover:scale-110"
           />
         </a>
+        <Button
+          type="button"
+          variant="ghost"
+          size="icon-lg"
+          className="inline-flex justify-center cursor-pointer rounded-none transition-all duration-300 ease-default items-center text-white hover:text-white hover:bg-white/10 hover:scale-110 active:scale-95"
+          onClick={handleClick}
+        >
+          <ChevronRight />
+        </Button>
       </SidebarHeader>
       <SidebarContent>
         <nav
