@@ -47,7 +47,7 @@ export default function ToolsSelector({
   tools,
 }: ToolSelectorProps): ReactElement<FC> {
   return (
-    <Tabs orientation="vertical" className="border border-[#E5E2DC] gap-0">
+    <Tabs orientation="vertical" className="border border-[#E5E2DC] gap-0 h-64">
       <div className="flex flex-col shrink-0 w-full md:w-72 border-r-4 border-r-mango-green-dark">
         <div className="px-5 py-3 bg-[#F8F6F2] border-b border-b-[#E5E2DC]">
           <span className="text-xs text-[#7A8872] font-bold tracking-widest">
@@ -63,13 +63,13 @@ export default function ToolsSelector({
               <TabsTrigger
                 key={tool.id}
                 value={tool.id}
-                className="group-data-vertical/tabs:justify-between cursor-pointer w-full gap-3 px-5 py-4 rounded-none h-auto border-l-4 border-l-transparent border-b border-b-[#E5E2DC] border-t-0 border-r-0 bg-white! text-[#5A6B52] transition-all duration-250 ease-default group/trigger *:pointer-events-none not-data-active:hover:bg-[#F0F4EC]! not-data-active:hover:text-[#2D3A24] not-data-active:hover:translate-x-1 not-data-active:hover:border-l-[#8BBF72] data-active:bg-mango-green-dark! data-active:text-white! data-active:border-l-[#FFE099] data-active:border-b-transparent data-active:translate-x-0 data-active:shadow-none! after:hidden!"
+                className="group-data-vertical/tabs:justify-between cursor-pointer w-full gap-3 px-5 py-4 rounded-none h-auto border-l-4 border-l-transparent border-b border-b-[#E5E2DC] border-t-0 border-r-0 text-[#5A6B52] transition-all duration-250 ease-default bg-white! group/trigger not-data-active:hover:bg-[#F0F4EC]! not-data-active:hover:text-[#2D3A24] not-data-active:hover:translate-x-1 not-data-active:hover:border-l-[#8BBF72] data-active:bg-mango-green-dark! data-active:border-l-[#FFE099] data-active:border-b-transparent data-active:translate-x-0 data-active:shadow-none! after:hidden!"
               >
                 <div className="flex flex-row items-center gap-3">
-                  <span className="inline-flex transition-transform duration-300 ease-default group-data-vertical/tabs:data-active:text-white data-[state=active]:text-white not-group-data-active/trigger:group-hover/trigger:scale-120 not-group-data-active/trigger:group-hover/trigger:-rotate-[5deg] data-active:scale-100 data-active:rotate-0">
+                  <span className="inline-flex transition-transform duration-300 ease-default group-data-active/trigger:text-white data-[state=active]:text-white not-group-data-active/trigger:group-hover/trigger:scale-120 not-group-data-active/trigger:group-hover/trigger:-rotate-[5deg] data-active:scale-100 data-active:rotate-0">
                     {iconMap[tool.icon]}
                   </span>
-                  <span className="font-medium text-left text-base">
+                  <span className="font-medium text-left text-base group-data-active/trigger:text-white">
                     {tool.name}
                   </span>
                 </div>
