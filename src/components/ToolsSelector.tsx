@@ -81,8 +81,7 @@ export default function ToolsSelector({
           })}
         </TabsList>
       </div>
-      <div className="flex flex-1 relative h-64">
-        <div className="block h-full w-1 border-r-4 border-r-mango-green-dark" />
+      <div className="flex flex-1 relative h-64 border-l-4 border-l-mango-green-dark">
         {tools.map((tool: Tool): ReactElement<FC> => {
           return (
             <TabsContent
