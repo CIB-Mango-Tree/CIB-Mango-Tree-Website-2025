@@ -114,7 +114,7 @@ export default function MobileNavigation(): ReactElement<FC> {
       <SidebarFooter className="flex-row justify-end px-6">
         <a
           href="/download"
-          className="inline-flex items-center justify-center gap-2 w-3/5 relative overflow-hidden transition-all transform-gpu ease-default duration-300 group font-semibold glass-shine-30 bg-mango-green-dark text-white shadow-[0_0.25rem_0.75rem_rgba(90,138,74,0.3)] px-4 py-2 hover:-translate-y-0.5 hover:shadow-[0_0.5rem_1.5rem_rgba(90,138,74,0.5)] hover:bg-[#4a7a3a] active:-translate-y-px active:shadow-[0_0.125rem_0.5rem_rgba(90,138,74,0.3)]"
+          className="inline-flex items-center justify-center gap-2 w-4/5 sm:w-3/5 relative overflow-hidden transition-all transform-gpu ease-default duration-300 group font-semibold glass-shine-30 bg-mango-green-dark text-white shadow-[0_0.25rem_0.75rem_rgba(90,138,74,0.3)] px-4 py-2 hover:-translate-y-0.5 hover:shadow-[0_0.5rem_1.5rem_rgba(90,138,74,0.5)] hover:bg-[#4a7a3a] active:-translate-y-px active:shadow-[0_0.125rem_0.5rem_rgba(90,138,74,0.3)]"
         >
           <Download className="w-5 h-5 group-hover:animate-bounce" />
           Download Now
