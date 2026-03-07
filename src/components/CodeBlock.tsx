@@ -13,7 +13,7 @@ export default function CodeBlock({
   className,
 }: CodeBlockProps): ReactElement<FC> {
   const containerClasses = useMemo<string>(
-    (): string => resolveClasses("relative group", className),
+    (): string => resolveClasses("relative group overflow-x-auto", className),
     [className],
   );
   const copyRef = useRef<SVGSVGElement>(null);

@@ -1,7 +1,6 @@
 ---
 import { BookOpen } from "@lucide/astro";
 import Layout from "@layouts/Layout.astro";
-import Footer from "@components/Footer.astro";
 import PlatformDownload from "@components/PlatformDownload.astro";
 import CodeBlock from "@components/CodeBlock";
 import BaseButton from "@components/LinkButtons/BaseButton.astro";
@@ -70,8 +69,8 @@ const dataPreparationSteps = [
 
 <Layout>
   <!-- Hero Section -->
-  <section class="flex-container-wrapper bg-background">
-    <div class="flex-container-main w-5xl">
+  <section class="flex-container-wrapper">
+    <div class="flex-container-main w-full px-6 xl:w-5xl xl:px-0">
       <h1
         class="font-bold text-4xl md:text-5xl lg:text-6xl mb-10 leading-tight"
       >
@@ -87,7 +86,7 @@ const dataPreparationSteps = [
 
   <!-- Platform Downloads -->
   <section class="flex justify-center py-16 bg-[#F8F6F2]">
-    <div class="flex-container-main w-5xl">
+    <div class="flex-container-main w-full xl:w-5xl">
       <h2 class="font-bold text-3xl mb-12 text-center">Choose Your Platform</h2>
       <PlatformDownload platforms={platforms} />
 
@@ -99,8 +98,8 @@ const dataPreparationSteps = [
   </section>
 
   <!-- Alternative Installation -->
-  <section class="flex-container-wrapper bg-background">
-    <div class="flex-container-main w-5xl">
+  <section class="flex-container-wrapper">
+    <div class="flex-container-main w-full px-6 xl:w-5xl xl:px-0">
       <h2 class="font-bold text-3xl mb-12">Alternative Installation Methods</h2>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -148,7 +147,7 @@ const dataPreparationSteps = [
 
   <!-- Data Preparation -->
   <section class="flex-container-wrapper bg-mango-yellow-light">
-    <div class="flex-container-main w-5xl">
+    <div class="flex-container-main w-full px-6 xl:w-5xl xl:px-0">
       <h2 class="font-bold text-3xl mb-6">Preparing Your Data</h2>
       <p class="text-muted mb-12 max-w-3xl">
         Before running analysis, you'll need to prepare your social media
@@ -175,7 +174,7 @@ const dataPreparationSteps = [
       </div>
 
       <!-- CSV Format Example -->
-      <div class="mt-12 bg-white p-8 border border-border-color">
+      <div class="mt-12 bg-white w-full p-8 border border-border">
         <h3 class="font-semibold mb-5">Expected CSV Format</h3>
         <div class="overflow-x-auto">
           <CodeBlock
@@ -189,7 +188,7 @@ const dataPreparationSteps = [
 
   <!-- CLI Preview -->
   <section class="flex-container-wrapper bg-background">
-    <div class="flex-container-main w-5xl">
+    <div class="flex-container-main w-full px-6 xl:w-5xl xl:px-0">
       <h2 class="font-bold text-3xl mb-10">What You'll Get</h2>
       <div
         class="rounded-xl border-2 border-mango-green-dark/20 overflow-hidden shadow-lg"
@@ -210,7 +209,7 @@ const dataPreparationSteps = [
   <!-- Technical Documentation -->
   <section class="flex justify-center py-16 bg-mango-green-dark text-white">
     <div
-      class="w-5xl flex flex-col md:flex-row items-center justify-between gap-8"
+      class="flex flex-col items-center justify-between gap-8 w-full px-8 md:flex-row xl:w-5xl xl:px-0"
     >
       <div>
         <h2 class="font-bold text-2xl mb-3">Technical Documentation</h2>
@@ -234,7 +233,7 @@ const dataPreparationSteps = [
 
   <!-- Help Section -->
   <section class="flex justify-center py-16 bg-background">
-    <div class="flex-container-main w-5xl text-center">
+    <div class="flex-container-main text-center w-full px-6 xl:w-5xl xl:px-0">
       <h3 class="font-bold text-2xl mb-6">Need Help?</h3>
       <p class="text-muted mb-8">
         Check our documentation or reach out to the community
