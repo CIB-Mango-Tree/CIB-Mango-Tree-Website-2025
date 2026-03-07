@@ -81,13 +81,13 @@ export default function ToolsSelector({
           })}
         </TabsList>
       </div>
-      <div className="flex flex-1 relative h-64 border-l-4 border-l-mango-green-dark">
+      <div className="flex flex-1 relative h-64 border-l-4 border-l-mango-green-dark bg-[#F8F6F2]">
         {tools.map((tool: Tool): ReactElement<FC> => {
           return (
             <TabsContent
               key={tool.name}
               value={tool.id}
-              className="flex flex-col p-8 bg-[#F8F6F2] animate-fade-in-accordion overflow-y-auto h-full"
+              className="flex flex-col p-8 animate-fade-in-accordion overflow-y-auto h-full"
             >
               <h4 className="text-xl mb-4 font-bold text-mango-green-dark tracking-tight">
                 {tool.name}
