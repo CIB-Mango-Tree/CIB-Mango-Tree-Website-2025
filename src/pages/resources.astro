@@ -200,12 +200,16 @@ const navItems = [
 <Layout>
   <!-- Centered wrapper for nav + content -->
   <div class="flex justify-center">
-    <div class="flex justify-center w-7xl">
+    <div class="flex justify-center w-full px-6 lg:w-7xl lg:px-0">
       <!-- Sticky Left Navigation -->
-      <AnchorNavMenu client:load title="ON THIS PAGE" items={navItems} />
+      <AnchorNavMenu
+        client:media="(min-width: 1280px)"
+        title="ON THIS PAGE"
+        items={navItems}
+      />
       <!-- Main Content -->
       <section class="flex-container-wrapper flex-1 bg-background">
-        <div class="flex-conatiner-main w-4xl">
+        <div class="flex-conatiner-main w-full lg:w-4xl">
           <h1
             class="font-bold text-4xl md:text-5xl lg:text-6xl mb-10 leading-tight"
           >

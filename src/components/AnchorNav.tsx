@@ -45,7 +45,7 @@ export default function AnchorNavMenu({
   }, [items]);
 
   return (
-    <aside className="hidden lg:flex lg:flex-col w-64 shrink-0">
+    <aside className="hidden flex-col w-64 shrink-0 xl:flex">
       <nav className="sticky top-24 py-20">
         <h3 className="text-xs font-bold uppercase tracking-widest text-muted mb-6">
           {title}
