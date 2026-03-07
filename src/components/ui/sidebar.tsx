@@ -77,7 +77,7 @@ function SidebarProvider({
         } as React.CSSProperties
       }
       className={cn(
-        "group/sidebar-wrapper flex flex-col h-full w-full overflow-x-hidden",
+        "group/sidebar-wrapper flex flex-col h-full w-full",
         className,
       )}
       {...props}
