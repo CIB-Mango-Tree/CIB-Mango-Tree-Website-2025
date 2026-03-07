@@ -4,10 +4,12 @@ import DownloadButton from "@components/LinkButtons/DownloadButton.astro";
 ---
 
 <section class="flex-container-wrapper justify-center">
-  <div class="flex-container-main w-full md:w-7xl px-6 gap-6 lg:flex-row">
+  <div
+    class="flex-container-main w-full md:w-7xl px-6 gap-6 lg:flex-row xl:px-0"
+  >
     <!-- Left side: Text content -->
     <div
-      class="flex-1 flex flex-col justify-between text-center md:text-left opacity-0 animate-fade-in order-2 md:order-1"
+      class="flex-1 flex flex-col justify-between text-center opacity-0 animate-fade-in order-2 lg:text-left lg:order-1"
     >
       <h1
         class="font-bold text-4xl md:text-5xl lg:text-6xl mb-8 leading-tight tracking-tight"
@@ -39,7 +41,7 @@ import DownloadButton from "@components/LinkButtons/DownloadButton.astro";
     </div>
     <!-- Right side: Bento Grid with Stats and Mango Animation -->
     <div
-      class="opacity-0 animate-fade-in animte-delay-500 order-1 w-96 sm:w-md md:w-xl md:order-2"
+      class="opacity-0 animate-fade-in animte-delay-500 order-1 w-96 sm:w-md md:w-lg lg:w-xl lg:order-2"
     >
       <div class="grid grid-cols-2 px-6 gap-3 sm:px-6 sm:gap-5">
         <!-- Stat Card 1: Bad bots -->

@@ -47,7 +47,7 @@ export default function ToolsSelector({
   tools,
 }: ToolSelectorProps): ReactElement<FC> {
   return (
-    <Tabs orientation="vertical" className="flex-col md:flex-row border border-[#E5E2DC] gap-0">
+    <Tabs orientation="vertical" className="flex-col mx-6 md:flex-row lg:mx-0 border border-[#E5E2DC] gap-0">
       <div className="flex flex-col shrink-0 w-full md:w-72">
         <div className="flex px-5 py-3 bg-[#F8F6F2] border-b border-b-[#E5E2DC]">
           <span className="text-xs text-[#7A8872] font-bold tracking-widest">
@@ -81,7 +81,7 @@ export default function ToolsSelector({
           })}
         </TabsList>
       </div>
-      <div className="flex flex-1 relative h-64 border-l-4 border-l-mango-green-dark bg-[#F8F6F2]">
+      <div className="flex flex-1 w-full relative h-64 border-l-4 border-l-mango-green-dark bg-[#F8F6F2] ">
         {tools.map((tool: Tool): ReactElement<FC> => {
           return (
             <TabsContent
