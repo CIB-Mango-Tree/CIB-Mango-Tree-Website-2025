@@ -47,9 +47,9 @@ export default function ToolsSelector({
   tools,
 }: ToolSelectorProps): ReactElement<FC> {
   return (
-    <Tabs orientation="vertical" className="border border-[#E5E2DC] gap-0 h-64">
-      <div className="flex flex-col shrink-0 w-full md:w-72 border-r-4 border-r-mango-green-dark">
-        <div className="px-5 py-3 bg-[#F8F6F2] border-b border-b-[#E5E2DC]">
+    <Tabs orientation="vertical" className="flex-col md:flex-row border border-[#E5E2DC] gap-0">
+      <div className="flex flex-col shrink-0 w-full md:w-72">
+        <div className="flex px-5 py-3 bg-[#F8F6F2] border-b border-b-[#E5E2DC]">
           <span className="text-xs text-[#7A8872] font-bold tracking-widest">
             SELECT A METHOD
           </span>
@@ -81,23 +81,25 @@ export default function ToolsSelector({
           })}
         </TabsList>
       </div>
-
-      {tools.map((tool: Tool): ReactElement<FC> => {
-        return (
-          <TabsContent
-            key={tool.name}
-            value={tool.id}
-            className="flex-1 p-8 bg-[#F8F6F2] relative animate-fade-in-accordion overflow-y-auto"
-          >
-            <h4 className="text-xl mb-4 font-bold text-mango-green-dark tracking-tight">
-              {tool.name}
-            </h4>
-            <p className="leading-relaxed max-w-md text-[#5A6B52] text-[15px]">
-              {tool.description}
-            </p>
-          </TabsContent>
-        );
-      })}
+      <div className="flex flex-1 relative h-64">
+        <div className="block h-full w-1 border-r-4 border-r-mango-green-dark" />
+        {tools.map((tool: Tool): ReactElement<FC> => {
+          return (
+            <TabsContent
+              key={tool.name}
+              value={tool.id}
+              className="flex flex-col p-8 bg-[#F8F6F2] animate-fade-in-accordion overflow-y-auto h-full"
+            >
+              <h4 className="text-xl mb-4 font-bold text-mango-green-dark tracking-tight">
+                {tool.name}
+              </h4>
+              <p className="leading-relaxed max-w-md text-[#5A6B52] text-4">
+                {tool.description}
+              </p>
+            </TabsContent>
+          );
+        })}
+      </div>
     </Tabs>
   );
 }

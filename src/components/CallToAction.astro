@@ -42,24 +42,26 @@ const meetings: Array<MeetingInfo> = [
 ---
 
 <section class="flex-container-wrapper bg-mango-green-dark">
-  <div class="flex-container-main w-5xl text-center">
+  <div class="flex-container-main w-full md:w-5xl text-center px-6">
     <h2 class="font-bold text-3xl md:text-4xl text-white mb-6">
       Ready to Make an Impact?
     </h2>
-    <p class="text-white/80 text-lg mb-8 max-w-2xl mx-auto">
+    <p class="text-white/80 text-lg mb-8 w-full md:w-2xl">
       Join our community of researchers, developers, and citizens working to
       protect digital democracy.
     </p>
 
     <!-- Compact Meeting Schedule -->
-    <div class="flex flex-col items-center justify-center mb-12 w-3xl">
+    <div
+      class="flex flex-col items-center justify-center mb-12 w-full md:w-3xl"
+    >
       <h3
         class="text-white/90 text-sm font-semibold uppercase tracking-wider mb-4 flex items-center justify-center gap-2"
       >
         <Calendar class="w-4 h-4" />
         Meeting Schedule
       </h3>
-      <div class="flex flex-col sm:flex-row gap-3 justify-center">
+      <div class="flex gap-3 flex-col md:flex-row justify-center">
         {
           meetings.map(
             (meeting: MeetingInfo): HTMLDivElement => (
