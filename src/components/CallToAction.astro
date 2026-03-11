@@ -65,7 +65,7 @@ const meetings: Array<MeetingInfo> = [
         {
           meetings.map(
             (meeting: MeetingInfo): HTMLDivElement => (
-              <div class="flex items-center gap-3 transition-all duration-300 ease-linear bg-white/10 backdrop-blur-sm px-4 py-3 border border-white/20 hover:bg-[rgba(255,255,255,0.15)] hover:-translate-y-0.5">
+              <div class="flex items-center gap-3 transition-all transform-gpu duration-300 ease-linear bg-white/10 backdrop-blur-sm px-4 py-3 border border-white/20 hover:bg-[rgba(255,255,255,0.15)] hover:-translate-y-0.5">
                 {meeting.type === "virtual" ? (
                   <Video class="w-4 h-4 text-cyan-300 shrink-0" />
                 ) : (

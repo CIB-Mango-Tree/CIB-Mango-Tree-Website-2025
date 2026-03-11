@@ -19,7 +19,7 @@ const {
   class: className,
 } = Astro.props;
 const buttonClasses: string = resolveClasses(
-  "inline-flex items-center gap-2 font-semibold transition-all",
+  "inline-flex items-center gap-2 font-semibold transition-all transform-gpu",
   className,
   {
     "hover:-translate-y-1 hover:shadow-lg": hoverAnimation,

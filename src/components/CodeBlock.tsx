@@ -55,7 +55,7 @@ export default function CodeBlock({
       />
       <button
         type="button"
-        className="absolute top-2 right-2 p-2 bg-white/10 hover:bg-white/20 text-white/70 hover:text-white rounded transition-all duration-200 ease-default opacity-0 group-hover:opacity-100 active:scale-95"
+        className="absolute top-2 right-2 p-2 bg-white/10 hover:bg-white/20 text-white/70 hover:text-white rounded transition-all transform-gpu duration-200 ease-default opacity-100 xl:opacity-0 xl:group-hover:opacity-100 active:scale-95"
         aria-label="Copy to clipboard"
         onClick={handleClick}
       >

@@ -1,7 +1,7 @@
 import { Accordion as AccordionPrimitive } from "@base-ui/react/accordion";
 
 import { cn } from "@utils/classMerge";
-import { ChevronDownIcon, ChevronUpIcon } from "lucide-react";
+import { ChevronDownIcon } from "lucide-react";
 
 function Accordion({ className, ...props }: AccordionPrimitive.Root.Props) {
   return (
@@ -18,7 +18,7 @@ function AccordionItem({ className, ...props }: AccordionPrimitive.Item.Props) {
     <AccordionPrimitive.Item
       data-slot="accordion-item"
       className={cn(
-        "border border-border transition-all duration-300 ease-linear hover:border-[#8bbf72] data-open:border-[#5a8a4a] data-open:shadow-[0_0.25rem_0.75rem_rgba(90,138,74,0.1)]",
+        "border border-border transition-all transform-gpu duration-300 ease-linear hover:border-[#8bbf72] data-open:border-[#5a8a4a] data-open:shadow-[0_0.25rem_0.75rem_rgba(90,138,74,0.1)]",
         className,
       )}
       {...props}
@@ -36,7 +36,7 @@ function AccordionTrigger({
       <AccordionPrimitive.Trigger
         data-slot="accordion-trigger"
         className={cn(
-          "transition-colors duration-200 ease-linear hover:bg-[#f8f6f2] group/accordion-trigger relative flex flex-1 items-center justify-between p-4 md:p-5 text-left font-bold outline-none aria-disabled:pointer-events-none aria-disabled:opacity-50",
+          "transition-colors transform-gpu duration-200 ease-linear hover:bg-[#f8f6f2] group/accordion-trigger relative flex flex-1 items-center justify-between p-4 cursor-pointer md:p-5 text-left font-bold outline-none aria-disabled:pointer-events-none aria-disabled:opacity-50",
           className,
         )}
         {...props}
@@ -44,7 +44,7 @@ function AccordionTrigger({
         {children}
         <ChevronDownIcon
           data-slot="accordion-trigger-icon"
-          className="pointer-events-none text-mango-green-dark size-5 shrink-0 transition-transform duration-300 ease-default group-aria-expanded/accordion-trigger:rotate-180"
+          className="pointer-events-none text-mango-green-dark size-5 shrink-0 transition-transform transform-gpu duration-300 ease-default group-aria-expanded/accordion-trigger:rotate-180"
         />
       </AccordionPrimitive.Trigger>
     </AccordionPrimitive.Header>
@@ -59,7 +59,7 @@ function AccordionContent({
   return (
     <AccordionPrimitive.Panel
       data-slot="accordion-content"
-      className="data-open:animate-accordion-down data-closed:animate-accordion-up overflow-hidden text-sm"
+      className="transform-gpu data-open:animate-accordion-down data-closed:animate-accordion-up overflow-hidden text-sm"
       {...props}
     >
       <div

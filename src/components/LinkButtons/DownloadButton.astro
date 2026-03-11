@@ -15,6 +15,8 @@ const buttonClasses: string = resolveClasses(
 ---
 
 <a href={href} class={buttonClasses}>
-  <Download class="w-5 h-5 group-hover:animate-bounce" />
+  <Download
+    class="w-5 h-5 transition-transform transform-gpu group-hover:animate-bounce"
+  />
   <slot />
 </a>

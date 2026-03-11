@@ -54,7 +54,7 @@ export default function AnchorNavMenu({
           {items.map(({ id, label }: NavItemType): ReactElement<FC> => {
             const isActive = activeId === id;
             const linkClasses: string = cn(
-              "relative flex items-center gap-2 text-sm py-2 px-3 -mx-3 transition-colors before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:w-0.75 before:bg-[#5a8a4a] before:transition-[height] before:duration-200 before:ease-linear",
+              "relative flex items-center gap-2 text-sm py-2 px-3 -mx-3 transition-all transform-gpu before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:w-0.75 before:bg-[#5a8a4a] before:transition-[height] before:duration-200 before:ease-linear",
               {
                 "text-mango-green-dark font-semibold before:h-full": isActive,
                 "text-muted hover:text-mango-green-dark before:h-0 hover:before:h-full":

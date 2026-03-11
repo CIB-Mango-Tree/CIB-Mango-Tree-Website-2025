@@ -22,7 +22,7 @@ const meetings: Meeting[] = [
 ];
 ---
 
-<div class="sprint-calendar bg-[#F8F6F2] p-6 md:p-8 border border-border">
+<div class="bg-[#F8F6F2] p-6 md:p-8 border border-border">
   <h4 class="font-bold text-xl mb-6 flex items-center gap-2">
     <svg
       class="w-5 h-5 text-mango-green-dark"
@@ -50,7 +50,7 @@ const meetings: Meeting[] = [
 
         return (
           <div
-            class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 p-4 bg-white border-l-4 border-mango-green-light opacity-0 animate-fade-in transition-all duration-300 ease-linear hover:translate-x-1 hover:shadow-[0_0.125rem_0.50rem_rgba(90,138,74,0.1)] hover:border-l-[#5a8a4a]"
+            class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 p-4 bg-white border-l-4 border-mango-green-light opacity-0 animate-fade-in transition-all transform-gpu duration-300 ease-linear hover:translate-x-1 hover:shadow-[0_0.125rem_0.50rem_rgba(90,138,74,0.1)] hover:border-l-[#5a8a4a]"
             style={`animation-delay: ${index * 0.1}s;`}
           >
             <div class="flex-1">

@@ -8,7 +8,7 @@ interface Props {
 
 const { href, class: className } = Astro.props;
 const cardClasses: string = resolveClasses(
-  "flex flex-col transition-all duration-300 ease-default p-8 hover:-translate-1 hover:shadow-[0_0.50rem_1.50rem_rgba(90,138,74,0.15)]",
+  "flex flex-col transition-all transform-gpu duration-300 ease-default p-8 hover:-translate-1 hover:shadow-[0_0.50rem_1.50rem_rgba(90,138,74,0.15)] active:-translate-1 active:shadow-[0_0.50rem_1.50rem_rgba(90,138,74,0.15)]",
   className,
 );
 ---

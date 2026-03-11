@@ -110,14 +110,14 @@ const datasets = [
     description: "Historical Reddit data for research.",
     link: "https://pushshift.io/",
     access: "API Required",
-    color: "bg-white border border-border-color",
+    color: "bg-white border border-border",
   },
   {
     name: "CrowdTangle (Meta)",
     description: "Facebook and Instagram public data.",
     link: "https://www.crowdtangle.com/",
     access: "Application Required",
-    color: "bg-white border border-border-color",
+    color: "bg-white border border-border",
   },
 ];
 
@@ -239,27 +239,27 @@ const navItems = [
               </p>
               <div class="flex flex-wrap gap-4">
                 <span
-                  class="transition-all duration-200 ease-linear bg-white px-4 py-2 text-sm hover:scale-105 hover:shadow-[0_0.125rem_0.50rem_rgba(90,138,74,0.2)]"
+                  class="transition-all transform-gpu duration-200 ease-linear bg-white px-4 py-2 text-sm hover:scale-105 hover:shadow-[0_0.125rem_0.50rem_rgba(90,138,74,0.2)]"
                 >
                   Bot Networks
                 </span>
                 <span
-                  class="transition-all duration-200 ease-linear bg-white px-4 py-2 text-sm hover:scale-105 hover:shadow-[0_0.125rem_0.50rem_rgba(90,138,74,0.2)]"
+                  class="transition-all transform-gpu duration-200 ease-linear bg-white px-4 py-2 text-sm hover:scale-105 hover:shadow-[0_0.125rem_0.50rem_rgba(90,138,74,0.2)]"
                 >
                   Astroturfing
                 </span>
                 <span
-                  class="transition-all duration-200 ease-linear bg-white px-4 py-2 text-sm hover:scale-105 hover:shadow-[0_0.125rem_0.50rem_rgba(90,138,74,0.2)]"
+                  class="transition-all transform-gpu duration-200 ease-linear bg-white px-4 py-2 text-sm hover:scale-105 hover:shadow-[0_0.125rem_0.50rem_rgba(90,138,74,0.2)]"
                 >
                   Sockpuppets
                 </span>
                 <span
-                  class="transition-all duration-200 ease-linear bg-white px-4 py-2 text-sm hover:scale-105 hover:shadow-[0_0.125rem_0.50rem_rgba(90,138,74,0.2)]"
+                  class="transition-all transform-gpu duration-200 ease-linear bg-white px-4 py-2 text-sm hover:scale-105 hover:shadow-[0_0.125rem_0.50rem_rgba(90,138,74,0.2)]"
                 >
                   Troll Farms
                 </span>
                 <span
-                  class="transition-all duration-200 ease-linear bg-white px-4 py-2 text-sm hover:scale-105 hover:shadow-[0_0.125rem_0.50rem_rgba(90,138,74,0.2)]"
+                  class="transition-all transform-gpu duration-200 ease-linear bg-white px-4 py-2 text-sm hover:scale-105 hover:shadow-[0_0.125rem_0.50rem_rgba(90,138,74,0.2)]"
                 >
                   Information Operations
                 </span>
@@ -290,15 +290,15 @@ const navItems = [
                     href={paper.link}
                     target="_blank"
                     rel="noopener"
-                    class="group bg-background-alt p-5 border-l-4 border-mango-green-dark transition-all duration-300 ease-linear hover:border-mango-yellow hover:translate-x-1 hover:shadow-[0_0.25rem_0.75rem_rgba(0,0,0,0.05)]"
+                    class="group bg-background-alt p-5 border-l-4 border-mango-green-dark transition-all transform-gpu duration-300 ease-linear hover:border-mango-yellow hover:translate-x-1 hover:shadow-[0_0.25rem_0.75rem_rgba(0,0,0,0.05)]"
                   >
-                    <h3 class="font-semibold mb-2 text-sm leading-tight group-hover:text-mango-green-dark transition-colors">
+                    <h3 class="font-semibold mb-2 text-sm leading-tight group-hover:text-mango-green-dark transition-colors transform-gpu">
                       {paper.title}
                     </h3>
                     <p class="text-xs text-muted">
                       {paper.authors} ({paper.year}) · {paper.publication}
                     </p>
-                    <span class="inline-flex items-center gap-1 text-xs text-mango-green-dark mt-3 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <span class="inline-flex items-center gap-1 text-xs text-mango-green-dark mt-3 opacity-0 group-hover:opacity-100 transition-opacity transform-gpu">
                       Read paper <ExternalLink class="w-3 h-3" />
                     </span>
                   </a>
@@ -318,7 +318,7 @@ const navItems = [
               {
                 tools.map((tool) => {
                   const toolCardClasses: string = cn(
-                    "block p-6 transition-all duration-300 ease-default hover:-translate-y-1 hover:shadow-[0_0.5rem_1.5rem_rgba(0,0,0,0.1)]",
+                    "block p-6 transition-all transform-gpu duration-300 ease-default hover:-translate-y-1 hover:shadow-[0_0.5rem_1.5rem_rgba(0,0,0,0.1)]",
                     tool.color,
                   );
 
@@ -357,7 +357,7 @@ const navItems = [
               {
                 datasets.map((dataset) => {
                   const cardClasses: string = cn(
-                    "block p-6 transition-all duration-300 ease-default hover:-translate-y-1 hover:shadow-[0_0.5rem_1.5rem_rgba(0,0,0,0.1)]",
+                    "block p-6 transition-all transform-gpu duration-300 ease-default hover:-translate-y-1 hover:shadow-[0_0.5rem_1.5rem_rgba(0,0,0,0.1)]",
                     dataset.color,
                   );
                   const datasetClasses: string = cn("text-xs px-2 py-1", {

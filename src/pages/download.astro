@@ -105,7 +105,7 @@ const dataPreparationSteps = [
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
         <!-- Python setup -->
         <div
-          class="bg-background-alt border border-border p-8 transition-all duration-300 ease-linear hover:border-[#5a8a4a] hover:shadow-[0_0.25rem_0.75rem_rgba(90,138,74,0.1)] hover:-translate-y-0.5"
+          class="bg-background-alt border border-border p-8 transition-all transform-gpu duration-300 ease-linear hover:border-[#5a8a4a] hover:shadow-[0_0.25rem_0.75rem_rgba(90,138,74,0.1)] hover:-translate-y-0.5"
         >
           <h3 class="font-semibold text-lg mb-5 flex items-center gap-2">
             <span class="bg-mango-yellow px-2 py-1 text-xs font-bold">
@@ -124,7 +124,7 @@ const dataPreparationSteps = [
 
         <!-- GitHub clone -->
         <div
-          class="bg-background-alt border border-border p-8 transition-all duration-300 ease-linear hover:border-[#5a8a4a] hover:shadow-[0_0.25rem_0.75rem_rgba(90,138,74,0.1)] hover:-translate-y-0.5"
+          class="bg-background-alt border border-border p-8 transition-all transform-gpu duration-300 ease-linear hover:border-[#5a8a4a] hover:shadow-[0_0.25rem_0.75rem_rgba(90,138,74,0.1)] hover:-translate-y-0.5"
         >
           <h3 class="font-semibold text-lg mb-5 flex items-center gap-2">
             <span class="bg-[#24292e] text-white px-2 py-1 text-xs font-bold"
@@ -158,10 +158,10 @@ const dataPreparationSteps = [
         {
           dataPreparationSteps.map((item, index) => (
             <div
-              class="bg-white p-8 relative group opacity-0 transition-all duration-300 ease-linear animate-fade-in-step hover:-translate-y-1 hover:shadow-[0_0.5rem_1.25rem_rgba(90,138,74,0.15)]"
+              class="bg-white p-8 relative group opacity-0 transition-all transform-gpu duration-300 ease-linear animate-fade-in-step hover:-translate-y-1 hover:shadow-[0_0.5rem_1.25rem_rgba(90,138,74,0.15)]"
               style={`animation-delay: ${index * 0.1}s;`}
             >
-              <div class="absolute -top-3 -left-3 w-12 h-12 bg-mango-green-dark text-white font-bold flex items-center justify-center text-lg transition-all duration-300 ease-default group-hover:bg-[#4a7a3a] group-hover:scale-110 group-hover:-rotate-5">
+              <div class="absolute -top-3 -left-3 w-12 h-12 bg-mango-green-dark text-white font-bold flex items-center justify-center text-lg transition-all transform-gpu duration-300 ease-default group-hover:bg-[#4a7a3a] group-hover:scale-110 group-hover:-rotate-5">
                 {item.step}
               </div>
               <h3 class="font-semibold mb-4 mt-3">{item.title}</h3>

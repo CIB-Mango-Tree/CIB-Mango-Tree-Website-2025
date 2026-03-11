@@ -9,7 +9,7 @@ interface Props {
 const { iconPath, class: className } = Astro.props;
 
 const containerClasses: string = resolveClasses(
-  "flex py-12 md:py-16 px-6 lg:px-8 animate-delay-100 w-full justify-center opacity-0 animate-slide-in group",
+  "flex py-12 md:py-16 px-6 lg:px-8 transition-all transform-gpu animate-delay-100 w-full justify-center opacity-0 animate-slide-in group",
   className,
 );
 ---
@@ -20,7 +20,7 @@ const containerClasses: string = resolveClasses(
   >
     {
       iconPath && (
-        <div class="shrink-0 w-16 h-16 flex items-center justify-start transition-all duration-300 ease-default lg:justify-center group-hover:scale-110 group-hover:-rotate-5">
+        <div class="shrink-0 w-16 h-16 flex items-center justify-start transition-all transform-gpu duration-300 ease-default lg:justify-center group-hover:scale-110 group-hover:-rotate-5">
           <svg
             class="w-8 h-8 text-mango-green-dark"
             fill="none"
