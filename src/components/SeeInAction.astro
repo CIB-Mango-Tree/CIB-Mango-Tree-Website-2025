@@ -1,5 +1,9 @@
 ---
-import cli_screenshot from "@assets/cliscreenshot.png";
+// Demo video sourced from Pixabay: https://pixabay.com/videos/earth-globe-rotate-world-global-1236/
+// License: Free for use under Pixabay's Content License: https://pixabay.com/service/license-summary/
+// Placeholder Video Only - TODO: Update with the final video provided by the content team
+import placeholder_demo_video from "@assets/placeholder_demo_video.mp4";
+import VideoPlayer from "@components/VideoPlayer.tsx";
 ---
 
 <section class="flex flex-col relative">
@@ -9,12 +13,11 @@ import cli_screenshot from "@assets/cliscreenshot.png";
         See it in Action
       </h2>
 
-      <!-- Video/Screenshot Placeholder - TODO: Replace with embedded video -->
       <div class="mb-16 shadow-lg overflow-hidden">
-        <img
-          class="w-full"
-          src={cli_screenshot.src}
-          alt="Screenshot of the CIB Mango Tree CLI"
+        <VideoPlayer 
+          src={placeholder_demo_video} 
+          label="Placeholder demo video for CIB Mango Tree"
+          client:load 
         />
       </div>
 
