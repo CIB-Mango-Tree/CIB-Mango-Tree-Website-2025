@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect, useCallback, useMemo } from "react";
+import { useRef, useState, useEffect, useCallback } from "react";
 import {
   Play,
   Pause,
@@ -25,7 +25,7 @@ import {
   TooltipTrigger,
 } from "@components/ui/tooltip";
 import { cn } from "@utils/classMerge";
-import type { ReactElement, FC, PropsWithChildren } from "react";
+import type { ReactElement, FC } from "react";
 
 export type VolumeLiterals = "high" | "low" | "silent" | "mute";
 
@@ -34,7 +34,9 @@ export interface VideoPlayerProps {
   type: string;
   poster?: string;
   start?: number;
+  label?: string;
   className?: string;
+  muted?: boolean;
   autoPlay?: boolean;
   onPlay?: () => void;
   onPause?: () => void;
@@ -50,7 +52,9 @@ export default function VideoPlayer({
   poster,
   className,
   start,
-  autoPlay,
+  autoPlay = false,
+  muted = false,
+  label = "cibmangotree video player",
 }: VideoPlayerProps): ReactElement<FC> {
   const [hasStarted, setHasStarted] = useState<boolean>(false);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
@@ -79,10 +83,20 @@ export default function VideoPlayer({
 
   return (
     <div className={cn("relative group/video-player rounded-xl", className)}>
+      {poster && !hasStarted && (
+        <img
+          src={poster}
+          alt=""
+          className="absolute inset-0 w-full h-full object-cover rounded-xl z-10 pointer-events-none"
+        />
+      )}
       <video
         ref={videoRef}
-        className="w-full h-auto aspect-video object-cover rounded-xl [[poster]]:object-cover [[poster]]:rounded-xl"
-        poster={poster}
+        className="w-full h-auto aspect-video object-cover rounded-xl z-0"
+        preload="off"
+        aria-label={label}
+        muted={muted}
+        autoPlay={autoPlay}
         playsInline
       >
         <source src={src} type={type} />
@@ -96,7 +110,7 @@ export default function VideoPlayer({
         </a>
         .
       </video>
-      <div className="absolute left-0 right-0 bottom-4 grid grid-cols-12 gap-x-2 w-full z-10">
+      <div className="absolute left-0 right-0 bottom-4 grid grid-cols-12 gap-x-2 px-4 w-full z-20">
         <div className="grid col-span-1 items-center">
           <Button type="button" size="sm" onClick={handlePlayToggle}>
             {isPlaying ? <Pause fill="white" /> : <Play fill="white" />}
