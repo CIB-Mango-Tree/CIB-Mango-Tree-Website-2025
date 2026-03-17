@@ -9,13 +9,11 @@ import cli_screenshot from "@assets/cliscreenshot.png";
         See it in Action
       </h2>
 
-      <!-- Video/Screenshot Placeholder - TODO: Replace with embedded video -->
-      <div class="mb-16 shadow-lg overflow-hidden">
-        <img
-          class="w-full"
-          src={cli_screenshot.src}
-          alt="Screenshot of the CIB Mango Tree CLI"
-        />
+      <div class="mb-16 shadow-lg overflow-hidden rounded-xl">
+        <video class="w-full h-auto" poster={cli_screenshot.src} preload="none" controls>
+          <source src="CIB_Mango_Tree_Demo.mp4" type="video/mp4" />
+          Your browser does not support video playback. You may download the video <a download='file' style="text-decoration-thickness: 2px;" href="CIB_Mango_Tree_Demo.mp4">here</a>.
+        </video>
       </div>
 
       <!-- Description -->
