@@ -75,10 +75,73 @@ export default function VideoPlayer({
       if (!hasStarted) setHasStarted(true);
     })();
   }, [isPlaying]);
+  const handleTimeUpdate = useCallback((): void => {
+    if (videoRef.current == null) return;
 
-  useEffect((): void => {
+    const currentTime: number = videoRef.current.currentTime;
+
+    if (currentTime !== trackValue) setTrackValue(currentTime);
+  }, [trackValue]);
+  const handleTrackChange = useCallback(
+    (value: number | readonly number[]): void => {
+      if (videoRef.current == null) return;
+
+      const currentTime = value as number;
+
+      if (currentTime === videoRef.current.currentTime) return;
+
+      videoRef.current.currentTime = currentTime;
+      setTrackValue(currentTime);
+    },
+    [],
+  );
+  const handleKeyDown = useCallback((e: KeyboardEvent): void => {
+    const tagName = (e.target as HTMLElement).tagName;
+
+    if (
+      tagName === "INPUT" ||
+      tagName === "TEXTAREA" ||
+      tagName === "SELECT" ||
+      tagName === "BUTTON"
+    )
+      return;
+
+    e.preventDefault();
+
+    if (e.key === " ") {
+      handlePlayToggle();
+      return;
+    }
+    if (e.key === "ArrowUp") {
+      return;
+    }
+    if (e.key === "ArrowDown") {
+      return;
+    }
+    if (e.key === "ArrowLeft") {
+      setTrackValue((state: number): number => {
+        state -= 5;
+        videoRef.current!.currentTime = state;
+        return state;
+      });
+      return;
+    }
+    if (e.key === "ArrowRight") {
+      setTrackValue((state: number): number => {
+        state += 5;
+        videoRef.current!.currentTime = state;
+        return state;
+      });
+      return;
+    }
+  }, []);
+
+  useEffect((): (() => void) => {
+    window.addEventListener("keydown", handleKeyDown);
     if (autoPlay != null) setIsPlaying(autoPlay);
     if (start != null && start > 0) setTrackValue(start);
+
+    return (): void => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
   return (
@@ -87,13 +150,15 @@ export default function VideoPlayer({
         <img
           src={poster}
           alt=""
-          className="absolute inset-0 w-full h-full object-cover rounded-xl z-10 pointer-events-none"
+          className="absolute inset-0 w-full h-full object-cover rounded-xl z-10 pointer-events-none cursor-pointer"
         />
       )}
       <video
         ref={videoRef}
-        className="w-full h-auto aspect-video object-cover rounded-xl z-0"
+        className="w-full h-auto aspect-video object-cover rounded-xl z-0 cursor-pointer"
         preload="off"
+        onTimeUpdate={handleTimeUpdate}
+        onClick={handlePlayToggle}
         aria-label={label}
         muted={muted}
         autoPlay={autoPlay}
@@ -112,7 +177,12 @@ export default function VideoPlayer({
       </video>
       <div className="absolute left-0 right-0 bottom-4 grid grid-cols-12 gap-x-2 px-4 w-full z-20">
         <div className="grid col-span-1 items-center">
-          <Button type="button" size="sm" onClick={handlePlayToggle}>
+          <Button
+            type="button"
+            size="sm"
+            onClick={handlePlayToggle}
+            className="cursor-pointer"
+          >
             {isPlaying ? <Pause fill="white" /> : <Play fill="white" />}
           </Button>
         </div>
@@ -121,13 +191,15 @@ export default function VideoPlayer({
             max={videoRef.current?.duration || 100}
             step={1}
             value={trackValue}
+            onValueChange={handleTrackChange}
+            className="cursor-pointer"
           />
         </div>
         <div className="grid col-span-1 grid-flow-col items-center justify-between">
-          <Button type="button" size="sm">
+          <Button type="button" size="sm" className="cursor-pointer">
             <Volume />
           </Button>
-          <Button type="button" size="sm">
+          <Button type="button" size="sm" className="cursor-pointer">
             <Fullscreen />
           </Button>
         </div>
