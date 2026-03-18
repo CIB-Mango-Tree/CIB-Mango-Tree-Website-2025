@@ -243,6 +243,7 @@ export default function VideoPlayer({
                 step={0.01}
                 value={volume}
                 onValueChange={handleVolumeChange}
+                className="cursor-pointer"
               />
             </DropdownMenuContent>
           </DropdownMenu>
