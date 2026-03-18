@@ -27,8 +27,6 @@ import {
 import { cn } from "@utils/classMerge";
 import type { ReactElement, FC } from "react";
 
-export type VolumeLiterals = "high" | "low" | "silent" | "mute";
-
 export interface VideoPlayerProps {
   src: string;
   type: string;
@@ -59,7 +57,7 @@ export default function VideoPlayer({
   const [hasStarted, setHasStarted] = useState<boolean>(false);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [trackValue, setTrackValue] = useState<number>(0);
-  const [volumeLevel, setVolumeLevel] = useState<VolumeLiterals>("high");
+  const [volume, setVolume] = useState<number>(0.5);
   const videoRef = useRef<HTMLVideoElement>(null);
   const handlePlayToggle = useCallback((): void => {
     if (videoRef.current == null) return;
@@ -95,7 +93,21 @@ export default function VideoPlayer({
     },
     [],
   );
+  const handleVolumeChange = useCallback(
+    (value: number | readonly number[]): void => {
+      if (videoRef.current == null) return;
+      const currentVolume = value as number;
+
+      if (currentVolume === videoRef.current?.volume) return;
+
+      videoRef.current.volume = currentVolume;
+      setVolume(currentVolume);
+    },
+    [],
+  );
   const handleKeyDown = useCallback((e: KeyboardEvent): void => {
+    if (videoRef.current == null) return;
+
     const tagName = (e.target as HTMLElement).tagName;
 
     if (
@@ -196,9 +208,30 @@ export default function VideoPlayer({
           />
         </div>
         <div className="grid col-span-1 grid-flow-col items-center justify-between">
-          <Button type="button" size="sm" className="cursor-pointer">
-            <Volume />
-          </Button>
+          <DropdownMenu>
+            <DropdownMenuTrigger
+              render={
+                <Button type="button" size="sm" className="cursor-pointer" />
+              }
+            >
+              {volume === 0 && <Volume />}
+              {volume > 0 && volume <= 0.5 && <Volume1 />}
+              {volume > 0.5 && volume <= 1 && <Volume2 />}
+            </DropdownMenuTrigger>
+            <DropdownMenuContent
+              side="top"
+              align="center"
+              className="min-w-none w-8"
+            >
+              <Slider
+                orientation="vertical"
+                max={1}
+                step={0.01}
+                value={volume}
+                onValueChange={handleVolumeChange}
+              />
+            </DropdownMenuContent>
+          </DropdownMenu>
           <Button type="button" size="sm" className="cursor-pointer">
             <Fullscreen />
           </Button>
