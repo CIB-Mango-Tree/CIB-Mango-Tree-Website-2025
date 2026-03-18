@@ -125,9 +125,23 @@ export default function VideoPlayer({
       return;
     }
     if (e.key === "ArrowUp") {
+      setVolume((state: number): number => {
+        const incrementedValue: number = state + 0.05;
+        const newValue = incrementedValue > 1 ? 1 : incrementedValue;
+        videoRef.current!.volume = newValue;
+
+        return newValue;
+      });
       return;
     }
     if (e.key === "ArrowDown") {
+      setVolume((state: number): number => {
+        const decrementedValue: number = state - 0.05;
+        const newValue = decrementedValue < 0 ? 0 : decrementedValue;
+        videoRef.current!.volume = newValue;
+
+        return newValue;
+      });
       return;
     }
     if (e.key === "ArrowLeft") {
