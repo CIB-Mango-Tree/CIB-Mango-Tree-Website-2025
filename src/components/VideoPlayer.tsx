@@ -7,6 +7,7 @@ import {
   Volume2,
   VolumeX,
   Fullscreen,
+  RotateCcw,
 } from "lucide-react";
 import { Button } from "@components/ui/button";
 import { Slider } from "@components/ui/slider";
@@ -25,7 +26,7 @@ import {
   TooltipTrigger,
 } from "@components/ui/tooltip";
 import { cn } from "@utils/classMerge";
-import type { ReactElement, FC } from "react";
+import type { ReactElement, FC, PropsWithChildren } from "react";
 
 export interface VideoPlayerProps {
   src: string;
@@ -44,6 +45,28 @@ export interface VideoPlayerProps {
   onTrack?: () => void;
 }
 
+export interface VideoControlButtonProps extends PropsWithChildren {
+  onClick?: () => void;
+  className?: string;
+}
+
+export function VideoControlButton({
+  onClick,
+  className,
+  children,
+}: VideoControlButtonProps): ReactElement<FC> {
+  return (
+    <Button
+      type="button"
+      size="sm"
+      onClick={onClick}
+      className={cn("cursor-pointer", className)}
+    >
+      {children}
+    </Button>
+  );
+}
+
 export default function VideoPlayer({
   src,
   type,
@@ -55,12 +78,14 @@ export default function VideoPlayer({
   label = "cibmangotree video player",
 }: VideoPlayerProps): ReactElement<FC> {
   const [hasStarted, setHasStarted] = useState<boolean>(false);
+  const [hasEnded, setHasEnded] = useState<boolean>(false);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [trackValue, setTrackValue] = useState<number>(0);
   const [volume, setVolume] = useState<number>(0.5);
   const videoRef = useRef<HTMLVideoElement>(null);
   const handlePlayToggle = useCallback((): void => {
     if (videoRef.current == null) return;
+
     if (!videoRef.current.paused) {
       videoRef.current?.pause();
       setIsPlaying(false);
@@ -68,11 +93,20 @@ export default function VideoPlayer({
     }
 
     (async (): Promise<void> => {
+      if (hasEnded) {
+        videoRef.current!.currentTime = 0;
+        setHasEnded(false);
+      }
+
       await videoRef.current?.play();
       setIsPlaying(true);
       if (!hasStarted) setHasStarted(true);
     })();
   }, [isPlaying]);
+  const handleEnded = useCallback((): void => {
+    setHasEnded(true);
+    setIsPlaying(false);
+  }, []);
   const handleTimeUpdate = useCallback((): void => {
     if (videoRef.current == null) return;
 
@@ -176,15 +210,16 @@ export default function VideoPlayer({
         <img
           src={poster}
           alt=""
-          className="absolute inset-0 w-full h-full object-cover rounded-xl z-10 pointer-events-none cursor-pointer"
+          className="absolute inset-0 w-full h-full object-cover rounded-xl z-10 pointer-events-none"
         />
       )}
       <video
         ref={videoRef}
-        className="w-full h-auto aspect-video object-cover rounded-xl z-0 cursor-pointer"
+        className="w-full h-auto aspect-video object-cover rounded-xl z-0"
         preload="off"
         onTimeUpdate={handleTimeUpdate}
         onClick={handlePlayToggle}
+        onEnded={handleEnded}
         aria-label={label}
         muted={muted}
         autoPlay={autoPlay}
@@ -203,14 +238,11 @@ export default function VideoPlayer({
       </video>
       <div className="absolute left-0 right-0 bottom-4 grid grid-cols-12 gap-x-2 px-4 w-full z-20">
         <div className="grid col-span-1 items-center">
-          <Button
-            type="button"
-            size="sm"
-            onClick={handlePlayToggle}
-            className="cursor-pointer"
-          >
-            {isPlaying ? <Pause fill="white" /> : <Play fill="white" />}
-          </Button>
+          <VideoControlButton onClick={handlePlayToggle}>
+            {hasEnded && <RotateCcw />}
+            {isPlaying && !hasEnded && <Pause fill="white" />}
+            {!isPlaying && !hasEnded && <Play fill="white" />}
+          </VideoControlButton>
         </div>
         <div className="grid col-span-10 items-center">
           <Slider
@@ -223,11 +255,7 @@ export default function VideoPlayer({
         </div>
         <div className="grid col-span-1 grid-flow-col items-center justify-between">
           <DropdownMenu>
-            <DropdownMenuTrigger
-              render={
-                <Button type="button" size="sm" className="cursor-pointer" />
-              }
-            >
+            <DropdownMenuTrigger render={<VideoControlButton />}>
               {volume === 0 && <Volume />}
               {volume > 0 && volume <= 0.5 && <Volume1 />}
               {volume > 0.5 && volume <= 1 && <Volume2 />}
@@ -247,9 +275,9 @@ export default function VideoPlayer({
               />
             </DropdownMenuContent>
           </DropdownMenu>
-          <Button type="button" size="sm" className="cursor-pointer">
+          <VideoControlButton>
             <Fullscreen />
-          </Button>
+          </VideoControlButton>
         </div>
       </div>
     </div>
