@@ -247,7 +247,7 @@ export default function VideoPlayer({
   return (
     <div ref={containerRef} className={containerClasses}>
       {poster && !hasStarted && (
-        <img src={poster} alt="" className={posterClasses} />
+        <img src={poster} alt={`${label} poster`} className={posterClasses} />
       )}
       <video
         ref={videoRef}
