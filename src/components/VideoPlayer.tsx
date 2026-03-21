@@ -96,6 +96,7 @@ export default function VideoPlayer({
     (async (): Promise<void> => {
       if (hasEnded) {
         videoRef.current!.currentTime = 0;
+        setTrackValue(0);
         setHasEnded(false);
       }
 
