@@ -210,8 +210,7 @@ export default function VideoPlayer({
   }, []);
   const handleFullscreenChange = useCallback((): void => {
     if (containerRef.current == null) return;
-    if (document.fullscreenElement == null && isFullscreen)
-      setIsFullscreen(false);
+    if (document.fullscreenElement == null) setIsFullscreen(false);
   }, []);
   const containerClasses: string = cn("relative", className, {
     "rounded-none": isFullscreen,
