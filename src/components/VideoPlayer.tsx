@@ -5,7 +5,6 @@ import {
   Volume,
   Volume1,
   Volume2,
-  VolumeX,
   Fullscreen,
   RotateCcw,
 } from "lucide-react";
@@ -276,8 +275,8 @@ export default function VideoPlayer({
         </a>
         .
       </video>
-      <div className="absolute left-0 right-0 bottom-4 grid grid-cols-12 gap-x-2 px-4 w-full z-20">
-        <div className="grid col-span-2 grid-flow-col items-center">
+      <div className="absolute left-0 right-0 bottom-4 grid grid-cols-[auto_1fr_auto] grid-flow-col gap-x-4 px-4 w-full z-20">
+        <div className="grid col-auto grid-flow-col items-center justify-center gap-x-2">
           <VideoControlButton onClick={handlePlayToggle} className="w-20">
             {hasEnded && <RotateCcw />}
             {isPlaying && !hasEnded && <Pause fill="white" />}
@@ -285,7 +284,7 @@ export default function VideoPlayer({
           </VideoControlButton>
           <span className="text-white text-sm">{formatTime(trackValue)}</span>
         </div>
-        <div className="grid col-span-9 items-center">
+        <div className="grid col-span-12 items-center">
           <Slider
             max={duration}
             step={1}
@@ -294,7 +293,7 @@ export default function VideoPlayer({
             className="cursor-pointer"
           />
         </div>
-        <div className="grid col-span-1 grid-flow-col items-center justify-between">
+        <div className="grid col-auto grid-flow-col items-center justify-center gap-x-1">
           <DropdownMenu>
             <DropdownMenuTrigger render={<VideoControlButton />}>
               {volume === 0 && <Volume />}
