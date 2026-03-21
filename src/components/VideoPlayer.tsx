@@ -106,6 +106,7 @@ export default function VideoPlayer({
   }, [isPlaying]);
   const handleEnded = useCallback((): void => {
     setHasEnded(true);
+    setHasStarted(false);
     setIsPlaying(false);
   }, []);
   const handleTimeUpdate = useCallback((): void => {
