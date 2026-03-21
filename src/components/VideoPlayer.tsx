@@ -63,6 +63,8 @@ export function VideoControlButton({
   );
 }
 
+const VIDEO_PLAYER_VOLUME = "video_player_volume";
+
 export default function VideoPlayer({
   src,
   type,
@@ -135,6 +137,7 @@ export default function VideoPlayer({
       if (currentVolume === videoRef.current?.volume) return;
 
       videoRef.current.volume = currentVolume;
+      window.localStorage.setItem(VIDEO_PLAYER_VOLUME, String(currentVolume));
       setVolume(currentVolume);
     },
     [],
@@ -163,6 +166,7 @@ export default function VideoPlayer({
         const incrementedValue: number = state + 0.05;
         const newValue = incrementedValue > 1 ? 1 : incrementedValue;
         videoRef.current!.volume = newValue;
+        window.localStorage.setItem(VIDEO_PLAYER_VOLUME, String(newValue));
 
         return newValue;
       });
@@ -173,6 +177,7 @@ export default function VideoPlayer({
         const decrementedValue: number = state - 0.05;
         const newValue = decrementedValue < 0 ? 0 : decrementedValue;
         videoRef.current!.volume = newValue;
+        window.localStorage.setItem(VIDEO_PLAYER_VOLUME, String(newValue));
 
         return newValue;
       });
@@ -241,6 +246,18 @@ export default function VideoPlayer({
   useEffect((): (() => void) => {
     window.addEventListener("keydown", handleKeyDown);
     document.addEventListener("fullscreenchange", handleFullscreenChange);
+
+    const volumeSliderValue: string | null =
+      window.localStorage.getItem(VIDEO_PLAYER_VOLUME);
+
+    if (volumeSliderValue != null) {
+      const volumeSliderValueNum: number = parseInt(volumeSliderValue);
+
+      if (volumeSliderValueNum !== volume) setVolume(volumeSliderValueNum);
+    }
+    if (volumeSliderValue == null) {
+      window.localStorage.setItem(VIDEO_PLAYER_VOLUME, String(volume));
+    }
     if (autoPlay != null) setIsPlaying(autoPlay);
     if (start != null) setTrackValue(start);
 
