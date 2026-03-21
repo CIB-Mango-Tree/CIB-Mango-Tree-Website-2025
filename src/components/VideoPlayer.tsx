@@ -13,11 +13,8 @@ import { Button } from "@components/ui/button";
 import { Slider } from "@components/ui/slider";
 import {
   DropdownMenu,
+  DropdownMenuPortal,
   DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@components/ui/dropdown-menu";
 import {
@@ -82,6 +79,7 @@ export default function VideoPlayer({
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
   const [trackValue, setTrackValue] = useState<number>(0);
+  const [duration, setDuration] = useState<number>(0);
   const [volume, setVolume] = useState<number>(0.5);
   const containerRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -111,11 +109,12 @@ export default function VideoPlayer({
   }, []);
   const handleTimeUpdate = useCallback((): void => {
     if (videoRef.current == null) return;
+    if (!hasStarted) return;
 
     const currentTime: number = videoRef.current.currentTime;
 
     if (currentTime !== trackValue) setTrackValue(currentTime);
-  }, [trackValue]);
+  }, [trackValue, hasStarted]);
   const handleTrackChange = useCallback(
     (value: number | readonly number[]): void => {
       if (videoRef.current == null) return;
@@ -212,6 +211,10 @@ export default function VideoPlayer({
     if (containerRef.current == null) return;
     if (document.fullscreenElement == null) setIsFullscreen(false);
   }, []);
+  const handleLoadedMetadata = useCallback((): void => {
+    if (videoRef.current == null) return;
+    setDuration(videoRef.current.duration);
+  }, []);
   const formatTime = (currentTime: number): string => {
     const minutes = Math.floor(currentTime / 60);
     const seconds = Math.floor(currentTime % 60);
@@ -240,7 +243,7 @@ export default function VideoPlayer({
     window.addEventListener("keydown", handleKeyDown);
     document.addEventListener("fullscreenchange", handleFullscreenChange);
     if (autoPlay != null) setIsPlaying(autoPlay);
-    if (start != null && start > 0) setTrackValue(start);
+    if (start != null) setTrackValue(start);
 
     return (): void => {
       window.removeEventListener("keydown", handleKeyDown);
@@ -256,10 +259,11 @@ export default function VideoPlayer({
       <video
         ref={videoRef}
         className={videoClasses}
-        preload="off"
+        preload="metadata"
         onTimeUpdate={handleTimeUpdate}
         onClick={handlePlayToggle}
         onEnded={handleEnded}
+        onLoadedMetadata={handleLoadedMetadata}
         aria-label={label}
         muted={muted}
         autoPlay={autoPlay}
@@ -283,7 +287,7 @@ export default function VideoPlayer({
         </div>
         <div className="grid col-span-9 items-center">
           <Slider
-            max={videoRef.current?.duration || 100}
+            max={duration}
             step={1}
             value={trackValue}
             onValueChange={handleTrackChange}
@@ -297,20 +301,24 @@ export default function VideoPlayer({
               {volume > 0 && volume <= 0.5 && <Volume1 />}
               {volume > 0.5 && volume <= 1 && <Volume2 />}
             </DropdownMenuTrigger>
-            <DropdownMenuContent
-              side="top"
-              align="center"
-              className="min-w-none w-8 z-50"
+            <DropdownMenuPortal
+              container={isFullscreen ? containerRef.current : document.body}
             >
-              <Slider
-                orientation="vertical"
-                max={1}
-                step={0.01}
-                value={volume}
-                onValueChange={handleVolumeChange}
-                className="cursor-pointer"
-              />
-            </DropdownMenuContent>
+              <DropdownMenuContent
+                side="top"
+                align="center"
+                className="min-w-none w-8"
+              >
+                <Slider
+                  orientation="vertical"
+                  max={1}
+                  step={0.01}
+                  value={volume}
+                  onValueChange={handleVolumeChange}
+                  className="cursor-pointer"
+                />
+              </DropdownMenuContent>
+            </DropdownMenuPortal>
           </DropdownMenu>
           <VideoControlButton onClick={handleFullscreenToggle}>
             <Fullscreen />
