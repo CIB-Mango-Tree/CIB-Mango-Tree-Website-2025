@@ -212,6 +212,11 @@ export default function VideoPlayer({
     if (containerRef.current == null) return;
     if (document.fullscreenElement == null) setIsFullscreen(false);
   }, []);
+  const formatTime = (currentTime: number): string => {
+    const minutes = Math.floor(currentTime / 60);
+    const seconds = Math.floor(currentTime % 60);
+    return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+  };
   const containerClasses: string = cn("relative", className, {
     "rounded-none": isFullscreen,
     "rounded-xl": !isFullscreen,
@@ -268,14 +273,15 @@ export default function VideoPlayer({
         .
       </video>
       <div className="absolute left-0 right-0 bottom-4 grid grid-cols-12 gap-x-2 px-4 w-full z-20">
-        <div className="grid col-span-1 items-center">
-          <VideoControlButton onClick={handlePlayToggle}>
+        <div className="grid col-span-2 grid-flow-col items-center">
+          <VideoControlButton onClick={handlePlayToggle} className="w-20">
             {hasEnded && <RotateCcw />}
             {isPlaying && !hasEnded && <Pause fill="white" />}
             {!isPlaying && !hasEnded && <Play fill="white" />}
           </VideoControlButton>
+          <span className="text-white text-sm">{formatTime(trackValue)}</span>
         </div>
-        <div className="grid col-span-10 items-center">
+        <div className="grid col-span-9 items-center">
           <Slider
             max={videoRef.current?.duration || 100}
             step={1}
@@ -294,7 +300,7 @@ export default function VideoPlayer({
             <DropdownMenuContent
               side="top"
               align="center"
-              className="min-w-none w-8"
+              className="min-w-none w-8 z-50"
             >
               <Slider
                 orientation="vertical"
