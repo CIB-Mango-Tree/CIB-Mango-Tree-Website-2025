@@ -80,8 +80,10 @@ export default function VideoPlayer({
   const [hasStarted, setHasStarted] = useState<boolean>(false);
   const [hasEnded, setHasEnded] = useState<boolean>(false);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
+  const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
   const [trackValue, setTrackValue] = useState<number>(0);
   const [volume, setVolume] = useState<number>(0.5);
+  const containerRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const handlePlayToggle = useCallback((): void => {
     if (videoRef.current == null) return;
@@ -195,27 +197,61 @@ export default function VideoPlayer({
       return;
     }
   }, []);
+  const handleFullscreenToggle = useCallback((): void => {
+    if (containerRef.current == null) return;
+    if (document.fullscreenElement != null) {
+      document.exitFullscreen();
+      setIsFullscreen(false);
+      return;
+    }
+
+    containerRef.current.requestFullscreen();
+    setIsFullscreen(true);
+  }, []);
+  const handleFullscreenChange = useCallback((): void => {
+    if (containerRef.current == null) return;
+    if (document.fullscreenElement == null && isFullscreen)
+      setIsFullscreen(false);
+  }, []);
+  const containerClasses: string = cn("relative", className, {
+    "rounded-none": isFullscreen,
+    "rounded-xl": !isFullscreen,
+  });
+  const posterClasses: string = cn(
+    "absolute inset-0 w-full h-auto object-cover z-10 pointer-events-none",
+    {
+      "rounded-none": isFullscreen,
+      "rounded-xl": !isFullscreen,
+    },
+  );
+  const videoClasses: string = cn(
+    "w-full h-auto aspect-video object-cover z-0",
+    {
+      "rounded-none": isFullscreen,
+      "rounded-xl": !isFullscreen,
+    },
+  );
 
   useEffect((): (() => void) => {
     window.addEventListener("keydown", handleKeyDown);
+    document.addEventListener("fullscreenchange", handleFullscreenChange);
     if (autoPlay != null) setIsPlaying(autoPlay);
     if (start != null && start > 0) setTrackValue(start);
 
-    return (): void => window.removeEventListener("keydown", handleKeyDown);
+    return (): void => {
+      window.removeEventListener("keydown", handleKeyDown);
+      document.removeEventListener("fullscreenchange", handleFullscreenChange);
+    };
   }, []);
 
   return (
-    <div className={cn("relative group/video-player rounded-xl", className)}>
+    <div ref={containerRef} className={containerClasses}>
       {poster && !hasStarted && (
-        <img
-          src={poster}
-          alt=""
-          className="absolute inset-0 w-full h-full object-cover rounded-xl z-10 pointer-events-none"
-        />
+        <img src={poster} alt="" className={posterClasses} />
       )}
       <video
         ref={videoRef}
-        className="w-full h-auto aspect-video object-cover rounded-xl z-0"
+        className={videoClasses}
         preload="off"
         onTimeUpdate={handleTimeUpdate}
         onClick={handlePlayToggle}
@@ -227,11 +263,7 @@ export default function VideoPlayer({
       >
         <source src={src} type={type} />
         Your browser does not support video playback. You may download the video
-        <a
-          download="file"
-          href="CIB_Mango_Tree_Demo.mp4"
-          className="decoration-2"
-        >
+        <a download="file" href={src} className="decoration-2">
           here
         </a>
         .
@@ -275,7 +307,7 @@ export default function VideoPlayer({
               />
             </DropdownMenuContent>
           </DropdownMenu>
-          <VideoControlButton>
+          <VideoControlButton onClick={handleFullscreenToggle}>
             <Fullscreen />
           </VideoControlButton>
         </div>
