@@ -78,20 +78,23 @@ export default function VideoPlayer({
   const [hasStarted, setHasStarted] = useState<boolean>(false);
   const [hasEnded, setHasEnded] = useState<boolean>(false);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
+  const [isStarting, setIsStarting] = useState<boolean>(false);
+  const [isRestarting, setIsRestarting] = useState<boolean>(false);
   const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
   const [trackValue, setTrackValue] = useState<number>(0);
   const [duration, setDuration] = useState<number>(0);
   const [volume, setVolume] = useState<number>(0.5);
+  const [iconFlash, setIconFlash] = useState<"play" | "pause" | null>(null);
+  const wasPlaying = useRef<boolean>(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
-  const playIconRef = useRef<HTMLButtonElement>(null);
-  const reloadIconRef = useRef<HTMLButtonElement>(null);
   const handlePlayToggle = useCallback((): void => {
     if (videoRef.current == null) return;
 
     if (!videoRef.current.paused) {
       videoRef.current?.pause();
       setIsPlaying(false);
+      setIconFlash("pause");
       return;
     }
 
@@ -99,14 +102,18 @@ export default function VideoPlayer({
       if (hasEnded) {
         videoRef.current!.currentTime = 0;
         setTrackValue(0);
+        setIsRestarting(true);
         setHasEnded(false);
       }
 
-      if (!hasStarted) setHasStarted(true);
+      if (!hasStarted) {
+        setIsStarting(true);
+        setHasStarted(true);
+      }
       await videoRef.current?.play();
       setIsPlaying(true);
     })();
-  }, [isPlaying]);
+  }, [isPlaying, hasStarted, hasEnded]);
   const handleEnded = useCallback((): void => {
     setHasEnded(true);
     setHasStarted(false);
@@ -127,11 +134,16 @@ export default function VideoPlayer({
       const currentTime = value as number;
 
       if (currentTime === videoRef.current.currentTime) return;
+      if (currentTime < duration && hasEnded) {
+        setIsRestarting(true);
+        setHasStarted(true);
+        setHasEnded(false);
+      }
 
       videoRef.current.currentTime = currentTime;
       setTrackValue(currentTime);
     },
-    [],
+    [hasEnded],
   );
   const handleVolumeChange = useCallback(
     (value: number | readonly number[]): void => {
@@ -271,71 +283,75 @@ export default function VideoPlayer({
     };
   }, []);
 
-  useEffect((): void => {
-    if (playIconRef.current == null || reloadIconRef.current == null) return;
-    if (
-      hasStarted &&
-      !hasEnded &&
-      !playIconRef.current.classList.contains("hidden")
-    ) {
-      playIconRef.current.classList.add("animate-fade-out-media-icon");
+  useEffect((): (() => void) | undefined => {
+    if (iconFlash == null) return;
 
-      setTimeout((): void => {
-        playIconRef.current?.classList.add("hidden");
-      }, 201);
-      return;
+    const timeout = setTimeout((): void => setIconFlash(null), 700);
+
+    return (): void => clearTimeout(timeout);
+  }, [iconFlash]);
+
+  useEffect((): (() => void) | undefined => {
+    if (!isStarting) return;
+    const timeout = setTimeout((): void => {
+      setIsStarting(false);
+      setHasStarted(true);
+    }, 250);
+    return (): void => clearTimeout(timeout);
+  }, [isStarting]);
+
+  useEffect((): (() => void) | undefined => {
+    if (!isRestarting) return;
+    const timeout = setTimeout((): void => setIsRestarting(false), 250);
+    return (): void => clearTimeout(timeout);
+  }, [isRestarting]);
+
+  useEffect(() => {
+    if (isPlaying && !wasPlaying.current && !isStarting && !isRestarting) {
+      setIconFlash("play");
     }
-
-    if (
-      hasStarted &&
-      !hasEnded &&
-      !reloadIconRef.current.classList.contains("hidden")
-    ) {
-      reloadIconRef.current.classList.remove(
-        "animate-fade-in-media-icon",
-        "opacity-0",
-        "scale-90",
-      );
-      reloadIconRef.current.classList.add("animate-fade-out-media-icon");
-
-      setTimeout((): void => {
-        reloadIconRef.current?.classList.add("hidden", "opacity-0", "scale-90");
-        reloadIconRef.current?.classList.remove("animate-fade-out-media-icon");
-      }, 201);
-      return;
-    }
-
-    if (
-      !hasStarted &&
-      hasEnded &&
-      reloadIconRef.current.classList.contains("hidden")
-    ) {
-      reloadIconRef.current.classList.remove("hidden");
-      reloadIconRef.current.classList.add("animate-fade-in-media-icon");
-      return;
-    }
-  }, [hasStarted, hasEnded]);
+    wasPlaying.current = isPlaying;
+  }, [isPlaying, isStarting, isRestarting]);
 
   return (
     <div ref={containerRef} className={containerClasses}>
-      <Button
-        type="button"
-        ref={playIconRef}
-        variant="ghost"
-        className="absolute inset-1/2 -translate-1/2 size-24 z-20 cursor-pointer transition-all ease-linear"
-        onClick={handlePlayToggle}
-      >
-        <Play fill="white" stroke="white" className="size-24" />
-      </Button>
-      <Button
-        type="button"
-        ref={reloadIconRef}
-        variant="ghost"
-        className="hidden absolute inset-1/2 -translate-1/2 size-24 z-20 cursor-pointer transition-all duration-300 ease-linear opacity-0 scale-90"
-        onClick={handlePlayToggle}
-      >
-        <RotateCcw stroke="white" className="size-24" />
-      </Button>
+      {iconFlash && (
+        <div className="absolute inset-1/2 -translate-1/2 size-24 z-20 flex items-center justify-center pointer-events-none animate-fade-in-out-media-icon">
+          {iconFlash === "pause" && (
+            <Pause fill="white" stroke="white" className="size-24" />
+          )}
+          {iconFlash === "play" && (
+            <Play fill="white" stroke="white" className="size-24" />
+          )}
+        </div>
+      )}
+      {(!hasStarted || isStarting) && !hasEnded && !isRestarting && (
+        <Button
+          type="button"
+          variant="ghost"
+          className={cn(
+            "absolute inset-1/2 -translate-1/2 size-24 z-20 cursor-pointer",
+            isStarting && "animate-fade-out-media-icon",
+          )}
+          onClick={handlePlayToggle}
+        >
+          <Play fill="white" stroke="white" className="size-24" />
+        </Button>
+      )}
+      {(hasEnded || isRestarting) && (
+        <Button
+          type="button"
+          variant="ghost"
+          className={cn(
+            "absolute inset-1/2 -translate-1/2 size-24 z-20 cursor-pointer pointer-events-auto",
+            hasEnded && !isRestarting && "animate-fade-in-media-icon",
+            isRestarting && "animate-fade-out-media-icon pointer-events-none",
+          )}
+          onClick={handlePlayToggle}
+        >
+          <RotateCcw stroke="white" className="size-24" />
+        </Button>
+      )}
       {poster && !hasStarted && (
         <img src={poster} alt={`${label} poster`} className={posterClasses} />
       )}
