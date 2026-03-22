@@ -1,3 +1,4 @@
+import * as React from "react";
 import { Tooltip as TooltipPrimitive } from "@base-ui/react/tooltip";
 
 import { cn } from "@utils/classMerge";
@@ -29,15 +30,24 @@ function TooltipContent({
   sideOffset = 4,
   align = "center",
   alignOffset = 0,
+  container,
   children,
   ...props
 }: TooltipPrimitive.Popup.Props &
   Pick<
     TooltipPrimitive.Positioner.Props,
     "align" | "alignOffset" | "side" | "sideOffset"
-  >) {
+  > & {
+    container?:
+      | HTMLElement
+      | ShadowRoot
+      | React.RefObject<HTMLElement>
+      | React.RefObject<ShadowRoot>
+      | null
+      | undefined;
+  }) {
   return (
-    <TooltipPrimitive.Portal>
+    <TooltipPrimitive.Portal container={container || document.body}>
       <TooltipPrimitive.Positioner
         align={align}
         alignOffset={alignOffset}

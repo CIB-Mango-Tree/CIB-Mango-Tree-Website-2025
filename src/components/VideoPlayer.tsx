@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect, useCallback } from "react";
+import { useRef, useState, useEffect, useCallback, forwardRef } from "react";
 import {
   Play,
   Pause,
@@ -20,6 +20,7 @@ import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
+  TooltipProvider,
 } from "@components/ui/tooltip";
 import { cn } from "@utils/classMerge";
 import type { ReactElement, FC, PropsWithChildren } from "react";
@@ -46,22 +47,23 @@ export interface VideoControlButtonProps extends PropsWithChildren {
   className?: string;
 }
 
-export function VideoControlButton({
-  onClick,
-  className,
-  children,
-}: VideoControlButtonProps): ReactElement<FC> {
+export const VideoControlButton = forwardRef<
+  HTMLButtonElement,
+  VideoControlButtonProps
+>(({ onClick, className, children, ...props }, ref): ReactElement<FC> => {
   return (
     <Button
+      ref={ref}
       type="button"
       size="sm"
       onClick={onClick}
       className={cn("cursor-pointer", className)}
+      {...props}
     >
       {children}
     </Button>
   );
-}
+});
 
 const VIDEO_PLAYER_VOLUME = "video_player_volume";
 
@@ -81,6 +83,7 @@ export default function VideoPlayer({
   const [isStarting, setIsStarting] = useState<boolean>(false);
   const [isRestarting, setIsRestarting] = useState<boolean>(false);
   const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
+  const [isVolumeMenuOpen, setIsVolumeMenuOpen] = useState<boolean>(false);
   const [trackValue, setTrackValue] = useState<number>(0);
   const [duration, setDuration] = useState<number>(0);
   const [volume, setVolume] = useState<number>(0.5);
@@ -157,6 +160,10 @@ export default function VideoPlayer({
       window.localStorage.setItem(VIDEO_PLAYER_VOLUME, String(currentVolume));
       setVolume(currentVolume);
     },
+    [],
+  );
+  const handleVolumeMenuOpen = useCallback(
+    (open: boolean): void => setIsVolumeMenuOpen(open),
     [],
   );
   const handleProgress = useCallback((): void => {
@@ -320,120 +327,165 @@ export default function VideoPlayer({
   }, [isPlaying, isStarting, isRestarting]);
 
   return (
-    <div ref={containerRef} className={containerClasses}>
-      {iconFlash && (
-        <div className="absolute inset-1/2 -translate-1/2 size-24 z-20 flex items-center justify-center pointer-events-none animate-fade-in-out-media-icon">
-          {iconFlash === "pause" && (
-            <Pause fill="white" stroke="white" className="size-24" />
-          )}
-          {iconFlash === "play" && (
+    <TooltipProvider>
+      <div ref={containerRef} className={containerClasses}>
+        {iconFlash && (
+          <div className="absolute inset-1/2 -translate-1/2 size-24 z-20 flex items-center justify-center pointer-events-none animate-fade-in-out-media-icon">
+            {iconFlash === "pause" && (
+              <Pause fill="white" stroke="white" className="size-24" />
+            )}
+            {iconFlash === "play" && (
+              <Play fill="white" stroke="white" className="size-24" />
+            )}
+          </div>
+        )}
+        {(!hasStarted || isStarting) && !hasEnded && !isRestarting && (
+          <Button
+            type="button"
+            variant="ghost"
+            className={cn(
+              "absolute inset-1/2 -translate-1/2 size-24 z-20 cursor-pointer",
+              isStarting && "animate-fade-out-media-icon",
+            )}
+            onClick={handlePlayToggle}
+          >
             <Play fill="white" stroke="white" className="size-24" />
-          )}
-        </div>
-      )}
-      {(!hasStarted || isStarting) && !hasEnded && !isRestarting && (
-        <Button
-          type="button"
-          variant="ghost"
-          className={cn(
-            "absolute inset-1/2 -translate-1/2 size-24 z-20 cursor-pointer",
-            isStarting && "animate-fade-out-media-icon",
-          )}
+          </Button>
+        )}
+        {(hasEnded || isRestarting) && (
+          <Button
+            type="button"
+            variant="ghost"
+            className={cn(
+              "absolute inset-1/2 -translate-1/2 size-24 z-20 cursor-pointer pointer-events-auto",
+              hasEnded && !isRestarting && "animate-fade-in-media-icon",
+              isRestarting && "animate-fade-out-media-icon pointer-events-none",
+            )}
+            onClick={handlePlayToggle}
+          >
+            <RotateCcw stroke="white" className="size-24" />
+          </Button>
+        )}
+        {poster && !hasStarted && (
+          <img src={poster} alt={`${label} poster`} className={posterClasses} />
+        )}
+        <video
+          ref={videoRef}
+          className={videoClasses}
+          preload="metadata"
+          onTimeUpdate={handleTimeUpdate}
+          onProgress={handleProgress}
           onClick={handlePlayToggle}
+          onEnded={handleEnded}
+          onLoadedMetadata={handleLoadedMetadata}
+          aria-label={label}
+          muted={muted}
+          autoPlay={autoPlay}
+          playsInline
         >
-          <Play fill="white" stroke="white" className="size-24" />
-        </Button>
-      )}
-      {(hasEnded || isRestarting) && (
-        <Button
-          type="button"
-          variant="ghost"
-          className={cn(
-            "absolute inset-1/2 -translate-1/2 size-24 z-20 cursor-pointer pointer-events-auto",
-            hasEnded && !isRestarting && "animate-fade-in-media-icon",
-            isRestarting && "animate-fade-out-media-icon pointer-events-none",
-          )}
-          onClick={handlePlayToggle}
-        >
-          <RotateCcw stroke="white" className="size-24" />
-        </Button>
-      )}
-      {poster && !hasStarted && (
-        <img src={poster} alt={`${label} poster`} className={posterClasses} />
-      )}
-      <video
-        ref={videoRef}
-        className={videoClasses}
-        preload="metadata"
-        onTimeUpdate={handleTimeUpdate}
-        onProgress={handleProgress}
-        onClick={handlePlayToggle}
-        onEnded={handleEnded}
-        onLoadedMetadata={handleLoadedMetadata}
-        aria-label={label}
-        muted={muted}
-        autoPlay={autoPlay}
-        playsInline
-      >
-        <source src={src} type={type} />
-        Your browser does not support video playback. You may download the video
-        <a download="file" href={src} className="decoration-2">
-          here
-        </a>
-        .
-      </video>
-      <div className="absolute left-0 right-0 bottom-4 grid grid-cols-[auto_1fr_auto] grid-flow-col gap-x-4 px-4 w-full z-20">
-        <div className="grid grid-flow-col items-center justify-center gap-x-2">
-          <VideoControlButton onClick={handlePlayToggle} className="w-20">
-            {hasEnded && <RotateCcw />}
-            {isPlaying && !hasEnded && <Pause fill="white" />}
-            {!isPlaying && !hasEnded && <Play fill="white" />}
-          </VideoControlButton>
-          <div className="inline-flex justify-center w-10">
-            <span className="text-white text-sm">{formatTime(trackValue)}</span>
+          <source src={src} type={type} />
+          Your browser does not support video playback. You may download the
+          video
+          <a download="file" href={src} className="decoration-2">
+            here
+          </a>
+          .
+        </video>
+        <div className="absolute left-0 right-0 bottom-4 grid grid-cols-[auto_1fr_auto] grid-flow-col gap-x-4 px-4 w-full z-20">
+          <div className="grid grid-flow-col items-center justify-center gap-x-2">
+            <Tooltip>
+              <TooltipTrigger
+                render={
+                  <VideoControlButton
+                    onClick={handlePlayToggle}
+                    className="w-20"
+                  >
+                    {hasEnded && <RotateCcw />}
+                    {isPlaying && !hasEnded && <Pause fill="white" />}
+                    {!isPlaying && !hasEnded && <Play fill="white" />}
+                  </VideoControlButton>
+                }
+              />
+              <TooltipContent
+                className="text-white"
+                container={isFullscreen ? containerRef.current : document.body}
+              >
+                {isPlaying ? "Pause" : "Play"}
+              </TooltipContent>
+            </Tooltip>
+            <div className="inline-flex justify-center w-10">
+              <span className="text-white text-sm">
+                {formatTime(trackValue)}
+              </span>
+            </div>
+          </div>
+          <div className="grid items-center">
+            <TrackSlider
+              max={duration}
+              step={1}
+              value={trackValue}
+              bufferValue={buffered}
+              onValueChange={handleTrackChange}
+              className="cursor-pointer"
+            />
+          </div>
+          <div className="grid grid-flow-col items-center justify-center gap-x-1">
+            <Tooltip disabled={isVolumeMenuOpen}>
+              <DropdownMenu
+                open={isVolumeMenuOpen}
+                onOpenChange={handleVolumeMenuOpen}
+              >
+                <TooltipTrigger
+                  render={
+                    <DropdownMenuTrigger render={<VideoControlButton />}>
+                      {volume === 0 && <Volume />}
+                      {volume > 0 && volume <= 0.5 && <Volume1 />}
+                      {volume > 0.5 && volume <= 1 && <Volume2 />}
+                    </DropdownMenuTrigger>
+                  }
+                />
+                <DropdownMenuPortal
+                  container={
+                    isFullscreen ? containerRef.current : document.body
+                  }
+                >
+                  <DropdownMenuContent
+                    side="top"
+                    align="center"
+                    className="min-w-none w-8"
+                  >
+                    <Slider
+                      orientation="vertical"
+                      max={1}
+                      step={0.01}
+                      value={volume}
+                      onValueChange={handleVolumeChange}
+                      className="cursor-pointer"
+                    />
+                  </DropdownMenuContent>
+                </DropdownMenuPortal>
+              </DropdownMenu>
+              <TooltipContent className="text-white">Volume</TooltipContent>
+            </Tooltip>
+
+            <Tooltip>
+              <TooltipTrigger
+                render={
+                  <VideoControlButton onClick={handleFullscreenToggle}>
+                    <Fullscreen />
+                  </VideoControlButton>
+                }
+              />
+              <TooltipContent
+                className="text-white"
+                container={isFullscreen ? containerRef.current : document.body}
+              >
+                {!isFullscreen ? "Enter Fullscreen" : "Exit Fullscreen"}
+              </TooltipContent>
+            </Tooltip>
           </div>
         </div>
-        <div className="grid items-center">
-          <TrackSlider
-            max={duration}
-            step={1}
-            value={trackValue}
-            bufferValue={buffered}
-            onValueChange={handleTrackChange}
-            className="cursor-pointer"
-          />
-        </div>
-        <div className="grid grid-flow-col items-center justify-center gap-x-1">
-          <DropdownMenu>
-            <DropdownMenuTrigger render={<VideoControlButton />}>
-              {volume === 0 && <Volume />}
-              {volume > 0 && volume <= 0.5 && <Volume1 />}
-              {volume > 0.5 && volume <= 1 && <Volume2 />}
-            </DropdownMenuTrigger>
-            <DropdownMenuPortal
-              container={isFullscreen ? containerRef.current : document.body}
-            >
-              <DropdownMenuContent
-                side="top"
-                align="center"
-                className="min-w-none w-8"
-              >
-                <Slider
-                  orientation="vertical"
-                  max={1}
-                  step={0.01}
-                  value={volume}
-                  onValueChange={handleVolumeChange}
-                  className="cursor-pointer"
-                />
-              </DropdownMenuContent>
-            </DropdownMenuPortal>
-          </DropdownMenu>
-          <VideoControlButton onClick={handleFullscreenToggle}>
-            <Fullscreen />
-          </VideoControlButton>
-        </div>
       </div>
-    </div>
+    </TooltipProvider>
   );
 }
