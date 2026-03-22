@@ -84,6 +84,8 @@ export default function VideoPlayer({
   const [volume, setVolume] = useState<number>(0.5);
   const containerRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const playIconRef = useRef<HTMLButtonElement>(null);
+  const reloadIconRef = useRef<HTMLButtonElement>(null);
   const handlePlayToggle = useCallback((): void => {
     if (videoRef.current == null) return;
 
@@ -100,9 +102,9 @@ export default function VideoPlayer({
         setHasEnded(false);
       }
 
+      if (!hasStarted) setHasStarted(true);
       await videoRef.current?.play();
       setIsPlaying(true);
-      if (!hasStarted) setHasStarted(true);
     })();
   }, [isPlaying]);
   const handleEnded = useCallback((): void => {
@@ -231,7 +233,7 @@ export default function VideoPlayer({
     "rounded-xl": !isFullscreen,
   });
   const posterClasses: string = cn(
-    "absolute inset-0 w-full h-auto object-cover z-10 pointer-events-none",
+    "absolute inset-0 w-full h-auto object-cover aspect-video z-10 pointer-events-none",
     {
       "rounded-none": isFullscreen,
       "rounded-xl": !isFullscreen,
@@ -269,8 +271,71 @@ export default function VideoPlayer({
     };
   }, []);
 
+  useEffect((): void => {
+    if (playIconRef.current == null || reloadIconRef.current == null) return;
+    if (
+      hasStarted &&
+      !hasEnded &&
+      !playIconRef.current.classList.contains("hidden")
+    ) {
+      playIconRef.current.classList.add("animate-fade-out-media-icon");
+
+      setTimeout((): void => {
+        playIconRef.current?.classList.add("hidden");
+      }, 201);
+      return;
+    }
+
+    if (
+      hasStarted &&
+      !hasEnded &&
+      !reloadIconRef.current.classList.contains("hidden")
+    ) {
+      reloadIconRef.current.classList.remove(
+        "animate-fade-in-media-icon",
+        "opacity-0",
+        "scale-90",
+      );
+      reloadIconRef.current.classList.add("animate-fade-out-media-icon");
+
+      setTimeout((): void => {
+        reloadIconRef.current?.classList.add("hidden", "opacity-0", "scale-90");
+        reloadIconRef.current?.classList.remove("animate-fade-out-media-icon");
+      }, 201);
+      return;
+    }
+
+    if (
+      !hasStarted &&
+      hasEnded &&
+      reloadIconRef.current.classList.contains("hidden")
+    ) {
+      reloadIconRef.current.classList.remove("hidden");
+      reloadIconRef.current.classList.add("animate-fade-in-media-icon");
+      return;
+    }
+  }, [hasStarted, hasEnded]);
+
   return (
     <div ref={containerRef} className={containerClasses}>
+      <Button
+        type="button"
+        ref={playIconRef}
+        variant="ghost"
+        className="absolute inset-1/2 -translate-1/2 size-24 z-20 cursor-pointer transition-all ease-linear"
+        onClick={handlePlayToggle}
+      >
+        <Play fill="white" stroke="white" className="size-24" />
+      </Button>
+      <Button
+        type="button"
+        ref={reloadIconRef}
+        variant="ghost"
+        className="hidden absolute inset-1/2 -translate-1/2 size-24 z-20 cursor-pointer transition-all duration-300 ease-linear opacity-0 scale-90"
+        onClick={handlePlayToggle}
+      >
+        <RotateCcw stroke="white" className="size-24" />
+      </Button>
       {poster && !hasStarted && (
         <img src={poster} alt={`${label} poster`} className={posterClasses} />
       )}
@@ -295,15 +360,17 @@ export default function VideoPlayer({
         .
       </video>
       <div className="absolute left-0 right-0 bottom-4 grid grid-cols-[auto_1fr_auto] grid-flow-col gap-x-4 px-4 w-full z-20">
-        <div className="grid col-auto grid-flow-col items-center justify-center gap-x-2">
+        <div className="grid grid-flow-col items-center justify-center gap-x-2">
           <VideoControlButton onClick={handlePlayToggle} className="w-20">
             {hasEnded && <RotateCcw />}
             {isPlaying && !hasEnded && <Pause fill="white" />}
             {!isPlaying && !hasEnded && <Play fill="white" />}
           </VideoControlButton>
-          <span className="text-white text-sm">{formatTime(trackValue)}</span>
+          <div className="inline-flex justify-center w-10">
+            <span className="text-white text-sm">{formatTime(trackValue)}</span>
+          </div>
         </div>
-        <div className="grid col-span-12 items-center">
+        <div className="grid items-center">
           <Slider
             max={duration}
             step={1}
@@ -312,7 +379,7 @@ export default function VideoPlayer({
             className="cursor-pointer"
           />
         </div>
-        <div className="grid col-auto grid-flow-col items-center justify-center gap-x-1">
+        <div className="grid grid-flow-col items-center justify-center gap-x-1">
           <DropdownMenu>
             <DropdownMenuTrigger render={<VideoControlButton />}>
               {volume === 0 && <Volume />}
