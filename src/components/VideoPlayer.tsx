@@ -9,7 +9,7 @@ import {
   RotateCcw,
 } from "lucide-react";
 import { Button } from "@components/ui/button";
-import { Slider } from "@components/ui/slider";
+import { Slider, TrackSlider } from "@components/ui/slider";
 import {
   DropdownMenu,
   DropdownMenuPortal,
@@ -84,6 +84,7 @@ export default function VideoPlayer({
   const [trackValue, setTrackValue] = useState<number>(0);
   const [duration, setDuration] = useState<number>(0);
   const [volume, setVolume] = useState<number>(0.5);
+  const [buffered, setBuffered] = useState<number>(0);
   const [iconFlash, setIconFlash] = useState<"play" | "pause" | null>(null);
   const wasPlaying = useRef<boolean>(false);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -158,6 +159,11 @@ export default function VideoPlayer({
     },
     [],
   );
+  const handleProgress = useCallback((): void => {
+    if (videoRef.current == null) return;
+    const buf = videoRef.current.buffered;
+    if (buf.length > 0) setBuffered(buf.end(buf.length - 1));
+  }, []);
   const handleKeyDown = useCallback((e: KeyboardEvent): void => {
     if (videoRef.current == null) return;
 
@@ -360,6 +366,7 @@ export default function VideoPlayer({
         className={videoClasses}
         preload="metadata"
         onTimeUpdate={handleTimeUpdate}
+        onProgress={handleProgress}
         onClick={handlePlayToggle}
         onEnded={handleEnded}
         onLoadedMetadata={handleLoadedMetadata}
@@ -387,10 +394,11 @@ export default function VideoPlayer({
           </div>
         </div>
         <div className="grid items-center">
-          <Slider
+          <TrackSlider
             max={duration}
             step={1}
             value={trackValue}
+            bufferValue={buffered}
             onValueChange={handleTrackChange}
             className="cursor-pointer"
           />
