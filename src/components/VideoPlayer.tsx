@@ -86,6 +86,8 @@ export default function VideoPlayer({
   const [isRestarting, setIsRestarting] = useState<boolean>(false);
   const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
   const [isVolumeMenuOpen, setIsVolumeMenuOpen] = useState<boolean>(false);
+  const [fullscreenTransition, setFullscreenTransition] =
+    useState<boolean>(false);
   const [trackValue, setTrackValue] = useState<number>(0);
   const [duration, setDuration] = useState<number>(0);
   const [volume, setVolume] = useState<number>(0.5);
@@ -128,6 +130,8 @@ export default function VideoPlayer({
   const handleTimeUpdate = useCallback((): void => {
     if (videoRef.current == null) return;
     if (!hasStarted) return;
+
+    handleProgress();
 
     const currentTime: number = videoRef.current.currentTime;
 
@@ -233,6 +237,10 @@ export default function VideoPlayer({
   }, []);
   const handleFullscreenToggle = useCallback((): void => {
     if (containerRef.current == null) return;
+
+    setFullscreenTransition(true);
+    setTimeout(() => setFullscreenTransition(false), 200);
+
     if (document.fullscreenElement != null) {
       document.exitFullscreen();
       setIsFullscreen(false);
@@ -282,7 +290,7 @@ export default function VideoPlayer({
       window.localStorage.getItem(VIDEO_PLAYER_VOLUME);
 
     if (volumeSliderValue != null) {
-      const volumeSliderValueNum: number = parseInt(volumeSliderValue);
+      const volumeSliderValueNum: number = parseFloat(volumeSliderValue);
 
       if (volumeSliderValueNum !== volume) setVolume(volumeSliderValueNum);
     }
@@ -474,22 +482,29 @@ export default function VideoPlayer({
                 Volume
               </TooltipContent>
             </Tooltip>
-
-            <Tooltip>
-              <TooltipTrigger
-                render={
-                  <VideoControlButton onClick={handleFullscreenToggle}>
-                    <Fullscreen />
-                  </VideoControlButton>
-                }
-              />
-              <TooltipContent
-                className="text-white"
-                container={isFullscreen ? containerRef.current : document.body}
-              >
-                {!isFullscreen ? "Enter Fullscreen" : "Exit Fullscreen"}
-              </TooltipContent>
-            </Tooltip>
+            {fullscreenTransition ? (
+              <VideoControlButton onClick={handleFullscreenToggle}>
+                <Fullscreen />
+              </VideoControlButton>
+            ) : (
+              <Tooltip>
+                <TooltipTrigger
+                  render={
+                    <VideoControlButton onClick={handleFullscreenToggle}>
+                      <Fullscreen />
+                    </VideoControlButton>
+                  }
+                />
+                <TooltipContent
+                  className="text-white"
+                  container={
+                    isFullscreen ? containerRef.current : document.body
+                  }
+                >
+                  {!isFullscreen ? "Enter Fullscreen" : "Exit Fullscreen"}
+                </TooltipContent>
+              </Tooltip>
+            )}
           </div>
         </div>
       </div>
