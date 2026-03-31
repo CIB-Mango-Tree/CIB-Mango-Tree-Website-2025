@@ -316,6 +316,182 @@
   --radius-md: 0.375rem;
 }
 
+@utility peer-data-* {
+  .peer &[data-state="open"],
+  .peer &[data-open] {
+    --peer-data-state: open;
+  }
+
+  .peer &[data-state="closed"],
+  .peer &[data-closed] {
+    --peer-data-state: closed;
+  }
+
+  .peer &[data-active] {
+    --peer-data-state: active;
+  }
+
+  .peer &[data-orientation="horizontal"],
+  .peer &[data-horizontal] {
+    --peer-data-orientation: horizontal;
+  }
+
+  .peer &[data-orientation="vertical"],
+  .peer &[data-vertical] {
+    --peer-data-orientation: vertical;
+  }
+
+  .peer &[data-side] {
+    --peer-data-side: --value(--side-*, [*]);
+  }
+
+  .peer &[data-collapsible] {
+    --peer-data-collapsible: --value(--collapsible-*, [*]);
+  }
+
+  .peer &[data-ending-style] {
+    --peer-data-ending-style: --value(--ending-style-*, [*]);
+  }
+
+  .peer &[data-starting-style] {
+    --peer-data-starting-style: --value(--starting-style-*, [*]);
+  }
+}
+
+@utility in-data-* {
+  &[data-state="open"],
+  &[data-open] {
+    --data-state: open;
+  }
+
+  &[data-state="closed"],
+  &[data-closed] {
+    --data-state: closed;
+  }
+
+  &[data-active] {
+    --data-state: active;
+  }
+
+  &[data-orientation="horizontal"],
+  &[data-horizontal] {
+    --data-orientation: horizontal;
+  }
+
+  &[data-orientation="vertical"],
+  &[data-vertical] {
+    --data-orientation: vertical;
+  }
+
+  &[data-side] {
+    --data-side: --value(--side-*, [*]);
+  }
+
+  &[data-collapsible] {
+    --data-collapsible: --value(--collapsible-*, [*]);
+  }
+
+  &[data-ending-style] {
+    --data-ending-style: --value(--ending-style-*, [*]);
+  }
+
+  &[data-starting-style] {
+    --data-starting-style: --value(--starting-style-*, [*]);
+  }
+}
+
+@utility data-open {
+  &[data-state="open"],
+  &[data-open] {
+    --data-state: open;
+  }
+}
+
+@utility data-closed {
+  &[data-state="closed"],
+  &[data-closed] {
+    --data-state: closed;
+  }
+}
+
+@utility data-active {
+  &[data-active] {
+    --data-state: active;
+  }
+}
+
+@utility data-horizontal {
+  &[data-orientation="horizontal"],
+  &[data-horizontal] {
+    --data-orientation: horizontal;
+  }
+}
+
+@utility data-vertical {
+  &[data-orientation="vertical"],
+  &[data-vertical] {
+    --data-orientation: vertical;
+  }
+}
+
+@utility data-side-* {
+  &[data-side] {
+    --data-side: --value(--side-*, [*]);
+  }
+}
+
+@utility data-collapsible-* {
+  &[data-collapsible] {
+    --data-collapsible: --value(--collapsible-*, [*]);
+  }
+}
+
+@utility data-ending-style-* {
+  &[data-ending-style] {
+    --data-ending-style: --value(--ending-style-*, [*]);
+  }
+}
+
+@utility data-starting-style-* {
+  &[data-starting-style] {
+    --data-starting-style: --value(--starting-style-*, [*]);
+  }
+}
+
+@utility group-data-open {
+  .group[data-state="open"] &,
+  .group[data-open] & {
+    --group-data-state: open;
+  }
+}
+
+@utility group-data-closed {
+  .group[data-state="closed"] &,
+  .group[data-closed] & {
+    --group-data-state: closed;
+  }
+}
+
+@utility group-data-active {
+  .group[data-active] & {
+    --group-data-state: active;
+  }
+}
+
+@utility group-data-horizontal {
+  .group[data-orientation="horizontal"] &,
+  .group[data-horizontal] & {
+    --group-data-orientation: horizontal;
+  }
+}
+
+@utility group-data-vertical {
+  .group[data-orientation="vertical"] &,
+  .group[data-vertical] & {
+    --group-data-orientation: vertical;
+  }
+}
+
 :root {
   --radius: 0.625rem;
   --foreground: oklch(0.141 0.005 285.823);
