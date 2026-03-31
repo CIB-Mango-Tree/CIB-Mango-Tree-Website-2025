@@ -310,22 +310,10 @@
   stroke-dashoffset: calc(-1 * --value([integer], [length], [percentage]));
 }
 
-@utility &_svg-* {
-  pointer-events: none;
-  shrink-val: --value(integer);
-  not: --value(--class-size-*);
-}
-
-@utility in-data {
-  slot: button-group;
-}
-
-@utility has-data {
-  icon: --value(inline-end, inline-start);
-}
-
-@utility rounded-* {
-  radius: --value(--radius-md-*);
+@theme {
+  --radius: 0.5rem;
+  --rounded: 0.25rem;
+  --radius-md: 0.375rem;
 }
 
 :root {
