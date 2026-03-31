@@ -1,7 +1,7 @@
 ---
-import cli_screenshot from "@assets/cliscreenshot.png";
 import VideoPlayer from "@components/VideoPlayer";
-import { TooltipProvider } from "@components/ui/tooltip";
+import cliScreenshot from "@assets/cliscreenshot.png";
+import demoVideo from "@assets/CIB_Mango_Tree_Demo_compressed.mp4";
 ---
 
 <section class="flex flex-col relative">
@@ -11,9 +11,9 @@ import { TooltipProvider } from "@components/ui/tooltip";
         See it in Action
       </h2>
       <VideoPlayer
-        src="CIB_Mango_Tree_Demo.mp4"
+        src={demoVideo}
         type="video/mp4"
-        poster={cli_screenshot.src}
+        poster={cliScreenshot.src}
         className="mb-16 shadow-lg"
         client:only
       />

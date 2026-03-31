@@ -23,6 +23,8 @@ import {
   TooltipProvider,
 } from "@components/ui/tooltip";
 import { cn } from "@utils/classMerge";
+import { formatTime } from "@utils/format";
+import { usingMobilePointer } from "@lib/mobile";
 import type { ReactElement, FC, PropsWithChildren } from "react";
 
 export interface VideoPlayerProps {
@@ -237,7 +239,12 @@ export default function VideoPlayer({
       return;
     }
 
-    containerRef.current.requestFullscreen();
+    if (!usingMobilePointer()) {
+      containerRef.current.requestFullscreen();
+    } else {
+      videoRef.current?.requestFullscreen();
+    }
+
     setIsFullscreen(true);
   }, []);
   const handleFullscreenChange = useCallback((): void => {
@@ -248,11 +255,6 @@ export default function VideoPlayer({
     if (videoRef.current == null) return;
     setDuration(videoRef.current.duration);
   }, []);
-  const formatTime = (currentTime: number): string => {
-    const minutes = Math.floor(currentTime / 60);
-    const seconds = Math.floor(currentTime % 60);
-    return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
-  };
   const containerClasses: string = cn("relative", className, {
     "rounded-none": isFullscreen,
     "rounded-xl": !isFullscreen,
@@ -372,7 +374,7 @@ export default function VideoPlayer({
         <video
           ref={videoRef}
           className={videoClasses}
-          preload="metadata"
+          preload="auto"
           onTimeUpdate={handleTimeUpdate}
           onProgress={handleProgress}
           onClick={handlePlayToggle}
@@ -465,7 +467,12 @@ export default function VideoPlayer({
                   </DropdownMenuContent>
                 </DropdownMenuPortal>
               </DropdownMenu>
-              <TooltipContent className="text-white">Volume</TooltipContent>
+              <TooltipContent
+                className="text-white"
+                container={isFullscreen ? containerRef.current : document.body}
+              >
+                Volume
+              </TooltipContent>
             </Tooltip>
 
             <Tooltip>
