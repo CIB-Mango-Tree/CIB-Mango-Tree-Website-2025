@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
   ArrowLeftRight,
+  ChevronDown,
+  ChevronUp,
   Maximize2,
   Minimize2,
   Pause,
@@ -20,6 +22,10 @@ export type DemoVideoPlayerProps = {
 };
 
 const PLAYBACK_RATES = [0.5, 0.75, 1, 1.5, 2] as const;
+
+function rateLabel(rate: number): string {
+  return rate === 1 ? "1×" : `${rate}×`;
+}
 
 function formatTime(seconds: number): string {
   if (!Number.isFinite(seconds) || seconds < 0) return "0:00";
@@ -48,6 +54,7 @@ export function DemoVideoPlayer({
 }: DemoVideoPlayerProps): React.ReactElement {
   const rootRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const speedMenuRef = useRef<HTMLDivElement>(null);
   const scrubbingRef = useRef(false);
   const isMobile = useIsMobile();
   const [playing, setPlaying] = useState(false);
@@ -57,6 +64,7 @@ export function DemoVideoPlayer({
   const [isFs, setIsFs] = useState(false);
   const [playbackRate, setPlaybackRate] = useState(1);
   const [portraitMobile, setPortraitMobile] = useState(false);
+  const [speedMenuOpen, setSpeedMenuOpen] = useState(false);
 
   const togglePlay = useCallback(() => {
     const v = videoRef.current;
@@ -92,6 +100,7 @@ export function DemoVideoPlayer({
     if (!v) return;
     v.playbackRate = rate;
     setPlaybackRate(rate);
+    setSpeedMenuOpen(false);
   }, []);
 
   const toggleFullscreen = useCallback(async () => {
@@ -119,9 +128,16 @@ export function DemoVideoPlayer({
 
       if (isEditableTarget(e.target)) return;
 
-      if (e.key === "Escape" && fsHere) {
-        e.preventDefault();
-        void document.exitFullscreen();
+      if (e.key === "Escape") {
+        if (speedMenuOpen) {
+          e.preventDefault();
+          setSpeedMenuOpen(false);
+          return;
+        }
+        if (fsHere) {
+          e.preventDefault();
+          void document.exitFullscreen();
+        }
         return;
       }
 
@@ -147,7 +163,7 @@ export function DemoVideoPlayer({
     return () => {
       document.removeEventListener("keydown", onDocKeyDown, true);
     };
-  }, [toggleFullscreen, toggleMute, togglePlay]);
+  }, [speedMenuOpen, toggleFullscreen, toggleMute, togglePlay]);
 
   useEffect(() => {
     const v = videoRef.current;
@@ -225,6 +241,20 @@ export function DemoVideoPlayer({
     };
   }, [isMobile]);
 
+  useEffect(() => {
+    if (!speedMenuOpen) return;
+    const close = (e: MouseEvent): void => {
+      const el = speedMenuRef.current;
+      if (el && e.target instanceof Node && !el.contains(e.target)) {
+        setSpeedMenuOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", close);
+    return () => {
+      document.removeEventListener("mousedown", close);
+    };
+  }, [speedMenuOpen]);
+
   const dur = duration;
   const ratio = dur > 0 ? progress / dur : 0;
 
@@ -246,7 +276,8 @@ export function DemoVideoPlayer({
           rootRef.current?.focus({ preventScroll: true });
         }}
         className={cn(
-          "group relative overflow-hidden rounded-xl bg-mango-green-darkest outline-none ring-offset-2 ring-offset-cyan-tint focus-visible:ring-2 focus-visible:ring-mango-yellow",
+          "group relative rounded-xl bg-mango-green-darkest outline-none ring-offset-2 ring-offset-cyan-tint focus-visible:ring-2 focus-visible:ring-mango-yellow",
+          speedMenuOpen ? "overflow-visible" : "overflow-hidden",
           isMobile && "max-md:rounded-none max-md:ring-offset-0",
           isMobile &&
             !portraitMobile &&
@@ -355,31 +386,56 @@ export function DemoVideoPlayer({
           </span>
 
           <div
-            className="ml-auto flex shrink-0 flex-wrap items-center gap-1 sm:ml-0"
+            className="ml-auto flex shrink-0 items-center gap-1.5 sm:gap-2"
             onClick={(e) => e.stopPropagation()}
             onPointerDown={(e) => e.stopPropagation()}
           >
-            <span className="sr-only">Playback speed</span>
-            {PLAYBACK_RATES.map((rate) => (
+            <div ref={speedMenuRef} className="relative">
               <button
-                key={rate}
                 type="button"
-                className={cn(
-                  "rounded px-1.5 py-1 font-mono text-[10px] font-semibold text-white/90 transition-colors sm:text-xs",
-                  playbackRate === rate
-                    ? "bg-mango-yellow/90 text-mango-green-dark"
-                    : "bg-white/10 hover:bg-white/20",
-                )}
-                aria-pressed={playbackRate === rate}
-                aria-label={`${rate} times speed`}
+                className="flex items-center gap-1 rounded-md bg-white/10 px-2 py-1.5 font-mono text-xs font-semibold text-white/95 transition-colors hover:bg-white/20 focus-visible:ring-2 focus-visible:ring-mango-yellow focus-visible:outline-none"
+                aria-haspopup="listbox"
+                aria-expanded={speedMenuOpen}
+                aria-label={`Playback speed, currently ${rateLabel(playbackRate)}`}
                 onClick={() => {
-                  setRate(rate);
+                  setSpeedMenuOpen((o) => !o);
                 }}
               >
-                {rate === 1 ? "1×" : `${rate}×`}
+                {rateLabel(playbackRate)}
+                {speedMenuOpen ? (
+                  <ChevronDown className="size-3.5 opacity-80" aria-hidden />
+                ) : (
+                  <ChevronUp className="size-3.5 opacity-80" aria-hidden />
+                )}
               </button>
-            ))}
-          </div>
+              {speedMenuOpen && (
+                <div
+                  role="listbox"
+                  aria-label="Playback speed"
+                  className="absolute bottom-full left-0 z-30 mb-1 flex min-w-[5.5rem] flex-col gap-0.5 rounded-lg bg-black/95 p-1 shadow-xl ring-1 ring-white/15 backdrop-blur-sm"
+                >
+                  {PLAYBACK_RATES.map((rate) => (
+                    <button
+                      key={rate}
+                      type="button"
+                      role="option"
+                      aria-selected={playbackRate === rate}
+                      className={cn(
+                        "rounded-md px-3 py-2 text-left font-mono text-xs font-semibold transition-colors",
+                        playbackRate === rate
+                          ? "bg-mango-yellow/90 text-mango-green-dark"
+                          : "text-white/90 hover:bg-white/15",
+                      )}
+                      onClick={() => {
+                        setRate(rate);
+                      }}
+                    >
+                      {rateLabel(rate)}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
 
           <button
             type="button"
@@ -412,6 +468,7 @@ export function DemoVideoPlayer({
               <Maximize2 className="size-5" aria-hidden />
             )}
           </button>
+          </div>
         </div>
 
         <p className="sr-only">
