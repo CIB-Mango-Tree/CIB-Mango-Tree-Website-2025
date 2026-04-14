@@ -13,33 +13,33 @@ import type {
 
 export function VideoPlayerIconOverlay(): ReactElement<FC> {
   const wasPlaying = useRef<boolean>(false);
-  const iconFlash: IconFlash = useVideoPlayerContext(
+  const iconFlash = useVideoPlayerContext<IconFlash>(
     (state: VideoPlayerStore): IconFlash => state.state.values.iconFlash,
   );
-  const hasStarted: boolean = useVideoPlayerContext(
+  const hasStarted = useVideoPlayerContext<boolean>(
     (state: VideoPlayerStore): boolean => state.state.events.hasStarted,
   );
-  const isStarting: boolean = useVideoPlayerContext(
+  const isStarting = useVideoPlayerContext<boolean>(
     (state: VideoPlayerStore): boolean => state.state.events.isStarting,
   );
-  const isPlaying: boolean = useVideoPlayerContext(
+  const isPlaying = useVideoPlayerContext<boolean>(
     (state: VideoPlayerStore): boolean => state.state.events.isPlaying,
   );
-  const hasEnded: boolean = useVideoPlayerContext(
+  const hasEnded = useVideoPlayerContext<boolean>(
     (state: VideoPlayerStore): boolean => state.state.events.hasEnded,
   );
-  const isRestarting: boolean = useVideoPlayerContext(
+  const isRestarting = useVideoPlayerContext<boolean>(
     (state: VideoPlayerStore): boolean => state.state.events.isRestarting,
   );
-  const setEvent: VideoPlayerActions["setEvent"] = useVideoPlayerContext(
+  const setEvent = useVideoPlayerContext<VideoPlayerActions["setEvent"]>(
     (state: VideoPlayerStore): VideoPlayerActions["setEvent"] =>
       state.actions.setEvent,
   );
-  const setEvents: VideoPlayerActions["setEvents"] = useVideoPlayerContext(
+  const setEvents = useVideoPlayerContext<VideoPlayerActions["setEvents"]>(
     (state: VideoPlayerStore): VideoPlayerActions["setEvents"] =>
       state.actions.setEvents,
   );
-  const setValue: VideoPlayerActions["setValue"] = useVideoPlayerContext(
+  const setValue = useVideoPlayerContext<VideoPlayerActions["setValue"]>(
     (state: VideoPlayerStore): VideoPlayerActions["setValue"] =>
       state.actions.setValue,
   );
