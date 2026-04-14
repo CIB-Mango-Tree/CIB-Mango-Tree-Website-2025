@@ -1,5 +1,6 @@
 ---
 import cli_screenshot from "@assets/cliscreenshot.png";
+import { DemoVideoPlayer } from "@components/DemoVideoPlayer";
 ---
 
 <section class="flex flex-col relative">
@@ -9,11 +10,24 @@ import cli_screenshot from "@assets/cliscreenshot.png";
         See it in Action
       </h2>
 
-      <div class="mb-16 shadow-lg overflow-hidden rounded-xl">
-        <video class="w-full h-auto" poster={cli_screenshot.src} preload="none" controls>
-          <source src="CIB_Mango_Tree_Demo.mp4" type="video/mp4" />
-          Your browser does not support video playback. You may download the video <a download='file' style="text-decoration-thickness: 2px;" href="CIB_Mango_Tree_Demo.mp4">here</a>.
-        </video>
+      <div class="mb-16 w-full max-w-full">
+        <div class="overflow-hidden rounded-xl shadow-lg">
+          <DemoVideoPlayer
+            client:visible
+            src="/CIB_Mango_Tree_Demo.mp4"
+            poster={cli_screenshot.src}
+          />
+        </div>
+        <p class="mt-3 text-center text-sm text-muted">
+          Trouble playing?
+          <a
+            class="text-primary underline decoration-2 underline-offset-2 hover:text-mango-green-dark"
+            href="/CIB_Mango_Tree_Demo.mp4"
+            download
+          >
+            Download the demo (MP4)
+          </a>
+        </p>
       </div>
 
       <!-- Description -->
