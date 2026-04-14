@@ -129,6 +129,10 @@ export function VideoPlayerWindow({
     if (containerRef.current == null) return;
     if (document.fullscreenElement == null) setEvent("isFullscreen", false);
   }, []);
+  const handleLoadedMetadata = useCallback((): void => {
+    if (videoRef.current == null) return;
+    setValue("duration", videoRef.current.duration);
+  }, []);
   const posterClasses: string = cn(
     "absolute inset-0 w-full h-auto object-cover aspect-video z-10 pointer-events-none",
     {
@@ -178,11 +182,12 @@ export function VideoPlayerWindow({
       <video
         ref={videoRef}
         className={videoClasses}
-        preload="auto"
+        preload="metadata"
         onTimeUpdate={handleTimeUpdate}
         onProgress={handleProgress}
-        onPointerUp={handlePlayToggle}
+        onClick={handlePlayToggle}
         onEnded={handleEnded}
+        onLoadedMetadata={handleLoadedMetadata}
         aria-label={label}
         muted={muted}
         autoPlay={autoPlay}

@@ -18,6 +18,7 @@ export type VideoPlayerState = {
   };
   values: {
     time: number;
+    duration: number;
     volume: number;
     buffered: number;
     iconFlash: IconFlash;
@@ -61,6 +62,7 @@ export const initialState: VideoPlayerState = {
   },
   values: {
     time: 0,
+    duration: 0,
     volume: 0.5,
     buffered: 0,
     iconFlash: EMPTY,
