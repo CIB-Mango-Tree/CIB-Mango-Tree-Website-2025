@@ -47,7 +47,6 @@ export function VideoPlayerControlBar(): ReactElement<FC> {
   const isPlaying = useVideoPlayerContext<boolean>((store: VideoPlayerStore): boolean => store.state.events.isPlaying);
   const isVolumeMenuOpen = useVideoPlayerContext<boolean>((store: VideoPlayerStore): boolean => store.state.events.isVolumeMenuOpen);
   const time = useVideoPlayerContext<number>((store: VideoPlayerStore): number => store.state.values.time);
-  const duration = useVideoPlayerContext<number>((store: VideoPlayerStore): number => store.state.values.duration);
   const volume = useVideoPlayerContext<number>((store: VideoPlayerStore): number => store.state.values.volume);
   const buffered = useVideoPlayerContext<number>((store: VideoPlayerStore): number => store.state.values.buffered);
   const handleTrackChange = useCallback(
@@ -57,7 +56,7 @@ export function VideoPlayerControlBar(): ReactElement<FC> {
       const currentTime = value as number;
 
       if (currentTime === videoRef.current.currentTime) return;
-      if (currentTime < duration && hasEnded) {
+      if (currentTime < videoRef.current.duration && hasEnded) {
         setEvents({
           isRestarting: true,
           hasStarted: true,
@@ -139,7 +138,7 @@ export function VideoPlayerControlBar(): ReactElement<FC> {
       </div>
       <div className="grid items-center">
         <TrackSlider
-          max={duration}
+          max={videoRef.current != null ? videoRef.current.duration : 0}
           step={1}
           value={time}
           bufferValue={buffered}

@@ -1,4 +1,4 @@
-import { useRef, useEffect, useCallback } from "react";
+import { useRef, useEffect } from "react";
 import { useVideoPlayerContext } from "@lib/contexts/video";
 import { usePlayToggle } from "@hooks/use-play-toggle";
 import { Play, Pause, RotateCcw } from "lucide-react";
@@ -14,7 +14,7 @@ import type {
 
 export function VideoPlayerIconOverlay(): ReactElement<FC> {
   const handlePlayToggle = usePlayToggle();
-  const wasPlaying = useRef<boolean>(false);
+  const iconFlashTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
   const iconFlash = useVideoPlayerContext<IconFlash>(
     (state: VideoPlayerStore): IconFlash => state.state.values.iconFlash,
   );
@@ -23,9 +23,6 @@ export function VideoPlayerIconOverlay(): ReactElement<FC> {
   );
   const isStarting = useVideoPlayerContext<boolean>(
     (state: VideoPlayerStore): boolean => state.state.events.isStarting,
-  );
-  const isPlaying = useVideoPlayerContext<boolean>(
-    (state: VideoPlayerStore): boolean => state.state.events.isPlaying,
   );
   const hasEnded = useVideoPlayerContext<boolean>(
     (state: VideoPlayerStore): boolean => state.state.events.hasEnded,
@@ -47,11 +44,14 @@ export function VideoPlayerIconOverlay(): ReactElement<FC> {
   );
 
   useEffect((): (() => void) | undefined => {
-    if (iconFlash == null) return;
+    if (iconFlash === EMPTY) return;
+    const timeout = setTimeout((): void => {
+      setValue("iconFlash", EMPTY);
+    }, 700);
 
-    const timeout = setTimeout((): void => setValue("iconFlash", EMPTY), 700);
-
-    return (): void => clearTimeout(timeout);
+    return (): void => {
+      if (timeout != null) clearTimeout(timeout);
+    };
   }, [iconFlash]);
 
   useEffect((): (() => void) | undefined => {
@@ -73,13 +73,6 @@ export function VideoPlayerIconOverlay(): ReactElement<FC> {
     );
     return (): void => clearTimeout(timeout);
   }, [isRestarting]);
-
-  useEffect(() => {
-    if (isPlaying && !wasPlaying.current && !isStarting && !isRestarting) {
-      setValue("iconFlash", "play");
-    }
-    wasPlaying.current = isPlaying;
-  }, [isPlaying, isStarting, isRestarting]);
 
   return (
     <>

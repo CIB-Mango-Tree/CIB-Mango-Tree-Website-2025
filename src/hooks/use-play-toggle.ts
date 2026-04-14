@@ -38,6 +38,11 @@ export function usePlayToggle(): (() => void) {
           hasStarted: true
         });
       }
+
+      if (hasStarted) {
+        setValue("iconFlash", "play");
+      }
+
       await videoRef.current?.play();
       setEvent("isPlaying", true);
     })();

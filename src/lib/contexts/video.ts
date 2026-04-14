@@ -24,6 +24,12 @@ export function useVideoPlayerContext<Out>(
   return useStore(context, selector);
 }
 
+export function useVideoPlayerContextStore(): StoreApi<VideoPlayerStore> {
+  const context = useContext(VideoPlayerContext);
+  if (context == null) throw new Error("missing video player provider");
+  return context;
+}
+
 export function useVideoPlayerRefs(): VideoPlayerRefs {
   const context = useContext(VideoPlayerRefsContext);
   if (context == null) throw new Error("missing video player refs provider");

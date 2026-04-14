@@ -1,5 +1,5 @@
 import { useEffect, useCallback } from "react";
-import { useVideoPlayerContext, useVideoPlayerRefs } from "@lib/contexts/video";
+import { useVideoPlayerContext, useVideoPlayerRefs, useVideoPlayerContextStore } from "@lib/contexts/video";
 import { usePlayToggle } from "@hooks/use-play-toggle";
 import { cn } from "@utils/classMerge";
 import { VIDEO_PLAYER_VOLUME } from "@utils/constants";
@@ -25,6 +25,7 @@ export function VideoPlayerWindow({
 }: VideoPlayerWindowProps): ReactElement<FC> {
   const handlePlayToggle = usePlayToggle();
   const { videoRef, containerRef } = useVideoPlayerRefs();
+  const store = useVideoPlayerContextStore();
   const time: number = useVideoPlayerContext(
     (state: VideoPlayerStore): number => state.state.values.time,
   );
@@ -33,9 +34,6 @@ export function VideoPlayerWindow({
   );
   const hasStarted: boolean = useVideoPlayerContext(
     (state: VideoPlayerStore): boolean => state.state.events.hasStarted,
-  );
-  const volume: number = useVideoPlayerContext<number>(
-    (store: VideoPlayerStore): number => store.state.values.volume
   );
   const setEvent = useVideoPlayerContext<VideoPlayerActions["setEvent"]>(
     (state: VideoPlayerStore): VideoPlayerActions["setEvent"] =>
@@ -91,6 +89,7 @@ export function VideoPlayerWindow({
       return;
     }
     if (e.key === "ArrowUp") {
+      const { volume } = store.getState().state.values;
       const incrementedVolume: number = volume + 0.05;
       const newVolume: number = incrementedVolume > 1 ? 1 : incrementedVolume;
       videoRef.current!.volume = newVolume;
@@ -100,6 +99,7 @@ export function VideoPlayerWindow({
       return;
     }
     if (e.key === "ArrowDown") {
+      const { volume } = store.getState().state.values;
       const decrementedVolume: number = volume - 0.05;
       const newVolume = decrementedVolume < 0 ? 0 : decrementedVolume;
 
@@ -109,6 +109,7 @@ export function VideoPlayerWindow({
       return;
     }
     if (e.key === "ArrowLeft") {
+      const { time } = store.getState().state.values;
       const newTime: number = time - 5;
       videoRef.current.currentTime = newTime;
 
@@ -116,13 +117,14 @@ export function VideoPlayerWindow({
       return;
     }
     if (e.key === "ArrowRight") {
+      const { time } = store.getState().state.values;
       const newTime: number = time + 5;
       videoRef.current.currentTime = newTime;
 
       setValue("time", newTime);
       return;
     }
-  }, [time, volume]);
+  }, [videoRef, handlePlayToggle]);
   const handleFullscreenChange = useCallback((): void => {
     if (containerRef.current == null) return;
     if (document.fullscreenElement == null) setEvent("isFullscreen", false);
@@ -146,8 +148,14 @@ export function VideoPlayerWindow({
     window.addEventListener("keydown", handleKeyDown);
     document.addEventListener("fullscreenchange", handleFullscreenChange);
 
-    if (videoRef.current != null) setValue("duration", videoRef.current.duration);
+    return (): void => {
+      window.removeEventListener("keydown", handleKeyDown);
+      document.removeEventListener("fullscreenchange", handleFullscreenChange);
+    };
+  }, [handleKeyDown, handleFullscreenChange]);
 
+  useEffect((): void => {
+    const { volume } = store.getState().state.values;
     const volumeSliderValue: string | null =
       window.localStorage.getItem(VIDEO_PLAYER_VOLUME);
 
@@ -160,11 +168,6 @@ export function VideoPlayerWindow({
       window.localStorage.setItem(VIDEO_PLAYER_VOLUME, String(volume));
     }
     if (autoPlay != null) setValue("autoPlay", autoPlay);
-
-    return (): void => {
-      window.removeEventListener("keydown", handleKeyDown);
-      document.removeEventListener("fullscreenchange", handleFullscreenChange);
-    };
   }, []);
 
   return (
@@ -178,7 +181,7 @@ export function VideoPlayerWindow({
         preload="auto"
         onTimeUpdate={handleTimeUpdate}
         onProgress={handleProgress}
-        onClick={handlePlayToggle}
+        onPointerUp={handlePlayToggle}
         onEnded={handleEnded}
         aria-label={label}
         muted={muted}
