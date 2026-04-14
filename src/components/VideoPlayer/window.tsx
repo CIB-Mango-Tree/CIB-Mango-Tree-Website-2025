@@ -1,5 +1,6 @@
 import { useEffect, useCallback } from "react";
 import { useVideoPlayerContext, useVideoPlayerRefs } from "@lib/contexts/video";
+import { usePlayToggle } from "@hooks/use-play-toggle";
 import { cn } from "@utils/classMerge";
 import { VIDEO_PLAYER_VOLUME } from "@utils/constants";
 import type { ReactElement, FC } from "react";
@@ -22,21 +23,16 @@ export function VideoPlayerWindow({
   muted = false,
   autoPlay = false,
 }: VideoPlayerWindowProps): ReactElement<FC> {
+  const handlePlayToggle = usePlayToggle();
   const { videoRef, containerRef } = useVideoPlayerRefs();
   const time: number = useVideoPlayerContext(
     (state: VideoPlayerStore): number => state.state.values.time,
-  );
-  const isPlaying: boolean = useVideoPlayerContext(
-    (state: VideoPlayerStore): boolean => state.state.events.isPlaying,
   );
   const isFullscreen: boolean = useVideoPlayerContext(
     (state: VideoPlayerStore): boolean => state.state.events.isFullscreen,
   );
   const hasStarted: boolean = useVideoPlayerContext(
     (state: VideoPlayerStore): boolean => state.state.events.hasStarted,
-  );
-  const hasEnded: boolean = useVideoPlayerContext(
-    (state: VideoPlayerStore): boolean => state.state.events.hasEnded,
   );
   const volume: number = useVideoPlayerContext<number>(
     (store: VideoPlayerStore): number => store.state.values.volume
@@ -75,36 +71,6 @@ export function VideoPlayerWindow({
 
     if (currentTime !== time) setValue("time", currentTime);
   }, [time, hasStarted]);
-  const handlePlayToggle = useCallback((): void => {
-    if (videoRef.current == null) return;
-
-    if (!videoRef.current.paused) {
-      videoRef.current?.pause();
-      setEvent("isPlaying", false);
-      setValue("iconFlash", "pause");
-      return;
-    }
-
-    (async (): Promise<void> => {
-      if (hasEnded) {
-        videoRef.current!.currentTime = 0;
-        setValue("time", 0);
-        setEvents({
-          isRestarting: true,
-          hasEnded: false
-        });
-      }
-
-      if (!hasStarted) {
-        setEvents({
-          isStarting: true,
-          hasStarted: true
-        });
-      }
-      await videoRef.current?.play();
-      setEvent("isPlaying", true);
-    })();
-  }, [isPlaying, hasStarted, hasEnded]);
   const handleKeyDown = useCallback((e: KeyboardEvent): void => {
     if (videoRef.current == null) return;
 
@@ -156,7 +122,7 @@ export function VideoPlayerWindow({
       setValue("time", newTime);
       return;
     }
-  }, []);
+  }, [time, volume]);
   const handleFullscreenChange = useCallback((): void => {
     if (containerRef.current == null) return;
     if (document.fullscreenElement == null) setEvent("isFullscreen", false);
@@ -179,6 +145,8 @@ export function VideoPlayerWindow({
   useEffect((): (() => void) => {
     window.addEventListener("keydown", handleKeyDown);
     document.addEventListener("fullscreenchange", handleFullscreenChange);
+
+    if (videoRef.current != null) setValue("duration", videoRef.current.duration);
 
     const volumeSliderValue: string | null =
       window.localStorage.getItem(VIDEO_PLAYER_VOLUME);

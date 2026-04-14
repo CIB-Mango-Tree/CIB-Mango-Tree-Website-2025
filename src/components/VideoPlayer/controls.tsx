@@ -1,6 +1,7 @@
 import { useCallback, forwardRef } from "react";
 import { useVideoPlayerContext, useVideoPlayerRefs } from "@lib/contexts/video";
 import { usingMobilePointer } from "@lib/mobile";
+import { usePlayToggle } from "@hooks/use-play-toggle";
 import { Play, Pause, RotateCcw, Volume, Volume1, Volume2, Fullscreen } from "lucide-react";
 import { Button } from "@components/ui/button";
 import { Tooltip, TooltipTrigger, TooltipContent } from "@components/ui/tooltip";
@@ -36,12 +37,12 @@ export const VideoControlButton = forwardRef<
 });
 
 export function VideoPlayerControlBar(): ReactElement<FC> {
+  const handlePlayToggle = usePlayToggle();
   const { videoRef, containerRef } = useVideoPlayerRefs();
   const setEvent = useVideoPlayerContext<VideoPlayerActions["setEvent"]>((store: VideoPlayerStore): VideoPlayerActions["setEvent"] => store.actions.setEvent);
   const setEvents = useVideoPlayerContext<VideoPlayerActions["setEvents"]>((store: VideoPlayerStore): VideoPlayerActions["setEvents"] => store.actions.setEvents);
   const setValue = useVideoPlayerContext<VideoPlayerActions["setValue"]>((store: VideoPlayerStore): VideoPlayerActions["setValue"] => store.actions.setValue);
   const hasEnded = useVideoPlayerContext<boolean>((store: VideoPlayerStore): boolean => store.state.events.hasEnded);
-  const hasStarted = useVideoPlayerContext<boolean>((store: VideoPlayerStore): boolean => store.state.events.hasStarted);
   const isFullscreen = useVideoPlayerContext<boolean>((store: VideoPlayerStore): boolean => store.state.events.isFullscreen);
   const isPlaying = useVideoPlayerContext<boolean>((store: VideoPlayerStore): boolean => store.state.events.isPlaying);
   const isVolumeMenuOpen = useVideoPlayerContext<boolean>((store: VideoPlayerStore): boolean => store.state.events.isVolumeMenuOpen);
@@ -49,36 +50,6 @@ export function VideoPlayerControlBar(): ReactElement<FC> {
   const duration = useVideoPlayerContext<number>((store: VideoPlayerStore): number => store.state.values.duration);
   const volume = useVideoPlayerContext<number>((store: VideoPlayerStore): number => store.state.values.volume);
   const buffered = useVideoPlayerContext<number>((store: VideoPlayerStore): number => store.state.values.buffered);
-  const handlePlayToggle = useCallback((): void => {
-    if (videoRef.current == null) return;
-
-    if (!videoRef.current.paused) {
-      videoRef.current?.pause();
-      setEvent("isPlaying", false);
-      setValue("iconFlash", "pause");
-      return;
-    }
-
-    (async (): Promise<void> => {
-      if (hasEnded) {
-        videoRef.current!.currentTime = 0;
-        setValue("time", 0);
-        setEvents({
-          isRestarting: true,
-          hasEnded: false
-        });
-      }
-
-      if (!hasStarted) {
-        setEvents({
-          isStarting: true,
-          hasStarted: true
-        });
-      }
-      await videoRef.current?.play();
-      setEvent("isPlaying", true);
-    })();
-  }, [isPlaying, hasStarted, hasEnded]);
   const handleTrackChange = useCallback(
     (value: number | readonly number[]): void => {
       if (videoRef.current == null) return;
