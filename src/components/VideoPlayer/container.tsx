@@ -1,6 +1,4 @@
-import { useRef, useEffect } from "react";
-import { useVideoPlayerContext } from "@lib/contexts/video";
-import { usingMobilePointer } from "@lib/mobile";
+import { useVideoPlayerContext, useVideoPlayerRefs } from "@lib/contexts/video";
 import { cn } from "@utils/classMerge";
 import type { ReactElement, FC, PropsWithChildren } from "react";
 import type { VideoPlayerStore } from "@lib/stores/video";
@@ -13,7 +11,7 @@ export function VideoPlayerContainer({
   className,
   children,
 }: VideoPlayerContainerProps): ReactElement<FC> {
-  const containerRef = useRef<HTMLDivElement>(null);
+  const { containerRef } = useVideoPlayerRefs();
   const isFullscreen = useVideoPlayerContext<boolean>(
     (state: VideoPlayerStore): boolean => state.state.events.isFullscreen,
   );
@@ -21,12 +19,6 @@ export function VideoPlayerContainer({
     "rounded-none": isFullscreen,
     "rounded-xl": !isFullscreen,
   });
-
-  useEffect((): void => {
-    if (!isFullscreen || !usingMobilePointer()) return;
-
-    containerRef.current?.requestFullscreen();
-  }, [isFullscreen]);
 
   return (
     <div ref={containerRef} className={containerClasses}>

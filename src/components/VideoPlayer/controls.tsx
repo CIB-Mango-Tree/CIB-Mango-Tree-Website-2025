@@ -1,5 +1,5 @@
 import { useCallback, forwardRef } from "react";
-import { useVideoPlayerContext } from "@lib/contexts/video";
+import { useVideoPlayerContext, useVideoPlayerRefs } from "@lib/contexts/video";
 import { usingMobilePointer } from "@lib/mobile";
 import { Play, Pause, RotateCcw, Volume, Volume1, Volume2, Fullscreen } from "lucide-react";
 import { Button } from "@components/ui/button";
@@ -36,12 +36,12 @@ export const VideoControlButton = forwardRef<
 });
 
 export function VideoPlayerControlBar(): ReactElement<FC> {
+  const { videoRef, containerRef } = useVideoPlayerRefs();
   const setEvent = useVideoPlayerContext<VideoPlayerActions["setEvent"]>((store: VideoPlayerStore): VideoPlayerActions["setEvent"] => store.actions.setEvent);
   const setEvents = useVideoPlayerContext<VideoPlayerActions["setEvents"]>((store: VideoPlayerStore): VideoPlayerActions["setEvents"] => store.actions.setEvents);
   const setValue = useVideoPlayerContext<VideoPlayerActions["setValue"]>((store: VideoPlayerStore): VideoPlayerActions["setValue"] => store.actions.setValue);
   const hasEnded = useVideoPlayerContext<boolean>((store: VideoPlayerStore): boolean => store.state.events.hasEnded);
   const hasStarted = useVideoPlayerContext<boolean>((store: VideoPlayerStore): boolean => store.state.events.hasStarted);
-  const fullscreenTransition = useVideoPlayerContext<boolean>((store: VideoPlayerStore): boolean => store.state.events.fullscreenTransition);
   const isFullscreen = useVideoPlayerContext<boolean>((store: VideoPlayerStore): boolean => store.state.events.isFullscreen);
   const isPlaying = useVideoPlayerContext<boolean>((store: VideoPlayerStore): boolean => store.state.events.isPlaying);
   const isVolumeMenuOpen = useVideoPlayerContext<boolean>((store: VideoPlayerStore): boolean => store.state.events.isVolumeMenuOpen);
@@ -79,18 +79,6 @@ export function VideoPlayerControlBar(): ReactElement<FC> {
       setEvent("isPlaying", true);
     })();
   }, [isPlaying, hasStarted, hasEnded]);
-  const handleEnded = useCallback((): void => {
-    setEvents({
-      hasEnded: true,
-      hasStarted: false,
-      isPlaying: false
-    });
-  }, []);
-  const handleProgress = useCallback((): void => {
-    if (videoRef.current == null) return;
-    const buf = videoRef.current.buffered;
-    if (buf.length > 0) setValue("buffered", buf.end(buf.length - 1));
-  }, []);
   const handleTrackChange = useCallback(
     (value: number | readonly number[]): void => {
       if (videoRef.current == null) return;
@@ -146,7 +134,7 @@ export function VideoPlayerControlBar(): ReactElement<FC> {
       videoRef.current?.requestFullscreen();
     }
 
-    setIsFullscreen(true);
+    setEvent("isFullscreen", true);
   }, []);
 
   return (
@@ -231,29 +219,23 @@ export function VideoPlayerControlBar(): ReactElement<FC> {
             Volume
           </TooltipContent>
         </Tooltip>
-        {fullscreenTransition ? (
-          <VideoControlButton onClick={handleFullscreenToggle}>
-            <Fullscreen />
-          </VideoControlButton>
-        ) : (
-          <Tooltip>
-            <TooltipTrigger
-              render={
-                <VideoControlButton onClick={handleFullscreenToggle}>
-                  <Fullscreen />
-                </VideoControlButton>
-              }
-            />
-            <TooltipContent
-              className="text-white"
-              container={
-                isFullscreen ? containerRef.current : document.body
-              }
-            >
-              {!isFullscreen ? "Enter Fullscreen" : "Exit Fullscreen"}
-            </TooltipContent>
-          </Tooltip>
-        )}
+        <Tooltip key={isFullscreen ? "fullscreen-toggle:active" : "fullscreen-toggle:inactve"}>
+          <TooltipTrigger
+            render={
+              <VideoControlButton onClick={handleFullscreenToggle}>
+                <Fullscreen />
+              </VideoControlButton>
+            }
+          />
+          <TooltipContent
+            className="text-white"
+            container={
+              isFullscreen ? containerRef.current : document.body
+            }
+          >
+            {!isFullscreen ? "Enter Fullscreen" : "Exit Fullscreen"}
+          </TooltipContent>
+        </Tooltip>
       </div>
     </div>
   );

@@ -1,6 +1,7 @@
-import { useRef, useEffect, useCallback } from "react";
-import { useVideoPlayerContext } from "@lib/contexts/video";
+import { useEffect, useCallback } from "react";
+import { useVideoPlayerContext, useVideoPlayerRefs } from "@lib/contexts/video";
 import { cn } from "@utils/classMerge";
+import { VIDEO_PLAYER_VOLUME } from "@utils/constants";
 import type { ReactElement, FC } from "react";
 import type { VideoPlayerStore, VideoPlayerActions } from "@lib/stores/video";
 
@@ -21,7 +22,7 @@ export function VideoPlayerWindow({
   muted = false,
   autoPlay = false,
 }: VideoPlayerWindowProps): ReactElement<FC> {
-  const videoRef = useRef<HTMLVideoElement>(null);
+  const { videoRef, containerRef } = useVideoPlayerRefs();
   const time: number = useVideoPlayerContext(
     (state: VideoPlayerStore): number => state.state.values.time,
   );
@@ -34,15 +35,21 @@ export function VideoPlayerWindow({
   const hasStarted: boolean = useVideoPlayerContext(
     (state: VideoPlayerStore): boolean => state.state.events.hasStarted,
   );
-  const setEvent: VideoPlayerActions["setEvent"] = useVideoPlayerContext(
+  const hasEnded: boolean = useVideoPlayerContext(
+    (state: VideoPlayerStore): boolean => state.state.events.hasEnded,
+  );
+  const volume: number = useVideoPlayerContext<number>(
+    (store: VideoPlayerStore): number => store.state.values.volume
+  );
+  const setEvent = useVideoPlayerContext<VideoPlayerActions["setEvent"]>(
     (state: VideoPlayerStore): VideoPlayerActions["setEvent"] =>
       state.actions.setEvent,
   );
-  const setEvents: VideoPlayerActions["setEvents"] = useVideoPlayerContext(
+  const setEvents = useVideoPlayerContext<VideoPlayerActions["setEvents"]>(
     (state: VideoPlayerStore): VideoPlayerActions["setEvents"] =>
       state.actions.setEvents,
   );
-  const setValue: VideoPlayerActions["setValue"] = useVideoPlayerContext(
+  const setValue = useVideoPlayerContext<VideoPlayerActions["setValue"]>(
     (state: VideoPlayerStore): VideoPlayerActions["setValue"] =>
       state.actions.setValue,
   );
@@ -68,10 +75,92 @@ export function VideoPlayerWindow({
 
     if (currentTime !== time) setValue("time", currentTime);
   }, [time, hasStarted]);
-  const handlePlayToggle = useCallback(
-    (): void => setEvent("isPlaying", !isPlaying),
-    [isPlaying],
-  );
+  const handlePlayToggle = useCallback((): void => {
+    if (videoRef.current == null) return;
+
+    if (!videoRef.current.paused) {
+      videoRef.current?.pause();
+      setEvent("isPlaying", false);
+      setValue("iconFlash", "pause");
+      return;
+    }
+
+    (async (): Promise<void> => {
+      if (hasEnded) {
+        videoRef.current!.currentTime = 0;
+        setValue("time", 0);
+        setEvents({
+          isRestarting: true,
+          hasEnded: false
+        });
+      }
+
+      if (!hasStarted) {
+        setEvents({
+          isStarting: true,
+          hasStarted: true
+        });
+      }
+      await videoRef.current?.play();
+      setEvent("isPlaying", true);
+    })();
+  }, [isPlaying, hasStarted, hasEnded]);
+  const handleKeyDown = useCallback((e: KeyboardEvent): void => {
+    if (videoRef.current == null) return;
+
+    const tagName = (e.target as HTMLElement).tagName;
+
+    if (
+      tagName === "INPUT" ||
+      tagName === "TEXTAREA" ||
+      tagName === "SELECT" ||
+      tagName === "BUTTON"
+    )
+      return;
+
+    e.preventDefault();
+
+    if (e.key === " ") {
+      handlePlayToggle();
+      return;
+    }
+    if (e.key === "ArrowUp") {
+      const incrementedVolume: number = volume + 0.05;
+      const newVolume: number = incrementedVolume > 1 ? 1 : incrementedVolume;
+      videoRef.current!.volume = newVolume;
+
+      window.localStorage.setItem(VIDEO_PLAYER_VOLUME, String(newVolume));
+      setValue("volume", newVolume);
+      return;
+    }
+    if (e.key === "ArrowDown") {
+      const decrementedVolume: number = volume - 0.05;
+      const newVolume = decrementedVolume < 0 ? 0 : decrementedVolume;
+
+      videoRef.current!.volume = newVolume;
+      window.localStorage.setItem(VIDEO_PLAYER_VOLUME, String(newVolume));
+      setValue("volume", newVolume);
+      return;
+    }
+    if (e.key === "ArrowLeft") {
+      const newTime: number = time - 5;
+      videoRef.current.currentTime = newTime;
+
+      setValue("time", newTime);
+      return;
+    }
+    if (e.key === "ArrowRight") {
+      const newTime: number = time + 5;
+      videoRef.current.currentTime = newTime;
+
+      setValue("time", newTime);
+      return;
+    }
+  }, []);
+  const handleFullscreenChange = useCallback((): void => {
+    if (containerRef.current == null) return;
+    if (document.fullscreenElement == null) setEvent("isFullscreen", false);
+  }, []);
   const posterClasses: string = cn(
     "absolute inset-0 w-full h-auto object-cover aspect-video z-10 pointer-events-none",
     {
@@ -86,6 +175,29 @@ export function VideoPlayerWindow({
       "rounded-xl": !isFullscreen,
     },
   );
+
+  useEffect((): (() => void) => {
+    window.addEventListener("keydown", handleKeyDown);
+    document.addEventListener("fullscreenchange", handleFullscreenChange);
+
+    const volumeSliderValue: string | null =
+      window.localStorage.getItem(VIDEO_PLAYER_VOLUME);
+
+    if (volumeSliderValue != null) {
+      const volumeSliderValueNum: number = parseFloat(volumeSliderValue);
+
+      if (volumeSliderValueNum !== volume) setValue("volume", volumeSliderValueNum);
+    }
+    if (volumeSliderValue == null) {
+      window.localStorage.setItem(VIDEO_PLAYER_VOLUME, String(volume));
+    }
+    if (autoPlay != null) setValue("autoPlay", autoPlay);
+
+    return (): void => {
+      window.removeEventListener("keydown", handleKeyDown);
+      document.removeEventListener("fullscreenchange", handleFullscreenChange);
+    };
+  }, []);
 
   return (
     <>
