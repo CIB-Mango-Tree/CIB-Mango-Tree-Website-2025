@@ -14,6 +14,7 @@ export type VideoPlayerState = {
     isWaiting: boolean;
     isFullscreen: boolean;
     isVolumeMenuOpen: boolean;
+    isSpeedMenuOpen: boolean;
     fullscreenTransition: boolean;
   };
   values: {
@@ -21,6 +22,7 @@ export type VideoPlayerState = {
     duration: number;
     volume: number;
     buffered: number;
+    playbackRate: number;
     iconFlash: IconFlash;
     autoPlay: boolean;
     muted: boolean;
@@ -58,6 +60,7 @@ export const initialState: VideoPlayerState = {
     isWaiting: false,
     isFullscreen: false,
     isVolumeMenuOpen: false,
+    isSpeedMenuOpen: false,
     fullscreenTransition: false,
   },
   values: {
@@ -65,6 +68,7 @@ export const initialState: VideoPlayerState = {
     duration: 0,
     volume: 0.5,
     buffered: 0,
+    playbackRate: 1,
     iconFlash: EMPTY,
     autoPlay: false,
     muted: false,
