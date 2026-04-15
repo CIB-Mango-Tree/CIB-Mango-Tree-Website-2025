@@ -6,7 +6,7 @@ import { Play, Pause, RotateCcw, Volume, Volume1, Volume2, Fullscreen, Gauge } f
 import { Button } from "@components/ui/button";
 import { Tooltip, TooltipTrigger, TooltipContent } from "@components/ui/tooltip";
 import { Slider, TrackSlider } from "@components/ui/slider";
-import { DropdownMenu, DropdownMenuTrigger, DropdownMenuPortal, DropdownMenuContent, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuLabel, DropdownMenuSeparator } from "@components/ui/dropdown-menu";
+import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuLabel, DropdownMenuSeparator } from "@components/ui/dropdown-menu";
 import { cn } from "@utils/classMerge";
 import { formatTime } from "@utils/format";
 import { VIDEO_PLAYER_VOLUME, PLAYBACK_RATES } from "@utils/constants";
@@ -177,26 +177,21 @@ export function VideoPlayerControlBar(): ReactElement<FC> {
                 </DropdownMenuTrigger>
               }
             />
-            <DropdownMenuPortal
-              container={
-                isFullscreen ? containerRef.current : document.body
-              }
+            <DropdownMenuContent
+              container={containerRef}
+              side="top"
+              align="center"
+              className="min-w-none w-8"
             >
-              <DropdownMenuContent
-                side="top"
-                align="center"
-                className="min-w-none w-8"
-              >
-                <Slider
-                  orientation="vertical"
-                  max={1}
-                  step={0.01}
-                  value={volume}
-                  onValueChange={handleVolumeChange}
-                  className="cursor-pointer"
-                />
-              </DropdownMenuContent>
-            </DropdownMenuPortal>
+              <Slider
+                orientation="vertical"
+                max={1}
+                step={0.01}
+                value={volume}
+                onValueChange={handleVolumeChange}
+                className="cursor-pointer"
+              />
+            </DropdownMenuContent>
           </DropdownMenu>
           <TooltipContent
             className="text-white"
@@ -218,30 +213,25 @@ export function VideoPlayerControlBar(): ReactElement<FC> {
                 </DropdownMenuTrigger>
               }
             />
-            <DropdownMenuPortal
-              container={
-                isFullscreen ? containerRef.current : document.body
-              }
+            <DropdownMenuContent
+              container={containerRef}
+              side="top"
+              align="center"
+              className="min-w-[6rem]"
             >
-              <DropdownMenuContent
-                side="top"
-                align="center"
-                className="min-w-[6rem]"
+              <DropdownMenuLabel>Speed</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuRadioGroup
+                value={String(playbackRate)}
+                onValueChange={handlePlaybackRateChange}
               >
-                <DropdownMenuLabel>Speed</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuRadioGroup
-                  value={String(playbackRate)}
-                  onValueChange={handlePlaybackRateChange}
-                >
-                  {PLAYBACK_RATES.map((rate) => (
-                    <DropdownMenuRadioItem key={rate} value={String(rate)} className="cursor-pointer font-mono text-sm">
-                      {rate === 1 ? "Normal" : `${rate}×`}
-                    </DropdownMenuRadioItem>
-                  ))}
-                </DropdownMenuRadioGroup>
-              </DropdownMenuContent>
-            </DropdownMenuPortal>
+                {PLAYBACK_RATES.map((rate) => (
+                  <DropdownMenuRadioItem key={rate} value={String(rate)} className="cursor-pointer font-mono text-sm">
+                    {rate === 1 ? "Normal" : `${rate}×`}
+                  </DropdownMenuRadioItem>
+                ))}
+              </DropdownMenuRadioGroup>
+            </DropdownMenuContent>
           </DropdownMenu>
           <TooltipContent
             className="text-white"
