@@ -144,11 +144,11 @@ export function VideoPlayerControlBar(): ReactElement<FC> {
     (open: boolean): void => setEvent("isSpeedMenuOpen", open),
     [],
   );
-  const handlePlaybackRateChange = useCallback((value: string): void => {
+  const handlePlaybackRateChange = useCallback((value: number): void => {
     if (videoRef.current == null) return;
-    const rate = parseFloat(value);
-    videoRef.current.playbackRate = rate;
-    setValue("playbackRate", rate);
+
+    videoRef.current.playbackRate = value;
+    setValue("playbackRate", value);
   }, []);
   const handleFullscreenToggle = useCallback((): void => {
     if (containerRef.current == null) return;
@@ -270,18 +270,20 @@ export function VideoPlayerControlBar(): ReactElement<FC> {
                 <DropdownMenuLabel>Speed</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuRadioGroup
-                  value={String(playbackRate)}
+                  value={playbackRate}
                   onValueChange={handlePlaybackRateChange}
                 >
-                  {PLAYBACK_RATES.map((rate) => (
-                    <DropdownMenuRadioItem
-                      key={rate}
-                      value={String(rate)}
-                      className="cursor-pointer font-mono text-sm"
-                    >
-                      {rate === 1 ? "Normal" : `${rate}×`}
-                    </DropdownMenuRadioItem>
-                  ))}
+                  {PLAYBACK_RATES.map(
+                    (rate: number): ReactElement<FC> => (
+                      <DropdownMenuRadioItem
+                        key={rate}
+                        value={rate}
+                        className="cursor-pointer font-mono text-sm"
+                      >
+                        {rate === 1 ? "Normal" : `${rate}×`}
+                      </DropdownMenuRadioItem>
+                    ),
+                  )}
                 </DropdownMenuRadioGroup>
               </DropdownMenuGroup>
             </DropdownMenuContent>
