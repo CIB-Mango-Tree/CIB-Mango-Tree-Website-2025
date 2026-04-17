@@ -2,14 +2,36 @@ import { useCallback, forwardRef } from "react";
 import { useVideoPlayerContext, useVideoPlayerRefs } from "@lib/contexts/video";
 import { usingMobilePointer } from "@lib/mobile";
 import { usePlayToggle } from "@hooks/use-play-toggle";
-import { Play, Pause, RotateCcw, Volume, Volume1, Volume2, Fullscreen } from "lucide-react";
+import {
+  Play,
+  Pause,
+  RotateCcw,
+  Volume,
+  Volume1,
+  Volume2,
+  Fullscreen,
+  Gauge,
+} from "lucide-react";
 import { Button } from "@components/ui/button";
-import { Tooltip, TooltipTrigger, TooltipContent } from "@components/ui/tooltip";
+import {
+  Tooltip,
+  TooltipTrigger,
+  TooltipContent,
+} from "@components/ui/tooltip";
 import { Slider, TrackSlider } from "@components/ui/slider";
-import { DropdownMenu, DropdownMenuTrigger, DropdownMenuPortal, DropdownMenuContent } from "@components/ui/dropdown-menu";
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+} from "@components/ui/dropdown-menu";
 import { cn } from "@utils/classMerge";
 import { formatTime } from "@utils/format";
-import { VIDEO_PLAYER_VOLUME } from "@utils/constants";
+import { VIDEO_PLAYER_VOLUME, PLAYBACK_RATES } from "@utils/constants";
 import type { ReactElement, FC, PropsWithChildren } from "react";
 import type { VideoPlayerStore, VideoPlayerActions } from "@lib/stores/video";
 
@@ -39,17 +61,48 @@ export const VideoControlButton = forwardRef<
 export function VideoPlayerControlBar(): ReactElement<FC> {
   const handlePlayToggle = usePlayToggle();
   const { videoRef, containerRef } = useVideoPlayerRefs();
-  const setEvent = useVideoPlayerContext<VideoPlayerActions["setEvent"]>((store: VideoPlayerStore): VideoPlayerActions["setEvent"] => store.actions.setEvent);
-  const setEvents = useVideoPlayerContext<VideoPlayerActions["setEvents"]>((store: VideoPlayerStore): VideoPlayerActions["setEvents"] => store.actions.setEvents);
-  const setValue = useVideoPlayerContext<VideoPlayerActions["setValue"]>((store: VideoPlayerStore): VideoPlayerActions["setValue"] => store.actions.setValue);
-  const hasEnded = useVideoPlayerContext<boolean>((store: VideoPlayerStore): boolean => store.state.events.hasEnded);
-  const isFullscreen = useVideoPlayerContext<boolean>((store: VideoPlayerStore): boolean => store.state.events.isFullscreen);
-  const isPlaying = useVideoPlayerContext<boolean>((store: VideoPlayerStore): boolean => store.state.events.isPlaying);
-  const isVolumeMenuOpen = useVideoPlayerContext<boolean>((store: VideoPlayerStore): boolean => store.state.events.isVolumeMenuOpen);
-  const time = useVideoPlayerContext<number>((store: VideoPlayerStore): number => store.state.values.time);
-  const duration = useVideoPlayerContext<number>((store: VideoPlayerStore): number => store.state.values.duration);
-  const volume = useVideoPlayerContext<number>((store: VideoPlayerStore): number => store.state.values.volume);
-  const buffered = useVideoPlayerContext<number>((store: VideoPlayerStore): number => store.state.values.buffered);
+  const setEvent = useVideoPlayerContext<VideoPlayerActions["setEvent"]>(
+    (store: VideoPlayerStore): VideoPlayerActions["setEvent"] =>
+      store.actions.setEvent,
+  );
+  const setEvents = useVideoPlayerContext<VideoPlayerActions["setEvents"]>(
+    (store: VideoPlayerStore): VideoPlayerActions["setEvents"] =>
+      store.actions.setEvents,
+  );
+  const setValue = useVideoPlayerContext<VideoPlayerActions["setValue"]>(
+    (store: VideoPlayerStore): VideoPlayerActions["setValue"] =>
+      store.actions.setValue,
+  );
+  const hasEnded = useVideoPlayerContext<boolean>(
+    (store: VideoPlayerStore): boolean => store.state.events.hasEnded,
+  );
+  const isFullscreen = useVideoPlayerContext<boolean>(
+    (store: VideoPlayerStore): boolean => store.state.events.isFullscreen,
+  );
+  const isPlaying = useVideoPlayerContext<boolean>(
+    (store: VideoPlayerStore): boolean => store.state.events.isPlaying,
+  );
+  const isVolumeMenuOpen = useVideoPlayerContext<boolean>(
+    (store: VideoPlayerStore): boolean => store.state.events.isVolumeMenuOpen,
+  );
+  const isSpeedMenuOpen = useVideoPlayerContext<boolean>(
+    (store: VideoPlayerStore): boolean => store.state.events.isSpeedMenuOpen,
+  );
+  const playbackRate = useVideoPlayerContext<number>(
+    (store: VideoPlayerStore): number => store.state.values.playbackRate,
+  );
+  const time = useVideoPlayerContext<number>(
+    (store: VideoPlayerStore): number => store.state.values.time,
+  );
+  const duration = useVideoPlayerContext<number>(
+    (store: VideoPlayerStore): number => store.state.values.duration,
+  );
+  const volume = useVideoPlayerContext<number>(
+    (store: VideoPlayerStore): number => store.state.values.volume,
+  );
+  const buffered = useVideoPlayerContext<number>(
+    (store: VideoPlayerStore): number => store.state.values.buffered,
+  );
   const handleTrackChange = useCallback(
     (value: number | readonly number[]): void => {
       if (videoRef.current == null) return;
@@ -61,7 +114,7 @@ export function VideoPlayerControlBar(): ReactElement<FC> {
         setEvents({
           isRestarting: true,
           hasStarted: true,
-          hasEnded: false
+          hasEnded: false,
         });
       }
 
@@ -87,6 +140,16 @@ export function VideoPlayerControlBar(): ReactElement<FC> {
     (open: boolean): void => setEvent("isVolumeMenuOpen", open),
     [],
   );
+  const handleSpeedMenuOpen = useCallback(
+    (open: boolean): void => setEvent("isSpeedMenuOpen", open),
+    [],
+  );
+  const handlePlaybackRateChange = useCallback((value: number): void => {
+    if (videoRef.current == null) return;
+
+    videoRef.current.playbackRate = value;
+    setValue("playbackRate", value);
+  }, []);
   const handleFullscreenToggle = useCallback((): void => {
     if (containerRef.current == null) return;
 
@@ -114,10 +177,7 @@ export function VideoPlayerControlBar(): ReactElement<FC> {
         <Tooltip>
           <TooltipTrigger
             render={
-              <VideoControlButton
-                onClick={handlePlayToggle}
-                className="w-20"
-              >
+              <VideoControlButton onClick={handlePlayToggle} className="w-20">
                 {hasEnded && <RotateCcw />}
                 {isPlaying && !hasEnded && <Pause fill="white" />}
                 {!isPlaying && !hasEnded && <Play fill="white" />}
@@ -132,9 +192,7 @@ export function VideoPlayerControlBar(): ReactElement<FC> {
           </TooltipContent>
         </Tooltip>
         <div className="inline-flex justify-center w-10">
-          <span className="text-white text-sm">
-            {formatTime(time)}
-          </span>
+          <span className="text-white text-sm">{formatTime(time)}</span>
         </div>
       </div>
       <div className="grid items-center">
@@ -162,26 +220,21 @@ export function VideoPlayerControlBar(): ReactElement<FC> {
                 </DropdownMenuTrigger>
               }
             />
-            <DropdownMenuPortal
-              container={
-                isFullscreen ? containerRef.current : document.body
-              }
+            <DropdownMenuContent
+              container={containerRef}
+              side="top"
+              align="center"
+              className="min-w-none w-8"
             >
-              <DropdownMenuContent
-                side="top"
-                align="center"
-                className="min-w-none w-8"
-              >
-                <Slider
-                  orientation="vertical"
-                  max={1}
-                  step={0.01}
-                  value={volume}
-                  onValueChange={handleVolumeChange}
-                  className="cursor-pointer"
-                />
-              </DropdownMenuContent>
-            </DropdownMenuPortal>
+              <Slider
+                orientation="vertical"
+                max={1}
+                step={0.01}
+                value={volume}
+                onValueChange={handleVolumeChange}
+                className="cursor-pointer"
+              />
+            </DropdownMenuContent>
           </DropdownMenu>
           <TooltipContent
             className="text-white"
@@ -190,7 +243,65 @@ export function VideoPlayerControlBar(): ReactElement<FC> {
             Volume
           </TooltipContent>
         </Tooltip>
-        <Tooltip key={isFullscreen ? "fullscreen-toggle:active" : "fullscreen-toggle:inactve"}>
+        <Tooltip disabled={isSpeedMenuOpen}>
+          <DropdownMenu
+            open={isSpeedMenuOpen}
+            onOpenChange={handleSpeedMenuOpen}
+          >
+            <TooltipTrigger
+              render={
+                <DropdownMenuTrigger
+                  render={<VideoControlButton className="font-mono text-xs" />}
+                >
+                  <Gauge className="size-4" />
+                  <span className="ml-1">
+                    {playbackRate === 1 ? "1×" : `${playbackRate}×`}
+                  </span>
+                </DropdownMenuTrigger>
+              }
+            />
+            <DropdownMenuContent
+              container={containerRef}
+              side="top"
+              align="center"
+              className="min-w-[6rem]"
+            >
+              <DropdownMenuGroup>
+                <DropdownMenuLabel>Speed</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuRadioGroup
+                  value={playbackRate}
+                  onValueChange={handlePlaybackRateChange}
+                >
+                  {PLAYBACK_RATES.map(
+                    (rate: number): ReactElement<FC> => (
+                      <DropdownMenuRadioItem
+                        key={rate}
+                        value={rate}
+                        className="cursor-pointer font-mono text-sm"
+                      >
+                        {rate === 1 ? "Normal" : `${rate}×`}
+                      </DropdownMenuRadioItem>
+                    ),
+                  )}
+                </DropdownMenuRadioGroup>
+              </DropdownMenuGroup>
+            </DropdownMenuContent>
+          </DropdownMenu>
+          <TooltipContent
+            className="text-white"
+            container={isFullscreen ? containerRef.current : document.body}
+          >
+            Playback Speed
+          </TooltipContent>
+        </Tooltip>
+        <Tooltip
+          key={
+            isFullscreen
+              ? "fullscreen-toggle:active"
+              : "fullscreen-toggle:inactive"
+          }
+        >
           <TooltipTrigger
             render={
               <VideoControlButton onClick={handleFullscreenToggle}>
@@ -200,9 +311,7 @@ export function VideoPlayerControlBar(): ReactElement<FC> {
           />
           <TooltipContent
             className="text-white"
-            container={
-              isFullscreen ? containerRef.current : document.body
-            }
+            container={isFullscreen ? containerRef.current : document.body}
           >
             {!isFullscreen ? "Enter Fullscreen" : "Exit Fullscreen"}
           </TooltipContent>

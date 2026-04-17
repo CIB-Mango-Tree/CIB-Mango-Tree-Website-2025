@@ -82,6 +82,25 @@ export function VideoPlayerWindow({
     )
       return;
 
+    if (e.key === "Escape") {
+      const { isSpeedMenuOpen, isVolumeMenuOpen, isFullscreen } = store.getState().state.events;
+      if (isSpeedMenuOpen) {
+        e.preventDefault();
+        store.getState().actions.setEvent("isSpeedMenuOpen", false);
+        return;
+      }
+      if (isVolumeMenuOpen) {
+        e.preventDefault();
+        store.getState().actions.setEvent("isVolumeMenuOpen", false);
+        return;
+      }
+      if (isFullscreen) {
+        e.preventDefault();
+        void document.exitFullscreen();
+      }
+      return;
+    }
+
     e.preventDefault();
 
     if (e.key === " ") {
