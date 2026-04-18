@@ -1,6 +1,11 @@
+"use client";
+
 import { useRef, useState } from "react";
 import { createVideoPlayerStore } from "@lib/stores/video";
-import { VideoPlayerContext, VideoPlayerRefsContext } from "@lib/contexts/video";
+import {
+  VideoPlayerContext,
+  VideoPlayerRefsContext,
+} from "@lib/contexts/video";
 import { VideoPlayerContainer } from "@components/VideoPlayer/container";
 import { VideoPlayerWindow } from "@components/VideoPlayer/window";
 import { VideoPlayerControlBar } from "@components/VideoPlayer/controls";

@@ -15,15 +15,21 @@ export function VideoPlayerContainer({
   children,
 }: VideoPlayerContainerProps): ReactElement<FC> {
   const { containerRef } = useVideoPlayerRefs();
+  const isMobile = useIsMobile();
+  const isMobilePointer = usingMobilePointer();
   const isFullscreen = useVideoPlayerContext<boolean>(
     (state: VideoPlayerStore): boolean => state.state.events.isFullscreen,
   );
-  const containerClasses: string = cn("relative overflow-visible", className, {
-    "rounded-none": isFullscreen,
-    "rounded-xl": !isFullscreen,
-  });
+  const containerClasses: string = cn(
+    "relative overflow-visible aspect-video w-full",
+    className,
+    {
+      "rounded-none": isFullscreen,
+      "rounded-xl": !isFullscreen,
+    },
+  );
 
-  if (!usingMobilePointer() || !useIsMobile()) {
+  if (!isMobilePointer || !isMobile) {
     return (
       <div ref={containerRef} className={containerClasses}>
         {children}

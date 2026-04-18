@@ -1,5 +1,9 @@
 import { useEffect, useCallback } from "react";
-import { useVideoPlayerContext, useVideoPlayerRefs, useVideoPlayerContextStore } from "@lib/contexts/video";
+import {
+  useVideoPlayerContext,
+  useVideoPlayerRefs,
+  useVideoPlayerContextStore,
+} from "@lib/contexts/video";
 import { usePlayToggle } from "@hooks/use-play-toggle";
 import { cn } from "@utils/classMerge";
 import { VIDEO_PLAYER_VOLUME } from "@utils/constants";
@@ -69,81 +73,85 @@ export function VideoPlayerWindow({
 
     if (currentTime !== time) setValue("time", currentTime);
   }, [time, hasStarted]);
-  const handleKeyDown = useCallback((e: KeyboardEvent): void => {
-    if (videoRef.current == null) return;
+  const handleKeyDown = useCallback(
+    (e: KeyboardEvent): void => {
+      if (videoRef.current == null) return;
 
-    const tagName = (e.target as HTMLElement).tagName;
+      const tagName = (e.target as HTMLElement).tagName;
 
-    if (
-      tagName === "INPUT" ||
-      tagName === "TEXTAREA" ||
-      tagName === "SELECT" ||
-      tagName === "BUTTON"
-    )
-      return;
+      if (
+        tagName === "INPUT" ||
+        tagName === "TEXTAREA" ||
+        tagName === "SELECT" ||
+        tagName === "BUTTON"
+      )
+        return;
 
-    if (e.key === "Escape") {
-      const { isSpeedMenuOpen, isVolumeMenuOpen, isFullscreen } = store.getState().state.events;
-      if (isSpeedMenuOpen) {
-        e.preventDefault();
-        store.getState().actions.setEvent("isSpeedMenuOpen", false);
+      if (e.key === "Escape") {
+        const { isSpeedMenuOpen, isVolumeMenuOpen, isFullscreen } =
+          store.getState().state.events;
+        if (isSpeedMenuOpen) {
+          e.preventDefault();
+          store.getState().actions.setEvent("isSpeedMenuOpen", false);
+          return;
+        }
+        if (isVolumeMenuOpen) {
+          e.preventDefault();
+          store.getState().actions.setEvent("isVolumeMenuOpen", false);
+          return;
+        }
+        if (isFullscreen) {
+          e.preventDefault();
+          void document.exitFullscreen();
+        }
         return;
       }
-      if (isVolumeMenuOpen) {
-        e.preventDefault();
-        store.getState().actions.setEvent("isVolumeMenuOpen", false);
+
+      e.preventDefault();
+
+      if (e.key === " ") {
+        handlePlayToggle();
         return;
       }
-      if (isFullscreen) {
-        e.preventDefault();
-        void document.exitFullscreen();
+      if (e.key === "ArrowUp") {
+        const { volume } = store.getState().state.values;
+        const incrementedVolume: number = volume + 0.05;
+        const newVolume: number = incrementedVolume > 1 ? 1 : incrementedVolume;
+        videoRef.current!.volume = newVolume;
+
+        window.localStorage.setItem(VIDEO_PLAYER_VOLUME, String(newVolume));
+        setValue("volume", newVolume);
+        return;
       }
-      return;
-    }
+      if (e.key === "ArrowDown") {
+        const { volume } = store.getState().state.values;
+        const decrementedVolume: number = volume - 0.05;
+        const newVolume = decrementedVolume < 0 ? 0 : decrementedVolume;
 
-    e.preventDefault();
+        videoRef.current!.volume = newVolume;
+        window.localStorage.setItem(VIDEO_PLAYER_VOLUME, String(newVolume));
+        setValue("volume", newVolume);
+        return;
+      }
+      if (e.key === "ArrowLeft") {
+        const { time } = store.getState().state.values;
+        const newTime: number = time - 5;
+        videoRef.current.currentTime = newTime;
 
-    if (e.key === " ") {
-      handlePlayToggle();
-      return;
-    }
-    if (e.key === "ArrowUp") {
-      const { volume } = store.getState().state.values;
-      const incrementedVolume: number = volume + 0.05;
-      const newVolume: number = incrementedVolume > 1 ? 1 : incrementedVolume;
-      videoRef.current!.volume = newVolume;
+        setValue("time", newTime);
+        return;
+      }
+      if (e.key === "ArrowRight") {
+        const { time } = store.getState().state.values;
+        const newTime: number = time + 5;
+        videoRef.current.currentTime = newTime;
 
-      window.localStorage.setItem(VIDEO_PLAYER_VOLUME, String(newVolume));
-      setValue("volume", newVolume);
-      return;
-    }
-    if (e.key === "ArrowDown") {
-      const { volume } = store.getState().state.values;
-      const decrementedVolume: number = volume - 0.05;
-      const newVolume = decrementedVolume < 0 ? 0 : decrementedVolume;
-
-      videoRef.current!.volume = newVolume;
-      window.localStorage.setItem(VIDEO_PLAYER_VOLUME, String(newVolume));
-      setValue("volume", newVolume);
-      return;
-    }
-    if (e.key === "ArrowLeft") {
-      const { time } = store.getState().state.values;
-      const newTime: number = time - 5;
-      videoRef.current.currentTime = newTime;
-
-      setValue("time", newTime);
-      return;
-    }
-    if (e.key === "ArrowRight") {
-      const { time } = store.getState().state.values;
-      const newTime: number = time + 5;
-      videoRef.current.currentTime = newTime;
-
-      setValue("time", newTime);
-      return;
-    }
-  }, [videoRef, handlePlayToggle]);
+        setValue("time", newTime);
+        return;
+      }
+    },
+    [videoRef, handlePlayToggle],
+  );
   const handleFullscreenChange = useCallback((): void => {
     if (containerRef.current == null) return;
     if (document.fullscreenElement == null) setEvent("isFullscreen", false);
@@ -153,19 +161,16 @@ export function VideoPlayerWindow({
     setValue("duration", videoRef.current.duration);
   }, []);
   const posterClasses: string = cn(
-    "absolute inset-0 w-full h-auto object-cover aspect-video z-10 pointer-events-none",
+    "absolute inset-0 w-full h-full object-cover z-10 pointer-events-none",
     {
       "rounded-none": isFullscreen,
       "rounded-xl": !isFullscreen,
     },
   );
-  const videoClasses: string = cn(
-    "w-full h-auto aspect-video object-cover z-0",
-    {
-      "rounded-none": isFullscreen,
-      "rounded-xl": !isFullscreen,
-    },
-  );
+  const videoClasses: string = cn("w-full h-auto object-cover z-0", {
+    "rounded-none": isFullscreen,
+    "rounded-xl": !isFullscreen,
+  });
 
   useEffect((): (() => void) => {
     window.addEventListener("keydown", handleKeyDown);
@@ -178,6 +183,9 @@ export function VideoPlayerWindow({
   }, [handleKeyDown, handleFullscreenChange]);
 
   useEffect((): void => {
+    if (videoRef.current != null && videoRef.current.readyState >= 1) {
+      setValue("duration", videoRef.current.duration);
+    }
     const { volume } = store.getState().state.values;
     const volumeSliderValue: string | null =
       window.localStorage.getItem(VIDEO_PLAYER_VOLUME);
@@ -185,7 +193,8 @@ export function VideoPlayerWindow({
     if (volumeSliderValue != null) {
       const volumeSliderValueNum: number = parseFloat(volumeSliderValue);
 
-      if (volumeSliderValueNum !== volume) setValue("volume", volumeSliderValueNum);
+      if (volumeSliderValueNum !== volume)
+        setValue("volume", volumeSliderValueNum);
     }
     if (volumeSliderValue == null) {
       window.localStorage.setItem(VIDEO_PLAYER_VOLUME, String(volume));

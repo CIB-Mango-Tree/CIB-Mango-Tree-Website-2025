@@ -1,4 +1,6 @@
-import { useCallback, forwardRef } from "react";
+"use client";
+
+import { useCallback, forwardRef, useState, useEffect } from "react";
 import { useVideoPlayerContext, useVideoPlayerRefs } from "@lib/contexts/video";
 import { usingMobilePointer } from "@lib/mobile";
 import { usePlayToggle } from "@hooks/use-play-toggle";
@@ -59,6 +61,8 @@ export const VideoControlButton = forwardRef<
 });
 
 export function VideoPlayerControlBar(): ReactElement<FC> {
+  const [mounted, setMounted] = useState<boolean>(false);
+  const isMobilePointer = usingMobilePointer();
   const handlePlayToggle = usePlayToggle();
   const { videoRef, containerRef } = useVideoPlayerRefs();
   const setEvent = useVideoPlayerContext<VideoPlayerActions["setEvent"]>(
@@ -162,13 +166,18 @@ export function VideoPlayerControlBar(): ReactElement<FC> {
       return;
     }
 
-    if (!usingMobilePointer()) {
+    if (!isMobilePointer) {
       containerRef.current.requestFullscreen();
     } else {
       videoRef.current?.requestFullscreen();
     }
 
     setEvent("isFullscreen", true);
+  }, []);
+  const bodyElem: HTMLElement | null = mounted ? document.body : null;
+
+  useEffect((): void => {
+    setMounted(true);
   }, []);
 
   return (
@@ -186,7 +195,7 @@ export function VideoPlayerControlBar(): ReactElement<FC> {
           />
           <TooltipContent
             className="text-white"
-            container={isFullscreen ? containerRef.current : document.body}
+            container={isFullscreen ? containerRef.current : bodyElem}
           >
             {isPlaying ? "Pause" : "Play"}
           </TooltipContent>
@@ -221,7 +230,7 @@ export function VideoPlayerControlBar(): ReactElement<FC> {
               }
             />
             <DropdownMenuContent
-              container={containerRef}
+              container={isFullscreen ? containerRef.current : bodyElem}
               side="top"
               align="center"
               className="min-w-none w-8"
@@ -238,7 +247,7 @@ export function VideoPlayerControlBar(): ReactElement<FC> {
           </DropdownMenu>
           <TooltipContent
             className="text-white"
-            container={isFullscreen ? containerRef.current : document.body}
+            container={isFullscreen ? containerRef.current : bodyElem}
           >
             Volume
           </TooltipContent>
@@ -261,10 +270,10 @@ export function VideoPlayerControlBar(): ReactElement<FC> {
               }
             />
             <DropdownMenuContent
-              container={containerRef}
+              container={isFullscreen ? containerRef.current : bodyElem}
               side="top"
               align="center"
-              className="min-w-[6rem]"
+              className="min-w-24"
             >
               <DropdownMenuGroup>
                 <DropdownMenuLabel>Speed</DropdownMenuLabel>
@@ -290,7 +299,7 @@ export function VideoPlayerControlBar(): ReactElement<FC> {
           </DropdownMenu>
           <TooltipContent
             className="text-white"
-            container={isFullscreen ? containerRef.current : document.body}
+            container={isFullscreen ? containerRef.current : bodyElem}
           >
             Playback Speed
           </TooltipContent>
@@ -311,7 +320,7 @@ export function VideoPlayerControlBar(): ReactElement<FC> {
           />
           <TooltipContent
             className="text-white"
-            container={isFullscreen ? containerRef.current : document.body}
+            container={isFullscreen ? containerRef.current : bodyElem}
           >
             {!isFullscreen ? "Enter Fullscreen" : "Exit Fullscreen"}
           </TooltipContent>

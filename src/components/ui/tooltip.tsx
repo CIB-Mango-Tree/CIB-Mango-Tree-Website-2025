@@ -46,8 +46,9 @@ function TooltipContent({
       | null
       | undefined;
   }) {
+  const bodyElem = typeof document !== "undefined" ? document.body : null;
   return (
-    <TooltipPrimitive.Portal container={container || document.body}>
+    <TooltipPrimitive.Portal container={container || bodyElem}>
       <TooltipPrimitive.Positioner
         align={align}
         alignOffset={alignOffset}
