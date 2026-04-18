@@ -92,6 +92,9 @@ export function VideoPlayerControlBar(): ReactElement<FC> {
   const isSpeedMenuOpen = useVideoPlayerContext<boolean>(
     (store: VideoPlayerStore): boolean => store.state.events.isSpeedMenuOpen,
   );
+  const isMouseOver = useVideoPlayerContext<boolean>(
+    (store: VideoPlayerStore): boolean => store.state.events.isMouseOver,
+  );
   const playbackRate = useVideoPlayerContext<number>(
     (store: VideoPlayerStore): number => store.state.values.playbackRate,
   );
@@ -107,6 +110,14 @@ export function VideoPlayerControlBar(): ReactElement<FC> {
   const buffered = useVideoPlayerContext<number>(
     (store: VideoPlayerStore): number => store.state.values.buffered,
   );
+  const handleMouseEnter = useCallback((): void => {
+    if (isMobilePointer) return;
+    setEvent("isMouseOverControlBar", true);
+  }, [isMobilePointer]);
+  const handleMouseLeave = useCallback((): void => {
+    if (isMobilePointer) return;
+    setEvent("isMouseOverControlBar", false);
+  }, [isMobilePointer]);
   const handleTrackChange = useCallback(
     (value: number | readonly number[]): void => {
       if (videoRef.current == null) return;
@@ -175,13 +186,24 @@ export function VideoPlayerControlBar(): ReactElement<FC> {
     setEvent("isFullscreen", true);
   }, []);
   const bodyElem: HTMLElement | null = mounted ? document.body : null;
+  const videoControlBarContainerClasses: string = cn(
+    "absolute left-0 right-0 bottom-4 grid grid-cols-[auto_1fr_auto] grid-flow-col gap-x-4 px-4 w-full transition-opacity ease-linear duration-200 z-20",
+    {
+      "opacity-100": isMouseOver,
+      "opacity-0": !isMouseOver,
+    },
+  );
 
   useEffect((): void => {
     setMounted(true);
   }, []);
 
   return (
-    <div className="absolute left-0 right-0 bottom-4 grid grid-cols-[auto_1fr_auto] grid-flow-col gap-x-4 px-4 w-full z-20">
+    <div
+      className={videoControlBarContainerClasses}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
       <div className="grid grid-flow-col items-center justify-center gap-x-2">
         <Tooltip>
           <TooltipTrigger

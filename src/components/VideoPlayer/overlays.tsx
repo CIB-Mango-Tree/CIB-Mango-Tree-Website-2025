@@ -1,4 +1,4 @@
-import { useRef, useEffect } from "react";
+import { useEffect } from "react";
 import { useVideoPlayerContext } from "@lib/contexts/video";
 import { usePlayToggle } from "@hooks/use-play-toggle";
 import { Play, Pause, RotateCcw } from "lucide-react";
@@ -14,7 +14,6 @@ import type {
 
 export function VideoPlayerIconOverlay(): ReactElement<FC> {
   const handlePlayToggle = usePlayToggle();
-  const iconFlashTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
   const iconFlash = useVideoPlayerContext<IconFlash>(
     (state: VideoPlayerStore): IconFlash => state.state.values.iconFlash,
   );

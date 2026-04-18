@@ -15,6 +15,8 @@ export type VideoPlayerState = {
     isFullscreen: boolean;
     isVolumeMenuOpen: boolean;
     isSpeedMenuOpen: boolean;
+    isMouseOver: boolean;
+    isMouseOverControlBar: boolean;
     fullscreenTransition: boolean;
   };
   values: {
@@ -61,6 +63,8 @@ export const initialState: VideoPlayerState = {
     isFullscreen: false,
     isVolumeMenuOpen: false,
     isSpeedMenuOpen: false,
+    isMouseOver: false,
+    isMouseOverControlBar: false,
     fullscreenTransition: false,
   },
   values: {

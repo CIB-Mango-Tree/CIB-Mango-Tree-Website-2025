@@ -1,10 +1,11 @@
+import { useRef, useCallback } from "react";
 import { useVideoPlayerContext, useVideoPlayerRefs } from "@lib/contexts/video";
 import { usingMobilePointer } from "@lib/mobile";
 import { useIsMobile } from "@hooks/use-mobile";
 import { ArrowLeftRight, Smartphone } from "lucide-react";
 import { cn } from "@utils/classMerge";
 import type { ReactElement, FC, PropsWithChildren } from "react";
-import type { VideoPlayerStore } from "@lib/stores/video";
+import type { VideoPlayerStore, VideoPlayerActions } from "@lib/stores/video";
 
 export interface VideoPlayerContainerProps extends PropsWithChildren {
   className?: string;
@@ -17,9 +18,44 @@ export function VideoPlayerContainer({
   const { containerRef } = useVideoPlayerRefs();
   const isMobile = useIsMobile();
   const isMobilePointer = usingMobilePointer();
+  const timeoutRef = useRef<number>(null);
   const isFullscreen = useVideoPlayerContext<boolean>(
     (state: VideoPlayerStore): boolean => state.state.events.isFullscreen,
   );
+  const isMouseOver = useVideoPlayerContext<boolean>(
+    (state: VideoPlayerStore): boolean => state.state.events.isMouseOver,
+  );
+  const isMouseOverControlBar = useVideoPlayerContext<boolean>(
+    (state: VideoPlayerStore): boolean =>
+      state.state.events.isMouseOverControlBar,
+  );
+  const isVolumeMenuOpen = useVideoPlayerContext<boolean>(
+    (state: VideoPlayerStore): boolean => state.state.events.isVolumeMenuOpen,
+  );
+  const isSpeedMenuOpen = useVideoPlayerContext<boolean>(
+    (state: VideoPlayerStore): boolean => state.state.events.isSpeedMenuOpen,
+  );
+  const setEvent = useVideoPlayerContext<VideoPlayerActions["setEvent"]>(
+    (store: VideoPlayerStore): VideoPlayerActions["setEvent"] =>
+      store.actions.setEvent,
+  );
+  const handleMouseMove = useCallback((): void => {
+    if (timeoutRef.current != null) clearTimeout(timeoutRef.current);
+    if (!isMouseOver) setEvent("isMouseOver", true);
+
+    timeoutRef.current = setTimeout((): void => {
+      if (isMouseOverControlBar) return;
+      if (isVolumeMenuOpen && isSpeedMenuOpen) return;
+
+      setEvent("isMouseOver", false);
+    }, 1250);
+  }, [isSpeedMenuOpen, isVolumeMenuOpen, isMouseOver, isMouseOverControlBar]);
+  const handleMouseLeave = useCallback((): void => {
+    if (timeoutRef.current != null) clearTimeout(timeoutRef.current);
+    if (isVolumeMenuOpen && isSpeedMenuOpen) return;
+
+    setEvent("isMouseOver", false);
+  }, [isSpeedMenuOpen, isVolumeMenuOpen]);
   const containerClasses: string = cn(
     "relative overflow-visible aspect-video w-full",
     className,
@@ -31,7 +67,12 @@ export function VideoPlayerContainer({
 
   if (!isMobilePointer || !isMobile) {
     return (
-      <div ref={containerRef} className={containerClasses}>
+      <div
+        ref={containerRef}
+        className={containerClasses}
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
+      >
         {children}
       </div>
     );
@@ -46,6 +87,8 @@ export function VideoPlayerContainer({
       <div
         ref={containerRef}
         className={cn(containerClasses, "max-md:rounded-none")}
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
       >
         {children}
       </div>
