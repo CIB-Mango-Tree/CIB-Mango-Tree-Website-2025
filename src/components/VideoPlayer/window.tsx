@@ -187,7 +187,7 @@ export function VideoPlayerWindow({
     },
   );
   const videoClasses: string = cn("w-full h-auto object-cover z-0", {
-    "rounded-none": isFullscreen,
+    "rounded-none absolute top-1/2 left-1/2 -translate-1/2": isFullscreen,
     "rounded-xl": !isFullscreen,
   });
 
