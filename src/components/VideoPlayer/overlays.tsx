@@ -3,6 +3,7 @@ import { useVideoPlayerContext } from "@lib/contexts/video";
 import { usePlayToggle } from "@hooks/use-play-toggle";
 import { Play, Pause, RotateCcw } from "lucide-react";
 import { Button } from "@components/ui/button";
+import { Spinner } from "@components/ui/spinner";
 import { cn } from "@utils/classMerge";
 import { EMPTY } from "@utils/constants";
 import type { ReactElement, FC } from "react";
@@ -43,7 +44,7 @@ export function VideoPlayerIconOverlay(): ReactElement<FC> {
   );
 
   useEffect((): (() => void) | undefined => {
-    if (iconFlash === EMPTY) return;
+    if (iconFlash === EMPTY || iconFlash === "loading") return;
     const timeout = setTimeout((): void => {
       setValue("iconFlash", EMPTY);
     }, 700);
@@ -82,6 +83,9 @@ export function VideoPlayerIconOverlay(): ReactElement<FC> {
           )}
           {iconFlash === "play" && (
             <Play fill="white" stroke="white" className="size-24" />
+          )}
+          {iconFlash === "loading" && (
+            <Spinner stroke="white" className="size-24" />
           )}
         </div>
       )}

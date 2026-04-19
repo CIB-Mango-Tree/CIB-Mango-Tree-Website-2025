@@ -3,7 +3,7 @@ import { immer } from "zustand/middleware/immer";
 import { EMPTY } from "@utils/constants";
 import type { WritableDraft } from "immer";
 
-export type IconFlash = "play" | "pause" | typeof EMPTY;
+export type IconFlash = "play" | "pause" | "loading" | typeof EMPTY;
 export type VideoPlayerState = {
   events: {
     hasStarted: boolean;

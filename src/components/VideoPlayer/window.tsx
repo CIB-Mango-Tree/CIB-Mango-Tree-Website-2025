@@ -6,7 +6,7 @@ import {
 } from "@lib/contexts/video";
 import { usePlayToggle } from "@hooks/use-play-toggle";
 import { cn } from "@utils/classMerge";
-import { VIDEO_PLAYER_VOLUME } from "@utils/constants";
+import { VIDEO_PLAYER_VOLUME, EMPTY } from "@utils/constants";
 import type { ReactElement, FC } from "react";
 import type { VideoPlayerStore, VideoPlayerActions } from "@lib/stores/video";
 
@@ -30,13 +30,16 @@ export function VideoPlayerWindow({
   const handlePlayToggle = usePlayToggle();
   const { videoRef, containerRef } = useVideoPlayerRefs();
   const store = useVideoPlayerContextStore();
-  const time: number = useVideoPlayerContext(
+  const time = useVideoPlayerContext<number>(
     (state: VideoPlayerStore): number => state.state.values.time,
   );
-  const isFullscreen: boolean = useVideoPlayerContext(
+  const isFullscreen = useVideoPlayerContext<boolean>(
     (state: VideoPlayerStore): boolean => state.state.events.isFullscreen,
   );
-  const hasStarted: boolean = useVideoPlayerContext(
+  const isWaiting = useVideoPlayerContext<boolean>(
+    (state: VideoPlayerStore): boolean => state.state.events.isWaiting,
+  );
+  const hasStarted = useVideoPlayerContext<boolean>(
     (state: VideoPlayerStore): boolean => state.state.events.hasStarted,
   );
   const setEvent = useVideoPlayerContext<VideoPlayerActions["setEvent"]>(
@@ -160,6 +163,22 @@ export function VideoPlayerWindow({
     if (videoRef.current == null) return;
     setValue("duration", videoRef.current.duration);
   }, []);
+  const handleWaiting = useCallback((): void => {
+    setValue("iconFlash", "loading");
+    setEvents({
+      isWaiting: true,
+      isPlaying: false,
+    });
+  }, []);
+  const handlePlaying = useCallback((): void => {
+    if (!isWaiting) return;
+
+    setEvents({
+      isWaiting: false,
+      isPlaying: true,
+    });
+    setValue("iconFlash", EMPTY);
+  }, [isWaiting]);
   const posterClasses: string = cn(
     "absolute inset-0 w-full h-full object-cover z-10 pointer-events-none",
     {
@@ -213,6 +232,9 @@ export function VideoPlayerWindow({
         preload="metadata"
         onTimeUpdate={handleTimeUpdate}
         onProgress={handleProgress}
+        onWaiting={handleWaiting}
+        onPlay={handlePlaying}
+        onPlaying={handlePlaying}
         onClick={handlePlayToggle}
         onEnded={handleEnded}
         onLoadedMetadata={handleLoadedMetadata}
