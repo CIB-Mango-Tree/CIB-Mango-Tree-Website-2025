@@ -153,14 +153,14 @@ export function VideoPlayerWindow({
     setValue("duration", videoRef.current.duration);
   }, []);
   const posterClasses: string = cn(
-    "absolute inset-0 w-full h-auto object-cover aspect-video z-10 pointer-events-none",
+    "absolute inset-0 h-full w-full object-cover z-10 pointer-events-none",
     {
       "rounded-none": isFullscreen,
       "rounded-xl": !isFullscreen,
     },
   );
   const videoClasses: string = cn(
-    "w-full h-auto aspect-video object-cover z-0",
+    "block h-full w-full object-cover z-0",
     {
       "rounded-none": isFullscreen,
       "rounded-xl": !isFullscreen,

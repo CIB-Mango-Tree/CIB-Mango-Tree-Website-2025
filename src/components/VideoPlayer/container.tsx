@@ -18,7 +18,7 @@ export function VideoPlayerContainer({
   const isFullscreen = useVideoPlayerContext<boolean>(
     (state: VideoPlayerStore): boolean => state.state.events.isFullscreen,
   );
-  const containerClasses: string = cn("relative overflow-visible", className, {
+  const containerClasses: string = cn("relative aspect-video overflow-visible", className, {
     "rounded-none": isFullscreen,
     "rounded-xl": !isFullscreen,
   });
