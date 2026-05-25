@@ -1,54 +1,17 @@
 ---
-import {
-  Download,
-  BookOpen,
-  Users,
-  Heart,
-  Calendar,
-  Video,
-  MapPin,
-  icons,
-} from "@lucide/astro";
+import { Calendar, Video, MapPin } from "@lucide/astro";
 import CTAButton from "@components/LinkButtons/CTAButton.astro";
+import AstroIcon from "@components/AstroIcon.astro";
 import type {
   LinkButtons,
   MeetingScheduleItem,
 } from "@lib/types/payload-types";
+import type { IconKey } from "@lib/types/icon";
 
 interface Props {
   buttons?: LinkButtons["items"];
   meetingSchedule?: Array<MeetingScheduleItem>;
 }
-
-type MeetingInfo = {
-  name: string;
-  day: string;
-  time: string;
-  type: "virtual" | "in-person";
-  link?: string;
-};
-
-const meetings: Array<MeetingInfo> = [
-  {
-    name: "Engagement Scrum",
-    day: "Tuesday",
-    time: "7-8pm",
-    type: "virtual" as const,
-  },
-  {
-    name: "Product Scrum",
-    day: "Thursday",
-    time: "7-8pm",
-    type: "virtual" as const,
-  },
-  {
-    name: "Civic Tech DC Project Night",
-    day: "2nd & 4th Wed",
-    time: "Evening",
-    type: "in-person" as const,
-    link: "https://lu.ma/civic-tech-dc",
-  },
-];
 
 const { meetingSchedule, buttons } = Astro.props;
 ---
@@ -58,15 +21,13 @@ const { meetingSchedule, buttons } = Astro.props;
     <h2 class="font-bold text-3xl md:text-4xl text-white mb-6">
       Ready to Make an Impact?
     </h2>
-    <p class="text-white/80 text-lg mb-8 w-full md:w-2xl">
+    <p class="text-white/80 text-lg mb-8 w-full">
       Join our community of researchers, developers, and citizens working to
       protect digital democracy.
     </p>
 
     <!-- Compact Meeting Schedule -->
-    <div
-      class="flex flex-col items-center justify-center mb-12 w-full md:w-3xl"
-    >
+    <div class="flex flex-col items-center justify-center mb-12 w-full">
       <h3
         class="text-white/90 text-sm font-semibold uppercase tracking-wider mb-4 flex items-center justify-center gap-2"
       >
@@ -76,21 +37,21 @@ const { meetingSchedule, buttons } = Astro.props;
       <div class="flex gap-3 flex-col md:flex-row justify-center">
         {
           meetingSchedule != null &&
-            meetingSchedule.map(
+            meetingSchedule.reverse().map(
               (meeting: MeetingScheduleItem): HTMLDivElement => (
-                <div class="flex items-center gap-3 transition-all transform-gpu duration-300 ease-linear bg-white/10 backdrop-blur-sm px-4 py-3 border border-white/20 hover:bg-[rgba(255,255,255,0.15)] hover:-translate-y-0.5">
+                <div class="flex items-center gap-3 transition-all transform-gpu duration-300 ease-linear bg-white/10 backdrop-blur-sm px-4 py-3 border border-white/20 hover:bg-white/15 hover:-translate-y-0.5">
                   {meeting.type === "virtual" ? (
                     <Video class="w-4 h-4 text-cyan-300 shrink-0" />
                   ) : (
                     <MapPin class="w-4 h-4 text-mango-yellow shrink-0" />
                   )}
-                  <div class="text-left">
-                    <div class="text-white text-sm font-medium">
+                  <div class="flex flex-col text-left">
+                    <span class="text-white text-sm font-medium">
                       {meeting.name}
-                    </div>
-                    <div class="text-white/60 text-xs">
+                    </span>
+                    <span class="text-white/60 text-xs">
                       {meeting.day} @ {meeting.time}
-                    </div>
+                    </span>
                   </div>
                   {meeting.link && (
                     <a
@@ -110,42 +71,18 @@ const { meetingSchedule, buttons } = Astro.props;
     </div>
 
     <div
-      class="flex flex-col sm:flex-row gap-4 justify-center items-center flex-wrap"
+      class="flex flex-col sm:flex-row gap-4 justify-center items-center flex-wrap w-full"
     >
       {
         buttons?.map((item): HTMLElement => {
           return (
             <CTAButton href={item.link} variant={item.type}>
+              {item.icon != null && <AstroIcon name={item.icon as IconKey} />}
               {item.name}
             </CTAButton>
           );
         })
       }
-      <!-- Primary CTA - Download (most prominent) -->
-      <CTAButton href="/download" variant="secondary">
-        <Download class="w-5 h-5" />
-        Download Now
-      </CTAButton>
-      <!-- Secondary CTA - Get Involved -->
-      <CTAButton href="/get-involved" variant="gold">
-        <Users class="w-5 h-5" />
-        Get Involved
-      </CTAButton>
-      <!-- Tertiary CTA - Documentation -->
-      <CTAButton href="/docs" variant="transparent-secondary">
-        <BookOpen class="w-5 h-5" />
-        View Docs
-      </CTAButton>
-      <!-- Donate CTA -->
-      <CTAButton
-        href="https://www.civictechdc.org/donate"
-        target="_blank"
-        rel="noopener noreferrer"
-        variant="transparent-gold"
-      >
-        <Heart class="w-5 h-5" />
-        Donate
-      </CTAButton>
     </div>
   </div>
 </section>

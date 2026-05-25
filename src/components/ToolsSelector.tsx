@@ -1,7 +1,9 @@
-import { FileText, Hash, Settings, ChevronRight } from "lucide-react";
+import { ChevronRight } from "lucide-react";
+import { DynamicIcon } from "lucide-react/dynamic";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@components/ui/tabs";
+import { pascalToKebab } from "@utils/kebab";
 import type { FC, ReactElement } from "react";
-import type {Selector} from "@lib/types/payload-types";
+import type { Selector } from "@lib/types/payload-types";
 
 export interface Tool {
   id: string;
@@ -38,12 +40,6 @@ export const TOOLS: Array<Tool> = [
   },
 ];
 
-const iconMap: Record<string, ReactElement<FC>> = {
-  "file-text": <FileText className="size-6" />,
-  hash: <Hash className="size-6" />,
-  settings: <Settings className="size-6" />,
-};
-
 export default function ToolsSelector({
   tools,
 }: ToolSelectorProps): ReactElement<FC> {
@@ -68,7 +64,7 @@ export default function ToolsSelector({
               >
                 <div className="flex flex-row items-center gap-3">
                   <span className="inline-flex transition-transform transform-gpu duration-300 ease-default group-data-active/trigger:text-white data-[state=active]:text-white not-group-data-active/trigger:group-hover/trigger:scale-120 not-group-data-active/trigger:group-hover/trigger:-rotate-[5deg] data-active:scale-100 data-active:rotate-0">
-                    {iconMap[tool.icon]}
+                    <DynamicIcon name={pascalToKebab(tool.icon)} />
                   </span>
                   <span className="font-medium text-left text-base group-data-active/trigger:text-white">
                     {tool.title}

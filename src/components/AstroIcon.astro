@@ -1,9 +1,8 @@
 ---
 import { icons } from "@lucide/astro";
 import type { IconProps } from "@lucide/astro";
+import type { IconKey, IconType } from "@lib/types/icon";
 
-type IconType = typeof icons;
-type IconKey = keyof IconType;
 interface Props extends IconProps {
   name: IconKey;
   class?: string;
