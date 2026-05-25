@@ -7,8 +7,18 @@ import {
   Calendar,
   Video,
   MapPin,
+  icons,
 } from "@lucide/astro";
 import CTAButton from "@components/LinkButtons/CTAButton.astro";
+import type {
+  LinkButtons,
+  MeetingScheduleItem,
+} from "@lib/types/payload-types";
+
+interface Props {
+  buttons?: LinkButtons["items"];
+  meetingSchedule?: Array<MeetingScheduleItem>;
+}
 
 type MeetingInfo = {
   name: string;
@@ -39,6 +49,8 @@ const meetings: Array<MeetingInfo> = [
     link: "https://lu.ma/civic-tech-dc",
   },
 ];
+
+const { meetingSchedule, buttons } = Astro.props;
 ---
 
 <section class="flex-container-wrapper bg-mango-green-dark">
@@ -63,35 +75,36 @@ const meetings: Array<MeetingInfo> = [
       </h3>
       <div class="flex gap-3 flex-col md:flex-row justify-center">
         {
-          meetings.map(
-            (meeting: MeetingInfo): HTMLDivElement => (
-              <div class="flex items-center gap-3 transition-all transform-gpu duration-300 ease-linear bg-white/10 backdrop-blur-sm px-4 py-3 border border-white/20 hover:bg-[rgba(255,255,255,0.15)] hover:-translate-y-0.5">
-                {meeting.type === "virtual" ? (
-                  <Video class="w-4 h-4 text-cyan-300 shrink-0" />
-                ) : (
-                  <MapPin class="w-4 h-4 text-mango-yellow shrink-0" />
-                )}
-                <div class="text-left">
-                  <div class="text-white text-sm font-medium">
-                    {meeting.name}
+          meetingSchedule != null &&
+            meetingSchedule.map(
+              (meeting: MeetingScheduleItem): HTMLDivElement => (
+                <div class="flex items-center gap-3 transition-all transform-gpu duration-300 ease-linear bg-white/10 backdrop-blur-sm px-4 py-3 border border-white/20 hover:bg-[rgba(255,255,255,0.15)] hover:-translate-y-0.5">
+                  {meeting.type === "virtual" ? (
+                    <Video class="w-4 h-4 text-cyan-300 shrink-0" />
+                  ) : (
+                    <MapPin class="w-4 h-4 text-mango-yellow shrink-0" />
+                  )}
+                  <div class="text-left">
+                    <div class="text-white text-sm font-medium">
+                      {meeting.name}
+                    </div>
+                    <div class="text-white/60 text-xs">
+                      {meeting.day} @ {meeting.time}
+                    </div>
                   </div>
-                  <div class="text-white/60 text-xs">
-                    {meeting.day} @ {meeting.time}
-                  </div>
+                  {meeting.link && (
+                    <a
+                      href={meeting.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="text-mango-yellow hover:text-white text-xs font-medium ml-2"
+                    >
+                      RSVP →
+                    </a>
+                  )}
                 </div>
-                {meeting.link && (
-                  <a
-                    href={meeting.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="text-mango-yellow hover:text-white text-xs font-medium ml-2"
-                  >
-                    RSVP →
-                  </a>
-                )}
-              </div>
-            ),
-          )
+              ),
+            )
         }
       </div>
     </div>
@@ -99,27 +112,27 @@ const meetings: Array<MeetingInfo> = [
     <div
       class="flex flex-col sm:flex-row gap-4 justify-center items-center flex-wrap"
     >
+      {
+        buttons?.map((item): HTMLElement => {
+          return (
+            <CTAButton href={item.link} variant={item.type}>
+              {item.name}
+            </CTAButton>
+          );
+        })
+      }
       <!-- Primary CTA - Download (most prominent) -->
-      <CTAButton
-        href="/download"
-        class="bg-white text-mango-green-dark shadow-[0_0.25rem_1.0rem_rgba(255,255,255,0.3)] hover:shadow-[0_0.50rem_1.50rem_rgba(255,255,255,0.4)]"
-      >
+      <CTAButton href="/download" variant="secondary">
         <Download class="w-5 h-5" />
         Download Now
       </CTAButton>
       <!-- Secondary CTA - Get Involved -->
-      <CTAButton
-        href="/get-involved"
-        class="bg-mango-yellow shadow-[0_0.25rem_1.0rem_rgba(255,224,153,0.3)] hover:shadow-[0_0.50rem_1.50rem_rgba(255,224,153,0.4)] hover:bg-[#ffd966]"
-      >
+      <CTAButton href="/get-involved" variant="gold">
         <Users class="w-5 h-5" />
         Get Involved
       </CTAButton>
       <!-- Tertiary CTA - Documentation -->
-      <CTAButton
-        href="/docs"
-        class="bg-transparent text-white border-2 border-white/50 hover:bg-[rgba(255,255,255,0.1)] hover:border-white"
-      >
+      <CTAButton href="/docs" variant="transparent-secondary">
         <BookOpen class="w-5 h-5" />
         View Docs
       </CTAButton>
@@ -128,7 +141,7 @@ const meetings: Array<MeetingInfo> = [
         href="https://www.civictechdc.org/donate"
         target="_blank"
         rel="noopener noreferrer"
-        class="bg-transparent text-white border-2 border-mango-yellow shadow-[0_0.25rem_1.0rem_rgba(255,224,153,0.2)] hover:bg-[rgba(255,224,153,0.15)] hover:border-[#ffd966] hover:shadow-[0_0.50rem_1.50rem_rgba(255,224,153,0.3)]"
+        variant="transparent-gold"
       >
         <Heart class="w-5 h-5" />
         Donate

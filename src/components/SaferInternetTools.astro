@@ -1,6 +1,13 @@
 ---
-import ToolsSelector, { TOOLS } from "@components/ToolsSelector";
+import ToolsSelector from "@components/ToolsSelector";
 import mango_tree from "@assets/mangotreesway.gif";
+import type { Selector } from "@lib/types/payload-types";
+
+interface Props {
+  toolSelectorData?: Selector["tabs"] | null;
+}
+
+const { toolSelectorData } = Astro.props;
 ---
 
 <section class="flex-container-wrapper bg-background">
@@ -34,6 +41,10 @@ import mango_tree from "@assets/mangotreesway.gif";
     </div>
 
     <!-- Methodologies Selector -->
-    <ToolsSelector tools={TOOLS} client:load />
+    {
+      toolSelectorData != null && toolSelectorData.length > 0 && (
+        <ToolsSelector tools={toolSelectorData} client:load />
+      )
+    }
   </div>
 </section>

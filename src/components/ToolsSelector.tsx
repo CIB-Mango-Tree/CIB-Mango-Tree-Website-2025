@@ -1,6 +1,7 @@
 import { FileText, Hash, Settings, ChevronRight } from "lucide-react";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@components/ui/tabs";
 import type { FC, ReactElement } from "react";
+import type {Selector} from "@lib/types/payload-types";
 
 export interface Tool {
   id: string;
@@ -10,7 +11,7 @@ export interface Tool {
 }
 
 export interface ToolSelectorProps {
-  tools: Array<Tool>;
+  tools: Selector["tabs"];
 }
 
 export const TOOLS: Array<Tool> = [
@@ -58,7 +59,7 @@ export default function ToolsSelector({
           variant="line"
           className="rounded-none bg-white p-0 w-full gap-0 overflow-x-hidden"
         >
-          {tools.map((tool: Tool): ReactElement<FC> => {
+          {tools.map((tool: Selector["tabs"][number]): ReactElement<FC> => {
             return (
               <TabsTrigger
                 key={tool.id}
@@ -70,7 +71,7 @@ export default function ToolsSelector({
                     {iconMap[tool.icon]}
                   </span>
                   <span className="font-medium text-left text-base group-data-active/trigger:text-white">
-                    {tool.name}
+                    {tool.title}
                   </span>
                 </div>
                 <span className="shrink-0 text-mango-green-dark transition-transform transform-gpu duration-250 ease-default group-data-active/trigger:text-white">
@@ -82,18 +83,18 @@ export default function ToolsSelector({
         </TabsList>
       </div>
       <div className="flex flex-1 w-full relative h-64 border-l-4 border-l-mango-green-dark bg-[#F8F6F2] ">
-        {tools.map((tool: Tool): ReactElement<FC> => {
+        {tools.map((tool: Selector["tabs"][number]): ReactElement<FC> => {
           return (
             <TabsContent
-              key={tool.name}
+              key={tool.title}
               value={tool.id}
               className="flex flex-col p-8 transition-all transform-gpu animate-fade-in-accordion overflow-y-auto h-full"
             >
               <h4 className="text-xl mb-4 font-bold text-mango-green-dark tracking-tight">
-                {tool.name}
+                {tool.title}
               </h4>
               <p className="leading-relaxed max-w-md text-[#5A6B52] text-4">
-                {tool.description}
+                {tool.content.root.children[0].children[0].text}
               </p>
             </TabsContent>
           );

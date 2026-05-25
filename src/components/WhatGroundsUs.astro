@@ -1,5 +1,12 @@
 ---
-import teamMeeting from "@assets/team-meeting.jpg";
+import { Image } from "astro:assets";
+import type { Media } from "@lib/types/payload-types";
+
+interface Props {
+  mediaBlock?: Media;
+}
+
+const { mediaBlock } = Astro.props;
 ---
 
 <section class="flex-container-wrapper bg-background">
@@ -14,15 +21,20 @@ import teamMeeting from "@assets/team-meeting.jpg";
         join in helping maintain a free and healthy online discourse.
       </p>
     </div>
-
-    <div class="flex justify-center items-center mt-16">
-      <div class="w-full overflow-hidden shadow-lg">
-        <img
-          src={teamMeeting.src}
-          alt="Team meeting"
-          class="w-full h-auto object-cover"
-        />
-      </div>
-    </div>
+    {
+      mediaBlock != null && (
+        <div class="flex justify-center items-center mt-16">
+          <div class="w-full overflow-hidden shadow-lg">
+            <Image
+              src={`https://api.cibmangotree.org${mediaBlock.url}`}
+              alt="Team meeting"
+              class="w-full h-auto object-cover"
+              width={mediaBlock.width as number}
+              height={mediaBlock.height as number}
+            />
+          </div>
+        </div>
+      )
+    }
   </div>
 </section>
