@@ -1,0 +1,13 @@
+---
+import { convertLexicalToHTML } from "@payloadcms/richtext-lexical/html";
+import type { SerializedEditorState } from "@payloadcms/richtext-lexical/lexical";
+
+interface Props {
+  data: SerializedEditorState;
+}
+
+const { data } = Astro.props;
+const parsedHTML: string = convertLexicalToHTML({ data });
+---
+
+<Fragment set:html={parsedHTML} />
