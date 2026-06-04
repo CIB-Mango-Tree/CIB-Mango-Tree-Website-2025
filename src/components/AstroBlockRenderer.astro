@@ -1,13 +1,125 @@
 ---
-import { convertLexicalToHTML } from "@payloadcms/richtext-lexical/html";
+import {
+  convertLexicalToHTML,
+  type HTMLConvertersFunction,
+} from "@payloadcms/richtext-lexical/html";
+import { escapeHTML } from "astro/runtime/server/escape.js";
+import { cn } from "@utils/classMerge";
 import type { SerializedEditorState } from "@payloadcms/richtext-lexical/lexical";
 
 interface Props {
   data: SerializedEditorState;
+  class?: string;
 }
 
-const { data } = Astro.props;
-const parsedHTML: string = convertLexicalToHTML({ data });
+const { data, class: className } = Astro.props;
+
+const baseHeadingClasses: Record<string, string> = {
+  h1: "font-bold text-3xl md:text-4xl text-mango-green-dark mt-8 mb-4 first:mt-0",
+  h2: "font-bold text-2xl md:text-3xl text-mango-green-dark mt-8 mb-4 first:mt-0",
+  h3: "font-bold text-xl md:text-2xl text-mango-green-darker mt-6 mb-3 first:mt-0",
+  h4: "font-semibold text-lg text-mango-green-darker mt-6 mb-2 first:mt-0",
+  h5: "font-semibold text-base text-mango-green-darker mt-4 mb-2 first:mt-0",
+  h6: "font-semibold text-sm uppercase tracking-wider text-muted mt-4 mb-2 first:mt-0",
+};
+
+const linkClasses: string =
+  "text-mango-green-dark underline underline-offset-3 transition-colors transform-gpu duration-200 ease-linear hover:text-mango-green-darkest";
+
+const converters: HTMLConvertersFunction = ({ defaultConverters }) => ({
+  ...defaultConverters,
+  paragraph: ({ node, nodesToHTML }) => {
+    const children: string = nodesToHTML({ nodes: node.children }).join("");
+
+    if (children.length === 0) return "";
+
+    const paragraphClasses: string = cn(
+      "text-foreground leading-relaxed mb-4 last:mb-0",
+      node.format === "center" && "text-center",
+      node.format === "left" && "text-left",
+      node.format === "right" && "text-right",
+    );
+
+    return `<p class="${paragraphClasses}">${children}</p>`;
+  },
+  heading: ({ node, nodesToHTML }) => {
+    const children: string = nodesToHTML({ nodes: node.children }).join("");
+    const tag: string = baseHeadingClasses[node.tag] != null ? node.tag : "h1";
+    const headingClasses: string = cn(
+      baseHeadingClasses[node.tag],
+      node.format === "center" && "text-center",
+      node.format === "left" && "text-left",
+      node.format === "right" && "text-right",
+    );
+
+    return `<${tag} class="${headingClasses}">${children}</${tag}>`;
+  },
+  list: ({ node, nodesToHTML }) => {
+    const children: string = nodesToHTML({ nodes: node.children }).join("");
+    const tag: string = node.tag === "ol" ? "ol" : "ul";
+    const listClasses: string = cn(
+      "pl-6 mb-4 space-y-1 text-foreground marker:text-mango-green-dark",
+      tag === "ol" ? "list-decimal" : "list-disc",
+    );
+
+    return `<${tag} class="${listClasses}">${children}</${tag}>`;
+  },
+  listitem: ({ node, nodesToHTML }) => {
+    const children: string = nodesToHTML({ nodes: node.children }).join("");
+
+    return `<li class="leading-relaxed">${children}</li>`;
+  },
+  quote: ({ node, nodesToHTML }) => {
+    const children: string = nodesToHTML({ nodes: node.children }).join("");
+
+    return `<blockquote class="border-l-4 border-mango-green-light bg-background-alt/40 pl-4 py-2 my-6 text-muted italic">${children}</blockquote>`;
+  },
+  link: ({ node, nodesToHTML }) => {
+    const children: string = nodesToHTML({ nodes: node.children }).join("");
+    const href: string = encodeURI(node.fields.url ?? "#");
+    const targetAttr: string = node.fields.newTab
+      ? ' target="_blank" rel="noopener noreferrer"'
+      : "";
+
+    return `<a href="${href}"${targetAttr} class="${linkClasses}">${children}</a>`;
+  },
+  autolink: ({ node, nodesToHTML }) => {
+    const children: string = nodesToHTML({ nodes: node.children }).join("");
+    const href: string = encodeURI(node.fields.url ?? "#");
+    const targetAttr: string = node.fields.newTab
+      ? ' target="_blank" rel="noopener noreferrer"'
+      : "";
+
+    return `<a href="${href}"${targetAttr} class="${linkClasses}">${children}</a>`;
+  },
+  upload: ({ node }) => {
+    const uploadNode: any = node;
+
+    if (typeof uploadNode.value !== "object" || uploadNode.value == null)
+      return "";
+
+    const uploadDoc: any = uploadNode.value;
+    const alt: string = escapeHTML(
+      uploadNode.fields?.alt ?? uploadDoc?.alt ?? "",
+    );
+    const url: string = encodeURI(uploadDoc.url ?? "");
+
+    if (
+      typeof uploadDoc.mimeType !== "string" ||
+      !uploadDoc.mimeType.startsWith("image")
+    )
+      return `<a href="${url}" rel="noopener noreferrer" class="${linkClasses}">${escapeHTML(uploadDoc.filename ?? "")}</a>`;
+
+    return `<img src="${url}" alt="${alt}" width="${escapeHTML(String(uploadDoc.width ?? ""))}" height="${escapeHTML(String(uploadDoc.height ?? ""))}" loading="lazy" class="my-6 max-w-full h-auto" />`;
+  },
+  horizontalrule: `<hr class="my-8 border-0 border-t border-border" />`,
+});
+
+const parsedHTML: string = convertLexicalToHTML({
+  data,
+  converters,
+  className: cn("w-full", className),
+});
 ---
 
 <Fragment set:html={parsedHTML} />
