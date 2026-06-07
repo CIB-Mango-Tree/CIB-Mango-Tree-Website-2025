@@ -1,4 +1,5 @@
 ---
+import { baseButtonVariants } from "@lib/variants/button";
 import { resolveClasses } from "@utils/classMerge";
 
 interface Props {
@@ -8,6 +9,13 @@ interface Props {
   rel?: string;
   hoverAnimation?: boolean;
   padding?: "xs" | "sm" | "md" | "lg";
+  variant?:
+    | "primary"
+    | "secondary"
+    | "transparent"
+    | "gold"
+    | "transparent-secondary"
+    | "transparent-gold";
 }
 
 const {
@@ -15,18 +23,19 @@ const {
   target,
   rel,
   hoverAnimation,
+  variant,
   padding = "md",
   class: className,
 } = Astro.props;
 const buttonClasses: string = resolveClasses(
-  "inline-flex items-center gap-2 font-semibold transition-all transform-gpu",
+  baseButtonVariants({ variant }),
   className,
   {
-    "hover:-translate-y-1 hover:shadow-lg": hoverAnimation,
     "px-3 py-1": padding === "xs",
     "px-4 py-2": padding === "sm",
     "px-6 py-3": padding === "md",
     "px-8 py-4": padding === "lg",
+    "hover:-translate-y-0.5 active:-translate-y-px": hoverAnimation,
   },
 );
 ---

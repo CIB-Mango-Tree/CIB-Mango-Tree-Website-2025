@@ -1,7 +1,7 @@
 import { cva } from "class-variance-authority";
 
 export const baseButtonVariants = cva(
-  "inline-flex items-center relative overflow-hidden transform-gpu transition-all duration-300 ease-default gap-2 px-8 py-4 font-semibold hover:-translate-y-0.5 active:-translate-y-px",
+  "inline-flex items-center relative overflow-hidden transform-gpu transition-all duration-300 ease-default gap-2 px-8 py-4 font-semibold",
   {
     variants: {
       variant: {
