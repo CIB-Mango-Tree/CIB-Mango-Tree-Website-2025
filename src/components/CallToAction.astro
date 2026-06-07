@@ -77,7 +77,7 @@ const { meetingSchedule, buttons } = Astro.props;
         buttons?.map((item): HTMLElement => {
           return (
             <CTAButton href={item.link} variant={item.type}>
-              {item.icon != null && <AstroIcon name={item.icon as IconKey} />}
+              {item.Icon != null && <AstroIcon name={item.Icon as IconKey} />}
               {item.name}
             </CTAButton>
           );

@@ -1,25 +1,12 @@
 ---
 import { cn } from "@utils/classMerge";
+import type { MeetingScheduleItem } from "@lib/types/payload-types";
 
-interface Meeting {
-  name: string;
-  day: string;
-  time: string;
-  type: "virtual" | "in-person";
-  link?: string;
+interface Props {
+  data: Array<MeetingScheduleItem>;
 }
 
-const meetings: Meeting[] = [
-  { name: "Engagement Scrum", day: "Tuesday", time: "7-8pm", type: "virtual" },
-  { name: "Product Scrum", day: "Thursday", time: "7-8pm", type: "virtual" },
-  {
-    name: "Civic Tech DC Project Night",
-    day: "2nd & 4th Wednesday",
-    time: "Evening",
-    type: "in-person",
-    link: "https://lu.ma/civic-tech-dc",
-  },
-];
+const { data } = Astro.props;
 ---
 
 <div class="bg-[#F8F6F2] p-6 md:p-8 border border-border">
@@ -42,7 +29,7 @@ const meetings: Meeting[] = [
 
   <div class="space-y-4">
     {
-      meetings.map((meeting, index) => {
+      data.map((meeting, index) => {
         const badgeClasses: string = cn("px-3 py-1 text-xs font-medium", {
           "bg-[#E5F7F8] text-cyan-700": meeting.type === "virtual",
           "bg-mango-yellow": meeting.type === "in-person",

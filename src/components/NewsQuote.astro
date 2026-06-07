@@ -1,13 +1,14 @@
 ---
 import { ArrowRight } from "@lucide/astro";
+import { format } from "date-fns";
 
 interface Props {
   title: string;
-  publication: string;
-  date: string;
+  publication?: string | null;
+  date?: string | null;
   link: string;
-  excerpt?: string;
-  imageUrl?: string;
+  excerpt: string | null;
+  imageUrl?: string | null;
 }
 
 const { title, publication, date, link, excerpt, imageUrl } = Astro.props;
@@ -24,11 +25,15 @@ const { title, publication, date, link, excerpt, imageUrl } = Astro.props;
   >
     <div class="flex gap-6">
       {
-        imageUrl && (
+        imageUrl != null && (
           <div class="hidden sm:block shrink-0 w-32 h-24 md:w-40 md:h-28 overflow-hidden">
             <img
               src={imageUrl}
-              alt={`${publication} article thumbnail`}
+              alt={
+                publication != null
+                  ? `${publication} article thumbnail`
+                  : "article thumbnail"
+              }
               class="w-full h-full object-cover transition-all transform-gpu duration-300 ease-linear group-hover:scale-105"
             />
           </div>
@@ -46,21 +51,29 @@ const { title, publication, date, link, excerpt, imageUrl } = Astro.props;
           <h3 class="font-bold text-xl md:text-2xl mb-3 pr-8">
             {title}
           </h3>
-
-          {
-            excerpt && (
-              <p class="text-muted mb-3 leading-relaxed text-sm md:text-base line-clamp-2">
-                "{excerpt}"
-              </p>
-            )
-          }
-
+          <p
+            class="text-muted mb-3 leading-relaxed text-sm md:text-base line-clamp-2"
+          >
+            "{excerpt}"
+          </p>
           <div class="flex flex-wrap items-center gap-2 md:gap-4 text-sm">
-            <span class="font-semibold text-mango-green-dark"
-              >{publication}</span
-            >
-            <span class="text-light hidden sm:inline">|</span>
-            <span class="text-light">{date}</span>
+            {
+              publication != null && (
+                <>
+                  <span class="font-semibold text-mango-green-dark">
+                    {publication}
+                  </span>
+                  <span class="text-light hidden sm:inline">|</span>
+                </>
+              )
+            }
+            {
+              date != null && (
+                <span class="text-light">
+                  {format(new Date(date), "MMMM dd, yyyy")}
+                </span>
+              )
+            }
             <span
               class="read-more ml-auto text-mango-green-dark font-medium flex items-center gap-1"
             >
