@@ -1,10 +1,38 @@
 ---
+import payload from "@lib/payload";
 import { Github } from "@lucide/astro";
+import { Image } from "astro:assets";
 import Layout from "@layouts/Layout.astro";
 import CodeBlock from "@components/CodeBlock";
 import DocCard from "@components/DocCard.astro";
 import BaseButton from "@components/LinkButtons/BaseButton.astro";
-import cliScreenshot from "@assets/CLI_Image_CIB.png";
+import type { PaginatedDocs } from "payload";
+import type {
+  Page,
+  MediaBlock,
+  ToolsList,
+  Media,
+} from "@lib/types/payload-types";
+
+const pageData: PaginatedDocs<Page> = await payload.find({
+  collection: "pages",
+  where: {
+    slug: {
+      equals: "docs",
+    },
+  },
+});
+let screenshot: MediaBlock | null = null;
+let toolsList: ToolsList | null = null;
+
+if (pageData.docs.length > 0) {
+  for (const layoutBlock of pageData.docs[0].layout) {
+    if (layoutBlock.blockType === "mediaBlock") screenshot = layoutBlock;
+    if (layoutBlock.blockType === "toolsList") toolsList = layoutBlock;
+  }
+}
+
+console.log(screenshot);
 ---
 
 <Layout>
@@ -66,61 +94,36 @@ import cliScreenshot from "@assets/CLI_Image_CIB.png";
       <!-- CLI Preview -->
       <div class="mb-16">
         <h2 class="font-bold text-3xl mb-8">CLI Interface</h2>
-        <div
-          class="rounded-xl border-2 border-mango-green-dark/20 overflow-hidden shadow-lg"
-        >
-          <img
-            src={cliScreenshot.src}
-            alt="CIB Mango Tree CLI interface"
-            class="w-full rounded-xl"
-          />
-        </div>
+        {
+          screenshot != null && (
+            <div class="rounded-xl border-2 border-mango-green-dark/20 overflow-hidden shadow-lg">
+              <Image
+                src={`https://api.cibmangotree.org${(screenshot.media as Media).url}`}
+                alt="CIB Mango Tree CLI interface"
+                class="w-full rounded-xl"
+                width={(screenshot.media as Media).width as number}
+                height={(screenshot.media as Media).height as number}
+              />
+            </div>
+          )
+        }
       </div>
 
       <!-- Documentation Sections -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
-        <DocCard
-          href="https://civictechdc.github.io/cib-mango-tree/guides/get-started/installation"
-          class="bg-[#E5F7F8]"
-        >
-          <Fragment slot="heading">Installation Guide</Fragment>
-          <Fragment slot="description">
-            Detailed instructions for setting up CIB Mango Tree on various
-            platforms.
-          </Fragment>
-        </DocCard>
-        <DocCard
-          href="https://civictechdc.github.io/cib-mango-tree"
-          class="bg-[#FFE099]"
-        >
-          <Fragment slot="heading">Test Reference</Fragment>
-          <Fragment slot="description">
-            Complete documentation of all available detection tests and their
-            parameters.
-          </Fragment>
-        </DocCard>
-        <DocCard
-          href="https://civictechdc.github.io/cib-mango-tree"
-          class="bg-[#FFF5E6]"
-        >
-          <Fragment slot="heading">Data Formats</Fragment>
-          <Fragment slot="description">
-            Supported input formats and how to prepare your social media
-            datasets.
-          </Fragment>
-        </DocCard>
-        <DocCard
-          href="https://civictechdc.github.io/cib-mango-tree/reference/analyzer_interface"
-          class="bg-mango-green-light"
-        >
-          <Fragment slot="heading">API Reference</Fragment>
-          <Fragment slot="description">
-            For developers who want to integrate CIB Mango Tree into their
-            workflows.
-          </Fragment>
-        </DocCard>
+        {
+          toolsList?.items != null &&
+            toolsList.items?.length > 0 &&
+            toolsList.items?.map(
+              (item): HTMLElement => (
+                <DocCard href={item.link} color={item.color}>
+                  <Fragment slot="heading">{item.name}</Fragment>
+                  <Fragment slot="description">{item.description}</Fragment>
+                </DocCard>
+              ),
+            )
+        }
       </div>
-
       <!-- GitHub Link -->
       <div class="text-center py-10 border-t border-border w-full">
         <p class="text-muted mb-6">
@@ -130,7 +133,7 @@ import cliScreenshot from "@assets/CLI_Image_CIB.png";
           href="https://github.com/civictechdc/cib-mango-tree"
           target="_blank"
           rel="noopener noreferrer"
-          class="gap-2 bg-primary text-white px-6 py-3 hover:bg-mango-green-dark"
+          variant="primary"
           hoverAnimation
         >
           <Github class="w-5 h-5" />
