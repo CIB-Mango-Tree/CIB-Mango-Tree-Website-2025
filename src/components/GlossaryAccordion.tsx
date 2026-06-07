@@ -4,7 +4,9 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@components/ui/accordion";
+import { BlockRenderer } from "./ReactBlockRenderer";
 import type { ReactElement, FC } from "react";
+import type { Accordion as AccordionType } from "@lib/types/payload-types";
 
 export type GlossaryDefinition = {
   term: string;
@@ -12,7 +14,7 @@ export type GlossaryDefinition = {
 };
 
 export interface GlossaryAccordionProps {
-  definitions: Array<GlossaryDefinition>;
+  definitions: AccordionType["items"];
 }
 
 export default function GlossaryAccordion({
@@ -20,23 +22,23 @@ export default function GlossaryAccordion({
 }: GlossaryAccordionProps): ReactElement<FC> {
   return (
     <Accordion>
-      {definitions.map(
-        (definition: GlossaryDefinition, index: number): ReactElement<FC> => (
+      {definitions != null ? definitions.map(
+        (definition, index: number): ReactElement<FC> => (
           <AccordionItem
             key={`index-${index + 1}`}
             value={`item-${index + 1}`}
             className="opacity-0 animate-fade-in-accordion"
             style={{ animationDelay: `${index * 50}ms` }}
           >
-            <AccordionTrigger>{definition.term}</AccordionTrigger>
+            <AccordionTrigger>{definition.title}</AccordionTrigger>
             <AccordionContent>
-              <p className="text-muted leading-relaxed border-l-4 border-mango-green-light pl-4">
-                {definition.definition}
-              </p>
+              {definition.content != null ? (
+                <BlockRenderer data={definition.content} />
+              ) : null}
             </AccordionContent>
           </AccordionItem>
         ),
-      )}
+      ) : null}
     </Accordion>
   );
 }
