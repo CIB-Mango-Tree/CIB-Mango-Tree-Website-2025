@@ -1,5 +1,7 @@
 ---
+import payload from "@lib/payload";
 import Layout from "@layouts/Layout.astro";
+import AstroIcon from "@components/AstroIcon.astro";
 import ContributionCard from "@components/ContributionCard.astro";
 import CircleCycle from "@components/CircleCycle.astro";
 import BaseButton from "@components/LinkButtons/BaseButton.astro";
@@ -7,25 +9,52 @@ import GitHubActivity from "@components/GitHubActivity.astro";
 import Newsletter from "@components/Newsletter.astro";
 import mangoMan from "@assets/CIB Mango Tree_mango_man.gif";
 import { Calendar, Slack, Heart } from "@lucide/astro";
+import type { PaginatedDocs } from "payload";
+import type {
+  Page,
+  ContributionStepList,
+  LinkButtons,
+} from "@lib/types/payload-types";
+import type { IconKey } from "@lib/types/icon";
+
+const pageData: PaginatedDocs<Page> = await payload.find({
+  collection: "pages",
+  where: {
+    slug: {
+      equals: "get-involved",
+    },
+  },
+});
+
+let contributionStepList: ContributionStepList | null = null;
+let joinButtons: LinkButtons | null = null;
+
+if (pageData.docs.length > 0) {
+  for (const layoutBlock of pageData.docs[0].layout) {
+    if (layoutBlock.blockType === "contributionStepList")
+      contributionStepList = layoutBlock;
+    if (layoutBlock.blockType === "linkButtons") joinButtons = layoutBlock;
+  }
+}
 
 const contributionTypesTop = [
   {
     title: "Development",
-    icon: "code",
+    icon: "Code",
     description:
       "Help build new detection tools, improve existing algorithms, or enhance our CLI interface. We work with Python, data analysis, and NLP/ML.",
     color: "green" as const,
   },
   {
     title: "Design",
-    icon: "palette",
+    icon: "Palette",
     description:
       "Create intuitive interfaces, visualizations, and educational materials. UI/UX design, data visualization, and graphic design skills welcome.",
     color: "yellow" as const,
   },
   {
     title: "Research & Writing",
-    icon: "file-text",
+    icon: "FileText",
     description:
       "Document our tools, write case studies, and contribute to our knowledge base. Technical writing, research analysis, and content creation.",
     color: "cyan" as const,
@@ -35,53 +64,17 @@ const contributionTypesTop = [
 const contributionTypesBottom = [
   {
     title: "Testing & Feedback",
-    icon: "flask",
+    icon: "FlaskConical",
     description:
       "Try our tools, report bugs, and help us improve the user experience. User testing, bug reporting, and feature suggestions.",
     color: "lavender" as const,
   },
   {
     title: "Engagement & Marketing",
-    icon: "megaphone",
+    icon: "Megaphone",
     description:
       "Help spread the word about CIB Mango Tree. Social media, community outreach, partnerships, and event coordination.",
     color: "peach" as const,
-  },
-];
-
-const contributionSteps = [
-  {
-    title: "Bug Reports",
-    icon: "bug",
-    description:
-      "Found something broken? Open a GitHub issue with details about what went wrong. Even small bugs help us improve!",
-    ctaText: "Report a Bug",
-    ctaLink: "https://github.com/civictechdc/cib-mango-tree/issues/new",
-  },
-  {
-    title: "Code Contributions",
-    icon: "code",
-    description:
-      'Ready to code? Fork the repo, make your changes, and submit a pull request. Check issues labeled "good first issue" to get started.',
-    ctaText: "View Good First Issues",
-    ctaLink:
-      "https://github.com/civictechdc/cib-mango-tree/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22",
-  },
-  {
-    title: "Ideas & Suggestions",
-    icon: "lightbulb",
-    description:
-      "Have an idea for a new feature? Join our Slack channel #cib-mango-tree or open a GitHub discussion to share your thoughts.",
-    ctaText: "Join Slack",
-    ctaLink: "https://codefordc.slack.com",
-  },
-  {
-    title: "Documentation",
-    icon: "book",
-    description:
-      "Help make our tools more accessible by improving documentation. No coding required—just clear writing!",
-    ctaText: "View Docs",
-    ctaLink: "/docs",
   },
 ];
 ---
@@ -134,7 +127,7 @@ const contributionSteps = [
             >
               <ContributionCard
                 title={type.title}
-                icon={type.icon}
+                icon={type.icon as IconKey}
                 description={type.description}
                 color={type.color}
               />
@@ -153,7 +146,7 @@ const contributionSteps = [
             >
               <ContributionCard
                 title={type.title}
-                icon={type.icon}
+                icon={type.icon as IconKey}
                 description={type.description}
                 color={type.color}
               />
@@ -192,20 +185,22 @@ const contributionSteps = [
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
         {
-          contributionSteps.map((step, index) => (
-            <div
-              style={`animation-delay: ${index * 0.1}s;`}
-              class="animate-fade-in-up opacity-0"
-            >
-              <ContributionCard
-                title={step.title}
-                icon={step.icon}
-                description={step.description}
-                ctaText={step.ctaText}
-                ctaLink={step.ctaLink}
-              />
-            </div>
-          ))
+          contributionStepList?.steps != null
+            ? contributionStepList.steps.map((step, index) => (
+                <div
+                  style={`animation-delay: ${index * 0.1}s;`}
+                  class="animate-fade-in-up opacity-0"
+                >
+                  <ContributionCard
+                    title={step.title}
+                    icon={step.Icon as IconKey}
+                    description={step.description}
+                    ctaName={step.ctaName}
+                    ctaLink={step.ctaLink}
+                  />
+                </div>
+              ))
+            : null
         }
       </div>
     </div>
@@ -237,36 +232,33 @@ const contributionSteps = [
       </p>
 
       <div class="flex flex-wrap gap-5">
-        <BaseButton
-          href="https://lu.ma/civic-tech-dc"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="bg-mango-yellow"
-          hoverAnimation
-        >
-          <Calendar class="w-5 h-5" />
-          RSVP on Lu.ma
-        </BaseButton>
-        <BaseButton
-          href="https://codefordc.slack.com"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="bg-white/10 text-white border border-white/30"
-          hoverAnimation
-        >
-          <Slack class="w-5 h-5" />
-          Join Slack (#cib-mango-tree)
-        </BaseButton>
-        <BaseButton
-          href="https://www.civictechdc.org/donate"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="bg-white/10 text-white border border-white/30"
-          hoverAnimation
-        >
-          <Heart class="w-5 h-5" />
-          Donate
-        </BaseButton>
+        {
+          joinButtons?.items != null
+            ? joinButtons.items.map(
+                (item): HTMLElement => (
+                  <BaseButton
+                    href={item.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    variant={item.type}
+                    hoverAnimation={
+                      item["hover effect"] != null
+                        ? item["hover effect"]
+                        : false
+                    }
+                  >
+                    {item.Icon != null && (
+                      <AstroIcon name={item.Icon as IconKey} class="w-5 h-5" />
+                    )}
+                    {item.name.toLowerCase().includes("slack") && (
+                      <Slack class="w-5 h-5" />
+                    )}
+                    {item.name}
+                  </BaseButton>
+                ),
+              )
+            : null
+        }
       </div>
     </div>
   </section>
