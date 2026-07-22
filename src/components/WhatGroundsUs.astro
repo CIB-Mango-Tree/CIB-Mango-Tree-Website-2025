@@ -1,5 +1,6 @@
 ---
 import { Image } from "astro:assets";
+import { API_URL } from "@utils/constants/url";
 import type { Media } from "@lib/types/payload-types";
 
 interface Props {
@@ -26,7 +27,7 @@ const { mediaBlock } = Astro.props;
         <div class="flex justify-center items-center mt-16">
           <div class="w-full overflow-hidden shadow-lg">
             <Image
-              src={`https://api.cibmangotree.org${mediaBlock.url}`}
+              src={`${API_URL}${mediaBlock.url}`}
               alt="Team meeting"
               class="w-full h-auto object-cover"
               width={mediaBlock.width as number}

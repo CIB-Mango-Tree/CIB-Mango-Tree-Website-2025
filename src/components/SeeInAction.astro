@@ -1,5 +1,13 @@
 ---
-import cli_screenshot from "@assets/cliscreenshot.png";
+import { API_URL } from "@utils/constants/url";
+import type { Media } from "@lib/types/payload-types";
+
+interface Props {
+  videoBlock?: Media;
+  posterBlock?: Media;
+}
+
+const { videoBlock, posterBlock } = Astro.props;
 ---
 
 <section class="flex flex-col relative">
@@ -10,9 +18,21 @@ import cli_screenshot from "@assets/cliscreenshot.png";
       </h2>
 
       <div class="mb-16 shadow-lg overflow-hidden rounded-xl">
-        <video class="w-full h-auto" poster={cli_screenshot.src} preload="none" controls>
-          <source src="CIB_Mango_Tree_Demo.mp4" type="video/mp4" />
-          Your browser does not support video playback. You may download the video <a download='file' style="text-decoration-thickness: 2px;" href="CIB_Mango_Tree_Demo.mp4">here</a>.
+        <video
+          class="w-full h-auto"
+          poster={`${API_URL}${posterBlock?.url}`}
+          preload="none"
+          controls
+        >
+          <source src={`${API_URL}${videoBlock?.url}`} type="video/mp4" />
+          Your browser does not support video playback. You may download the video
+          <a
+            download="file"
+            style="text-decoration-thickness: 2px;"
+            href={`${API_URL}${videoBlock?.url}`}
+          >
+            here
+          </a>
         </video>
       </div>
 

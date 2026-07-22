@@ -35,10 +35,15 @@ if (page.status === "rejected" || meetingSchedule.status === "rejected")
   throw Error("http request to the CMS for page data failed...");
 
 let toolSelectorData: Selector | null = null;
+let demoVideo: MediaBlock | null = null;
+let demoVideoPoster: MediaBlock | null = null;
 let teamMeetingData: MediaBlock | null = null;
 let callToActionButtonData: LinkButtons | null = null;
 
 for (const block of page.value.layout) {
+  if (block.blockName === "demo video") demoVideo = block as MediaBlock;
+  if (block.blockName === "demo video poster")
+    demoVideoPoster = block as MediaBlock;
   if (block.blockName === "tools") toolSelectorData = block as Selector;
   if (block.blockName === "team picture") teamMeetingData = block as MediaBlock;
   if (block.blockName === "call to action buttons")
@@ -49,7 +54,10 @@ for (const block of page.value.layout) {
 <Layout>
   <h1 class="sr-only">CIB Mango Tree Homepage</h1>
   <Welcome />
-  <SeeInAction />
+  <SeeInAction
+    videoBlock={demoVideo?.media as Media}
+    posterBlock={demoVideoPoster?.media as Media}
+  />
   <SaferInternetTools toolSelectorData={toolSelectorData?.tabs} />
   <OurToolsHelpEveryone />
   <WhatGroundsUs mediaBlock={teamMeetingData?.media as Media} />
