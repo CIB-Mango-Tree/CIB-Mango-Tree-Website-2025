@@ -9,7 +9,6 @@ import type { PaginatedDocs } from "payload";
 import type {
   Page,
   PlatformDownloadList,
-  InstallMethodList,
   LinkButtons,
 } from "@lib/types/payload-types";
 import type {
@@ -26,7 +25,6 @@ const downloadPageData: PaginatedDocs<Page> = await payload.find({
   },
 });
 let platformDownloadList: PlatformDownloadList | null = null;
-let installationMethods: Array<InstallMethodList> = [];
 let helpButtons: LinkButtons | null = null;
 const platformIcons: Record<string, string> = {
   Windows:
@@ -42,8 +40,6 @@ if (downloadPageData.docs.length > 0) {
     if (layoutBlock.blockType === "platformDownloadList")
       platformDownloadList = layoutBlock;
     if (layoutBlock.blockType === "linkButtons") helpButtons = layoutBlock;
-    if (layoutBlock.blockType === "installMethodListBlock")
-      installationMethods.push(layoutBlock);
   }
 }
 
