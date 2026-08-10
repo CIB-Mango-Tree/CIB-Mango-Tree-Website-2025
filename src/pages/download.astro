@@ -5,13 +5,10 @@ import Layout from "@layouts/Layout.astro";
 import PlatformDownload from "@components/PlatformDownload.astro";
 import CodeBlock from "@components/CodeBlock";
 import BaseButton from "@components/LinkButtons/BaseButton.astro";
-import { cn } from "@utils/classMerge";
-import cliScreenshot from "@assets/CLI_Image_CIB.png";
 import type { PaginatedDocs } from "payload";
 import type {
   Page,
   PlatformDownloadList,
-  InstallMethodList,
   LinkButtons,
 } from "@lib/types/payload-types";
 import type {
@@ -28,7 +25,6 @@ const downloadPageData: PaginatedDocs<Page> = await payload.find({
   },
 });
 let platformDownloadList: PlatformDownloadList | null = null;
-let installationMethods: Array<InstallMethodList> = [];
 let helpButtons: LinkButtons | null = null;
 const platformIcons: Record<string, string> = {
   Windows:
@@ -44,8 +40,6 @@ if (downloadPageData.docs.length > 0) {
     if (layoutBlock.blockType === "platformDownloadList")
       platformDownloadList = layoutBlock;
     if (layoutBlock.blockType === "linkButtons") helpButtons = layoutBlock;
-    if (layoutBlock.blockType === "installMethodListBlock")
-      installationMethods.push(layoutBlock);
   }
 }
 
@@ -115,53 +109,6 @@ const dataPreparationSteps = [
       </p>
     </div>
   </section>
-  <!-- Alternative Installation -->
-  <section class="flex-container-wrapper">
-    <div class="flex-container-main w-full px-6 xl:w-5xl xl:px-0">
-      <h2 class="font-bold text-3xl mb-12">Alternative Installation Methods</h2>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-        {
-          installationMethods != null
-            ? installationMethods.map(
-                (item): HTMLElement => (
-                  <div class="bg-background-alt border border-border p-8 transition-all transform-gpu duration-300 ease-linear hover:border-[#5a8a4a] hover:shadow-[0_0.25rem_0.75rem_rgba(90,138,74,0.1)] hover:-translate-y-0.5">
-                    <h3 class="font-semibold text-lg mb-5 flex items-center gap-2">
-                      <span
-                        class={cn(
-                          " px-2 py-1 text-xs font-bold",
-                          item.platform.toLowerCase() === "python"
-                            ? "bg-mango-yellow"
-                            : "bg-[#24292e] text-white",
-                        )}
-                      >
-                        {item.platform}
-                      </span>
-                      {item.title}
-                    </h3>
-                    <div class="space-y-4 mb-5">
-                      {item.commands != null
-                        ? item.commands.map(
-                            (command): HTMLElement => (
-                              <CodeBlock
-                                client:visible
-                                className="mt-2"
-                                code={command.content}
-                              />
-                            ),
-                          )
-                        : null}
-                    </div>
-                    {item.footnote != null && (
-                      <p class="text-muted text-sm">{item.footnote}</p>
-                    )}
-                  </div>
-                ),
-              )
-            : null
-        }
-      </div>
-    </div>
-  </section>
   <!-- Data Preparation -->
   <section class="flex-container-wrapper bg-mango-yellow-light">
     <div class="flex-container-main w-full px-6 xl:w-5xl xl:px-0">
@@ -198,25 +145,6 @@ const dataPreparationSteps = [
           />
         </div>
       </div>
-    </div>
-  </section>
-  <!-- CLI Preview -->
-  <section class="flex-container-wrapper bg-background">
-    <div class="flex-container-main w-full px-6 xl:w-5xl xl:px-0">
-      <h2 class="font-bold text-3xl mb-10">What You'll Get</h2>
-      <div
-        class="rounded-xl border-2 border-mango-green-dark/20 overflow-hidden shadow-lg"
-      >
-        <img
-          src={cliScreenshot.src}
-          alt="CIB Mango Tree CLI interface"
-          class="w-full rounded-xl"
-        />
-      </div>
-      <p class="text-muted text-sm mt-6 text-center">
-        An interactive command-line interface for analyzing social media
-        datasets
-      </p>
     </div>
   </section>
   <!-- Technical Documentation -->
