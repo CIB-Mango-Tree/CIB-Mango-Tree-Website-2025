@@ -68,7 +68,7 @@ export default function MobileNavigation(): ReactElement<FC> {
             </li>
             <li>
               <a
-                href="/docs"
+                href="/get-involved"
                 className={cn(
                   "inline-flex w-full py-3 pl-0 text-white font-medium no-underline transition-all duration-250 ease-linear origin-left hover:pl-2 hover:bg-linear-90 hover:from-white/10 hover:to-transparent",
                   {
@@ -77,7 +77,7 @@ export default function MobileNavigation(): ReactElement<FC> {
                   },
                 )}
               >
-                Documentation
+                Get Involved
               </a>
             </li>
             <li>
@@ -96,7 +96,8 @@ export default function MobileNavigation(): ReactElement<FC> {
             </li>
             <li>
               <a
-                href="/get-involved"
+                href="https://civictechdc.github.io/cib-mango-tree/"
+                target="_blank"
                 className={cn(
                   "inline-flex w-full py-3 pl-0 text-[#ffcc33] font-semibold no-underline transition-all duration-250 ease-linear origin-left hover:pl-2 hover:bg-linear-90 hover:from-white/10 hover:to-transparent",
                   {
@@ -105,7 +106,7 @@ export default function MobileNavigation(): ReactElement<FC> {
                   },
                 )}
               >
-                Get Involved
+                Documentation
               </a>
             </li>
           </ul>
