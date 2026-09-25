@@ -186,6 +186,12 @@ const dataPreparationSteps = [
                   <BaseButton
                     href={item.link}
                     variant={item.type}
+                    target={
+                      !item.link.startsWith("https://cibmangotree.org/") &&
+                      !item.link.startsWith("http://localhost")
+                        ? "_blank"
+                        : "_self"
+                    }
                     hoverAnimation={
                       item["hover effect"] != null
                         ? item["hover effect"]
