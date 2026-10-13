@@ -1,6 +1,6 @@
 ---
 import payload from "@lib/payload";
-import { BookOpen } from "@lucide/astro";
+import { BookOpen, Download } from "@lucide/astro";
 import Layout from "@layouts/Layout.astro";
 import PlatformDownload from "@components/PlatformDownload.astro";
 import CodeBlock from "@components/CodeBlock";
@@ -104,9 +104,32 @@ const dataPreparationSteps = [
         )
       }
       <p class="text-center text-muted text-sm mt-10">
-        All downloads include the full CIB Mango Tree CLI with all detection
+        All downloads include the full CIB Mango Tree GUI with all detection
         modules.
       </p>
+      <div
+        class="mt-12 flex flex-col items-center text-center gap-6 w-full bg-white border border-border p-8 opacity-0 animate-fade-in-scale transition-all transform-gpu duration-300 ease-default hover:border-[#5A8A4A] hover:shadow-[0_1.0rem_2.50rem_rgba(90,138,74,0.15)] hover:-translate-y-1"
+        style="animation-delay: 450ms;"
+      >
+        <div class="flex flex-col items-center">
+          <h3 class="font-bold text-2xl mb-3">Demo Data</h3>
+          <p class="text-muted max-w-2xl">
+            New to the tool? Download a sample CSV dataset to run your first
+            analysis without preparing your own data.
+          </p>
+        </div>
+        <BaseButton
+          href="https://raw.githubusercontent.com/civictechdc/cib-mango-tree/main/assets/demo_data/demo_data.csv"
+          class="demo-data-download group"
+          variant="gold"
+          hoverAnimation
+        >
+          <Download
+            class="w-5 h-5 transition-transform transform-gpu group-hover:animate-bounce"
+          />
+          Download Demo Data
+        </BaseButton>
+      </div>
     </div>
   </section>
   <!-- Data Preparation -->
@@ -207,4 +230,44 @@ const dataPreparationSteps = [
       </div>
     </div>
   </section>
+  <script>
+    // Demo data download handler.
+    //
+    // The button points at a cross-origin GitHub raw CSV URL. Browsers treat that
+    // as a navigation (often opening/viewing the file), not a Save dialog.
+    // The HTML download attribute also does not work cross-origin.
+    //
+    // So on click we: fetch the remote file → wrap it in a same-origin blob URL →
+    // trigger a temporary <a download> click. Bytes still come from the main
+    // cib-mango-tree repo; only the download prompt is forced locally.
+
+    // The Demo Data BaseButton is tagged with class "demo-data-download".
+    const link = document.querySelector<HTMLAnchorElement>(".demo-data-download");
+
+    link?.addEventListener("click", async (event) => {
+      // Stop the browser from navigating to the GitHub raw URL.
+      event.preventDefault();
+
+      // Pull the CSV from the button's href (main cib repo raw URL).
+      const response = await fetch(link.href);
+      // Bail quietly if GitHub is unreachable or the file moved.
+      if (!response.ok) return;
+
+      // Turn the response body into an in-memory file the page owns.
+      const blob = await response.blob();
+      // Blob URLs are same-origin, so the download attribute will be honored.
+      const objectUrl = URL.createObjectURL(blob);
+      // Hidden helper link used only to kick off the save dialog.
+      const temporaryLink = document.createElement("a");
+
+      temporaryLink.href = objectUrl;
+      // Suggested filename in the save dialog.
+      temporaryLink.download = "demo_data.csv";
+      // Programmatic click — user gesture still counts as this click handler.
+      temporaryLink.click();
+
+      // Free the blob URL now that the download has been started.
+      URL.revokeObjectURL(objectUrl);
+    });
+  </script>
 </Layout>
