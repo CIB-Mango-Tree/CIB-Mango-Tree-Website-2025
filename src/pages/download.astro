@@ -5,6 +5,7 @@ import Layout from "@layouts/Layout.astro";
 import PlatformDownload from "@components/PlatformDownload.astro";
 import CodeBlock from "@components/CodeBlock";
 import BaseButton from "@components/LinkButtons/BaseButton.astro";
+import DemoDataDownload from "@components/DemoDataDownload";
 import type { PaginatedDocs } from "payload";
 import type {
   Page,
@@ -26,6 +27,7 @@ const downloadPageData: PaginatedDocs<Page> = await payload.find({
 });
 let platformDownloadList: PlatformDownloadList | null = null;
 let helpButtons: LinkButtons | null = null;
+let demoDataButtons: LinkButtons | null = null;
 const platformIcons: Record<string, string> = {
   Windows:
     '<svg viewBox="0 0 24 24" fill="currentColor" class="w-16 h-16 text-[#0078D4]"><path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801"/></svg>',
@@ -39,9 +41,20 @@ if (downloadPageData.docs.length > 0) {
   for (const layoutBlock of downloadPageData.docs[0].layout) {
     if (layoutBlock.blockType === "platformDownloadList")
       platformDownloadList = layoutBlock;
-    if (layoutBlock.blockType === "linkButtons") helpButtons = layoutBlock;
+    if (
+      layoutBlock.blockType === "linkButtons" &&
+      layoutBlock.blockName === "Help Buttons"
+    )
+      helpButtons = layoutBlock;
+    if (
+      layoutBlock.blockType === "linkButtons" &&
+      layoutBlock.blockName === "Demo Data"
+    )
+      demoDataButtons = layoutBlock;
   }
 }
+
+const demoDataButton = demoDataButtons?.items?.[0] ?? null;
 
 const dataPreparationSteps = [
   {
@@ -104,9 +117,29 @@ const dataPreparationSteps = [
         )
       }
       <p class="text-center text-muted text-sm mt-10">
-        All downloads include the full CIB Mango Tree CLI with all detection
+        All downloads include the full CIB Mango Tree GUI with all detection
         modules.
       </p>
+      {
+        demoDataButton != null && (
+          <div class="mt-12 flex flex-col items-center text-center gap-6 w-full bg-white border border-border p-8 opacity-0 animate-fade-in-scale animate-delay-400 transition-all transform-gpu duration-300 ease-default hover:border-[#5A8A4A] hover:shadow-[0_1.0rem_2.50rem_rgba(90,138,74,0.15)] hover:-translate-y-1">
+            <div class="flex flex-col items-center">
+              <h3 class="font-bold text-2xl mb-3">Demo Data</h3>
+              <p class="text-muted max-w-2xl">
+                New to the tool? Download a sample CSV dataset to run your first
+                analysis without preparing your own data.
+              </p>
+            </div>
+            <DemoDataDownload
+              client:visible
+              href={demoDataButton.link}
+              label={demoDataButton.name}
+              variant={demoDataButton.type}
+              hoverAnimation={demoDataButton["hover effect"] ?? true}
+            />
+          </div>
+        )
+      }
     </div>
   </section>
   <!-- Data Preparation -->
