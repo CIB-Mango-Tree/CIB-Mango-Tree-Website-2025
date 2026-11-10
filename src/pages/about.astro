@@ -125,10 +125,15 @@ const values: Array<Value> = [
         <section
           class={cn(
             "flex justify-center py-16",
-            (
-              (item.richText as SerializedEditorState).root
-                .children[0] as SerializedElementNode<SerializedTextNode>
-            ).children[0].text === "Who We Are"
+            [
+              "Who We Are",
+              "A Nonpartisan Project",
+            ].includes(
+              (
+                (item.richText as SerializedEditorState).root
+                  .children[0] as SerializedElementNode<SerializedTextNode>
+              ).children[0].text,
+            )
               ? "bg-[#F8F6F2]"
               : "bg-background",
           )}
